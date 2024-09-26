@@ -1,0 +1,16 @@
+.Burial_Search_Container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    background: url("../../assets/HimalayanPhotos.jpg")no-repeat center center/cover;
+    position: relative;
+    
+}
+
+.Burial_Search_Container::before{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: -1;
+}
