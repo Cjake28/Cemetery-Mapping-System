@@ -8,7 +8,7 @@ export default function Navbar() {
       <ul>
         <li><Link to="/">Virtual Tour</Link></li>
         <li><Link to="/cementerylot">Cementery Lot</Link></li>
-        <li><Link to="/BurialSearch">Burial Search</Link></li>
+        <li><Link to="/VirtualTour">Burial Search</Link></li>
         
       </ul>
     </nav>
