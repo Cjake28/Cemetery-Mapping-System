@@ -55,7 +55,8 @@ export default function App() {
   // Run checkAuth when the app loads
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]);  // Ensure `checkAuth` is stable or memoized
+    console.log("asdasd");
+  },[]);  // Ensure `checkAuth` is stable or memoized
 
   // Show a loading screen while checking authentication
   if (isCheckingAuth) {

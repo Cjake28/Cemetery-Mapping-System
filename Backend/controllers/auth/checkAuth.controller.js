@@ -1,13 +1,13 @@
 import { get_id_name_role_ByID } from '../../models/auth/checkAuth.model.js';
 
 export const checkAuth = async (req, res) => {
+	console.log('repete');
 	try {
 		const userId = req.userId;
 
 		if (!userId) {
 			return res.status(400).json({ success: false, message: "User ID not provided" });
 		}
-
 
 		const userDetails = await get_id_name_role_ByID(userId);
 

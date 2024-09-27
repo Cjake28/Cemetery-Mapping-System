@@ -6,8 +6,8 @@ export default function UserProtectedRoute() {
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/auth/signin" replace />;
   }
 
-  return <Outlet />;  // Render the child routes if authenticated
+  return <Outlet />; 
 }
