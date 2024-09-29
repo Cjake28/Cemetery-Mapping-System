@@ -70,13 +70,15 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     dispatch({ type: 'START_LOADING' });
     try {
-      const response = await axios.post(`${API_URL}/signin`, { username, password });
+      const response = await axios.post(`${API_URL}/signin`, { username: username, password: password });
       dispatch({ type: 'LOGIN_SUCCESS', payload: response.data.user });
-    } catch (error) {
+    } catch(error){
+      console.log("login error: ", error.response?.data?.message );
       dispatch({
         type: 'LOGIN_FAILURE',
-        payload: error.response?.data?.message || 'Error logging in',
+        payload: error.response?.data?.message || 'Error logging in'
       });
+      throw error;
     }
   };
 
@@ -84,17 +86,27 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       const response = await axios.get(`${API_URL}/check-auth`);
-      console.log("checkAuth data: ", response.data);
-      console.log("checkAuth user: ", response.data.user);
+      // console.log("checkAuth data: ", response.data);
+      // console.log("checkAuth user: ", response.data.user);
       dispatch({ type: 'CHECK_AUTH_SUCCESS', payload: response.data.user });
     } catch (error) {
       console.log(error);
       dispatch({ type: 'CHECK_AUTH_FAILURE' });
+      throw error;
     }
   };
 
+  const signout = async (req, res) => {
+    try{
+      const response = await axios.post(`${API_URL}/signout`);
+       dispatch({ type: 'CHECK_AUTH_FAILURE' });
+      console.log(response);
+    }catch(error){
+      console.log(error)}
+  }
+
   return (
-    <AuthContext.Provider value={{ ...state, login, checkAuth }}>
+    <AuthContext.Provider value={{ ...state, login, checkAuth, signout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -143,7 +143,7 @@ button {
     }
     .login-form{
         height: 100%;
-        background-color:red;
+        /* background-color:red; */
     }
     .right-div {
         width: 100%;

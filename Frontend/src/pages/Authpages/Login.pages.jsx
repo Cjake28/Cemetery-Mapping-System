@@ -7,14 +7,13 @@ export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false); // For showing loader or feedback on login attempt
-    const [error, setError] = useState(null); // For handling errors
+    // const [error, setError] = useState(null); // For handling errors
 
-    const { login } = useAuth(); // Use `useAuth` instead of `useAuthStore`
+    const { login, error } = useAuth(); // Use `useAuth` instead of `useAuthStore`
 
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(null); // Clear previous errors
 
         try {
             // Assuming your API endpoint is /api/auth/login
@@ -23,8 +22,8 @@ export default function LoginPage() {
             // Handle successful login, e.g., redirect to a dashboard
 
         } catch (err) {
+            console.log(err);
             setLoading(false);
-            setError(err.response?.data?.message || "Login failed");
         }
     };
 

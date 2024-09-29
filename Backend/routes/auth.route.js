@@ -2,11 +2,13 @@ import express from 'express';
 import {signin} from '../controllers/auth/signin.controller.js';
 import {checkAuth} from '../controllers/auth/checkAuth.controller.js';
 import {verifyToken} from '../middleware/verifyToken.js';
-import {userRoleValidate} from '../middleware/userRoleValidation.js';
-const router = express.Router();
+import {signout} from '../controllers/auth/signout.controller.js';
 
-router.post("/signin",signin);
+const authRoutes = express.Router();
 
-router.get("/check-auth", verifyToken, checkAuth);
+authRoutes.post("/signin",signin);
 
-export default router;
+authRoutes.get("/check-auth", verifyToken, checkAuth);
+authRoutes.post("/signout", signout);
+
+export default authRoutes;

@@ -4,9 +4,10 @@ import {getUserName_by_Email, get_id_name_role_Byusername} from '../../models/au
 
 export const signin = async (req, res) =>{
     const {username, password} = req.body;
+    console.log("input: ",username, password);
     try{
         if(!username || !password){
-            throw new Error("All fields are required");
+            return res.status(400).json({ success: false, message: "All fields are required" });
         }
         console.log("dito umabot");
         const usernameLower = username.toLowerCase();
