@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
-import adminRouter from './routes/admin.route.js'
+import adminRouter from './routes/adminUser.route.js'
 
 dotenv.config();
 

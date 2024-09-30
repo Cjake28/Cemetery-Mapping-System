@@ -1,4 +1,4 @@
-import db from '../../db/db.connect';
+import db from '../../db/db.connect.js';
 
 export async function createUserInDB(name, username, password, role) {
     try {
