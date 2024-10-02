@@ -94,7 +94,7 @@ h2 {
     margin-bottom: 3rem;
 }
 
-input{
+.Input-login{
     width: 80%;
     padding: 0.65rem;
     margin-bottom: 1rem;
@@ -104,13 +104,13 @@ input{
     font-size: 1rem;
 }
 
-input:focus {
+.Input-login:focus {
     outline: none;
     border-color: #4caf50; /* Subtle green on focus */
     box-shadow: 0 0 8px rgba(67, 209, 119, 0.5);
 }
 
-button {
+.login-button {
     background-color: #4caf50; /* Softer green for button */
     color: white;
     padding: 0.75rem 2rem;
@@ -121,7 +121,7 @@ button {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.login-form button:hover {
+.login-form .login-button:hover {
     background-color: #388e3c; /* Darken on hover */
     transform: scale(1.05); /* Slightly larger on hover */
 }

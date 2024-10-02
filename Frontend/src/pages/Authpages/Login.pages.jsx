@@ -39,6 +39,7 @@ export default function LoginPage() {
                         <h2>Login</h2>
                         <form className="login-form" onSubmit={handleLogin}>
                             <input
+                                className='Input-login'
                                 icon={Mail}
                                 type='text'
                                 name='username'
@@ -48,6 +49,7 @@ export default function LoginPage() {
                             />
 
                             <input
+                                className='Input-login'
                                 icon={Lock}
                                 type='password'
                                 name='password'
@@ -56,7 +58,7 @@ export default function LoginPage() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
 
-                            <button type="submit" disabled={loading}>
+                            <button className="login-button" type="submit" disabled={loading}>
                                 {loading ? <Loader /> : 'Login'}
                             </button>
                         </form>

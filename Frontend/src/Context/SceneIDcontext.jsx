@@ -1,13 +1,17 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
-export const SenceIDContext = createContext();
+const SenceIDContext = createContext();
 
 export function SceneIDProvider({ children }) {
-  const [sceneID, setSenceID] = useState(null);
+  const [sceneID, setSceneID] = useState(null);
 
   return (
-    <SenceIDContext.Provider value={{ sceneID, setSenceID }}>
+    <SenceIDContext.Provider value={{ sceneID, setSceneID }}>
       {children}
     </SenceIDContext.Provider>
   );
 }
+
+export const useSceneIdContext = () => {
+  return useContext(SenceIDContext);
+};

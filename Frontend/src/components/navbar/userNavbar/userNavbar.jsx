@@ -1,19 +1,32 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom'; // Import useLocation
 import './userNavbar.css';
 import { AlignJustify } from 'lucide-react';
 import { useAuth } from '../../../Context/authContext.jsx';
+
 export default function Usernavbar() {
   const { signout } = useAuth();
+  const location = useLocation(); // Get the current location
+
   return (
-    <nav>
-      <ul>
-        <li><Link to="/">Burial Search</Link></li>
-        <li><Link to="/cementerylot">Cementery Lot</Link></li>
-        <li><Link to="/VirtualTour">Virtual Tour</Link></li>
-        <AlignJustify onClick={()=>{
-          signout();
-          }}/>
+    <nav className='user-navbar-container'>
+      <ul className='ul-user-navbar'>
+        <li className='li-user-navbar'>
+          <Link to="/" className={`a-user-navbar ${location.pathname === '/' ? 'active' : ''}`}>
+            Burial Search
+          </Link>
+        </li>
+        <li className='li-user-navbar'>
+          <Link to="/cementerylot" className={`a-user-navbar ${location.pathname === '/cementerylot' ? 'active' : ''}`}>
+            Cemetery Lot
+          </Link>
+        </li>
+        <li className='li-user-navbar'>
+          <Link to="/VirtualTour" className={`a-user-navbar ${location.pathname === '/VirtualTour' ? 'active' : ''}`}>
+            Virtual Tour
+          </Link>
+        </li>
       </ul>
+      <button className='user-navbar-signoutButton' onClick={()=> signout()}>Sign out</button>
     </nav>
   );
 }

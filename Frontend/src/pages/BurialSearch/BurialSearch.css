@@ -1,16 +1,64 @@
-.Burial_Search_Container{
+.Burial_Search_Container {
     height: 100%;
     width: 100%;
     display: flex;
-    background: url("../../assets/HimalayanPhotos.jpg")no-repeat center center/cover;
+    background: url("../../assets/HimalayanPhotos.jpg") no-repeat center center/cover;
     position: relative;
-    
+    flex-direction: column;
 }
 
-.Burial_Search_Container::before{
+.Burial_Search_Container::before {
+    content: '';
     position: absolute;
     height: 100%;
     width: 100%;
-    background: rgba(0,0,0,0.9);
-    z-index: -1;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+
+.Search-Bar-container {
+    height: 42vh;
+    width: 45%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 250px; /* Slightly increased minimum width */
+    z-index: 2;
+}
+
+#search-person-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px; /* Softer corners */
+    max-height: 75%;
+    margin-top: 8px;
+    overflow-y: auto; /* Allow scrolling */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+    /* padding:10px */
+}
+
+.person-list-container {
+    padding: 11px 20px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.7s ease; /* Smooth hover transition */
+    border-bottom: 1px solid #ddd;
+    font-weight: 600;
+    color: #4e4e4e;
+}
+
+.person-list-container:hover {
+    background-color: #ddd; /* Subtle red hover effect */
+}
+
+#search-person-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#search-person-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 8px;
 }

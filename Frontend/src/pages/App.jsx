@@ -19,11 +19,11 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       {
-        element: <UserProtectedRoute />, // Wrap protected routes
+        element: <UserProtectedRoute />,
         children: [
           {
-            path: '/', // Public path
-            element: <BurialSearch />,
+            path: '/',
+            element: <BurialSearch/>,
           },
           {
             path: 'cementerylot',
@@ -55,7 +55,7 @@ export default function App() {
   // Run checkAuth when the app loads
   useEffect(() => {
     checkAuth();
-    console.log("asdasd");
+    console.log("app.jsx: checkAuth");
   },[]);  // Ensure `checkAuth` is stable or memoized
 
   // Show a loading screen while checking authentication

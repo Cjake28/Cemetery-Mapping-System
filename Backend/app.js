@@ -4,6 +4,7 @@ import cors from 'cors';
 import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 import adminRouter from './routes/adminUser.route.js'
+import gravesiteRoute from './routes/gravesite.route.js';
 
 dotenv.config();
 
@@ -19,3 +20,4 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRouter);
+app.use("/api/", gravesiteRoute );

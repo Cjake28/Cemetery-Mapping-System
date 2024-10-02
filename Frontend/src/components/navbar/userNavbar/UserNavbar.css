@@ -1,29 +1,63 @@
-nav{
+.user-navbar-container{
+    height: 3.3rem;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding:0.9rem;
-    /* position: absolute; */
-    /* background-color: pink; */
+    justify-content: space-between; /* Use space-between to distribute space */
+ 
 }
 
-ul{
-    width: 40%;
-    display: flex;
-    justify-content: space-evenly;
+.ul-user-navbar{
+    margin-left: 6rem;
+    display: flex; /* Keep it as flex */
+    justify-content: center; /* Center the items in the ul */
+    width: 100%; /* Set to 100% to fill available space */
+    flex: 1; /* Allow the ul to grow and take up space */
     /* background-color: red; */
 }
 
-li{
+.li-user-navbar{
     list-style: none;
 }
 
-a{
-    text-decoration: none;
-    color: black
+.a-user-navbar {
+    text-decoration: none; /* Remove underline from links */
+    color: #000000; /* Set the link color */
+    padding: 10px 20px; /* Add padding */
+    font-size: 1rem; /* Font size */
+    font-weight: 500;
+    font-family: 'Open Sans', sans-serif;
+    transition: color 1.5s ease, background-color 0.5s ease, border-radius 2s ease; /* Add a smooth transition */
+    border-radius: 8px;
+    margin-left: 30px;
+  }
+
+.a-user-navbar:hover {
+  color: white; /* Change color on hover */
+  background-color: #505050; /* Set a background color on hover */
+  border-radius: 100px;
 }
 
-a:hover {
-    cursor:pointer;
+.a-user-navbar.active {
+    color: white; /* Set color for the active link */
+    background-color: #505050; /* Set background color for the active link */
+    border-radius: 100px; /* Optional: make it look similar to the hover effect */
+}
+
+.user-navbar-signoutButton{
+    height: 75%;
+   width: 5.5rem;
+   margin-right: 3rem;
+   border: none;
+   border-radius: 8px; 
+   background-color: #505050;
+   font-size: 0.8rem;
+   color:white;
+   cursor: pointer;
+   transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.user-navbar-signoutButton:hover{
+    background-color: #696969;
+    transform: scale(1.07);
 }
