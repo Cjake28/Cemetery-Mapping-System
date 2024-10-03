@@ -6,10 +6,11 @@ import MainLayout from '../Layouts/MainLayout/MainLayout.jsx';
 import BurialSearch from './BurialSearch/BurialSearch.jsx';
 import LoginPage from './Authpages/Login.pages.jsx';
 import { useAuth } from '../Context/authContext.jsx';
-import UserProtectedRoute from '../components/userProtectedRoute.jsx';
-import ProtectedsigninRoute from '../components/signinProtectedRoute.jsx'
+import UserProtectedRoute from '../components/protectedRoute/userProtectedRoute.jsx';
+import ProtectedsigninRoute from '../components/protectedRoute/signinProtectedRoute.jsx'
 import { useEffect } from 'react';  // Import useEffect
-
+import AdminProtectedRoute from '../components/protectedRoute/adminProtectedRoute.jsx'
+import ManageUsers from './admin/mageuser/manageUsers.jsx'
 import './App.css';
 
 const router = createBrowserRouter([
@@ -22,16 +23,35 @@ const router = createBrowserRouter([
         element: <UserProtectedRoute />,
         children: [
           {
-            path: '/',
-            element: <BurialSearch/>,
+            path: 'user',  // Parent route for user
+            children: [
+              {
+                path: '',  // Maps to '/user'
+                element: <BurialSearch />,
+              },
+              {
+                path: 'cementerylot',  // Maps to '/user/cementerylot'
+                element: <Cementerylot />,
+              },
+              {
+                path: 'VirtualTour',  // Maps to '/user/VirtualTour'
+                element: <VirtualTour />,
+              },
+            ],
           },
+        ],
+      },
+      {
+        element: <AdminProtectedRoute />,
+        children: [
           {
-            path: 'cementerylot',
-            element: <Cementerylot />,
-          },
-          {
-            path: 'VirtualTour',
-            element: <VirtualTour />,
+            path: 'admin',  // Parent route for admin
+            children: [
+              {
+                path: '',  // Maps to '/admin'
+                element: <ManageUsers />,
+              }
+            ],
           },
         ],
       },
@@ -39,13 +59,13 @@ const router = createBrowserRouter([
   },
   {
     path: '/auth',
-    element: <ProtectedsigninRoute/>,
+    element: <ProtectedsigninRoute />,
     children: [
       {
         path: 'signin',
-        element:<LoginPage/>
+        element: <LoginPage />,
       },
-    ]
+    ],
   },
 ]);
 

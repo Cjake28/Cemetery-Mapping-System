@@ -11,17 +11,17 @@ export default function Usernavbar() {
     <nav className='user-navbar-container'>
       <ul className='ul-user-navbar'>
         <li className='li-user-navbar'>
-          <Link to="/" className={`a-user-navbar ${location.pathname === '/' ? 'active' : ''}`}>
+          <Link to="user" className={`a-user-navbar ${location.pathname === '/' ? 'active' : ''}`}>
             Burial Search
           </Link>
         </li>
         <li className='li-user-navbar'>
-          <Link to="/cementerylot" className={`a-user-navbar ${location.pathname === '/cementerylot' ? 'active' : ''}`}>
+          <Link to="user/cementerylot" className={`a-user-navbar ${location.pathname === '/cementerylot' ? 'active' : ''}`}>
             Cemetery Lot
           </Link>
         </li>
         <li className='li-user-navbar'>
-          <Link to="/VirtualTour" className={`a-user-navbar ${location.pathname === '/VirtualTour' ? 'active' : ''}`}>
+          <Link to="user/VirtualTour" className={`a-user-navbar ${location.pathname === '/VirtualTour' ? 'active' : ''}`}>
             Virtual Tour
           </Link>
         </li>

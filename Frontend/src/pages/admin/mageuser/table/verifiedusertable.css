@@ -1,0 +1,106 @@
+/* Table Wrapper */
+.table-wrapper {
+    width: 75%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* Table */
+.user-table {
+    height: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    table-layout: fixed;
+}
+
+/* Table Head */
+.user-table-head {
+    background-color: #575757;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.user-table-heading {
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Table Body */
+#user-table-body {
+    display: block;
+    height: 90%;
+    overflow-y: auto;
+    padding-bottom: 10px;
+}
+
+/* Row and Column Styling */
+.user-table .user-table-head, 
+.user-table-row {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.user-table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.user-table-row:last-child {
+    border-bottom: none;
+}
+
+.user-table-cell {
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Striped Rows */
+.user-table-row:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.user-table-row-content:hover {
+    background-color: rgb(209, 209, 209);
+}
+
+.user-actions{
+    display: flex;
+    gap: 3rem;
+}
+
+/* Hover Effects for Icons */
+.edit-icon:hover {
+    color: #007bff;
+}
+
+.delete-icon:hover {
+    color: #dc3545;
+}
+
+/* Scrollbar Customization */
+#user-table-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+#user-table-body::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+#user-table-body::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+

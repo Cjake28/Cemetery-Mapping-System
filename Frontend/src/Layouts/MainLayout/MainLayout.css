@@ -3,5 +3,6 @@
     width: 100%;
     background-color: #fefefe;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
+    /* overflow-y: hidden; */
 }
