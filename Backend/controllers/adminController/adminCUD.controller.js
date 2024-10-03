@@ -116,9 +116,9 @@ export async function getUnverifiedUsers(req, res) {
         // Fetch unverified users from the database (this assumes you have a field like 'isVerified')
         const unverifiedUsers = await Get_unverified_users_fromDB();
 
-        if (unverifiedUsers.length === 0) {
-            return res.status(404).json({ success: false, message: "No unverified users found" });
-        }
+        // if (unverifiedUsers.length === 0) {
+        //     return res.status(404).json({ success: true, unverifiedUsers});
+        // }
 
         res.status(200).json({ success: true, unverifiedUsers });
     } catch (error) {
