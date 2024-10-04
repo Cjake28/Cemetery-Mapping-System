@@ -2,7 +2,7 @@ import express from 'express';
 import { verifyToken } from '../middleware/verifyToken.js';
 import { adminRoleValidate } from '../middleware/adminRoleValidate.js';
 import { createUser, 
-        UpdatePassword, 
+        updatePassword, 
         disable_user, 
         Get_all_user,
         reverifyUser,
@@ -15,7 +15,7 @@ const adminUserRouter = express.Router();
 adminUserRouter.post("/create-user", verifyToken, adminRoleValidate, createUser);
 
 // Route for updating password (admin only, requires token and admin role)
-adminUserRouter.patch("/update-password", verifyToken, adminRoleValidate, UpdatePassword);
+adminUserRouter.patch("/update-password", verifyToken, adminRoleValidate, updatePassword);
 
 // Route for disabling a user (admin only, requires token and admin role)
 adminUserRouter.patch("/disable-user", verifyToken, adminRoleValidate, disable_user);

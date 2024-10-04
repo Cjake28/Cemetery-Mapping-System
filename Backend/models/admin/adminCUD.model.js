@@ -1,12 +1,12 @@
 import db from '../../db/db.connect.js';
 
-export async function createUserInDB(name, username, password, role) {
+export async function createUserInDB(name, username, password) {
     try {
         const [result] = await db.query(`
             INSERT INTO 
-            users(name, username, password, role)
-            VALUES(?,?,?,?)
-        `, [name, username, password, role]);
+            users(name, username, password)
+            VALUES(?,?,?)
+        `, [name, username, password]);
         
         if (!result || !result.insertId) {
             console.log("Failed to create user");
@@ -21,13 +21,13 @@ export async function createUserInDB(name, username, password, role) {
 }
 
 
-export async function updatePassword_by_username(username, password) {
+export async function updatePassword_by_username(userID, password) {
     try {
         const [result] = await db.query(`
             UPDATE users
             SET password = ? 
-            WHERE username = ?
-        `, [password, username]);
+            WHERE id = ?
+        `, [password, userID]);
 
         return result;
     } catch (error) {
@@ -36,13 +36,13 @@ export async function updatePassword_by_username(username, password) {
     }
 }
 
-export async function unverified_a_user(username) {
+export async function unverified_a_user(userId) {
     try {
         const [result] = await db.query(`
             UPDATE users
             SET isVerified = false
-            WHERE username = ?
-        `, [username]);
+            WHERE id = ?
+        `, [userId]);
 
         return result;
     } catch (error) {
@@ -103,14 +103,14 @@ export async function Get_unverified_users_fromDB() {
 }
 
 // Re-verify a user (update isVerified field)
-export async function verify_a_user(username) {
+export async function verify_a_user(userId) {
     // Query to update the user and set isVerified to true
     try {
         const [result] = await db.query(`
             UPDATE users 
             SET isVerified = true 
-            WHERE username = ?
-            `,[username]);
+            WHERE id = ?
+            `,[userId]);
 
         return result;
     } catch (error) {

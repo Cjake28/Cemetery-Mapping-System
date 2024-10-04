@@ -1,55 +1,52 @@
 import './manageUser.css';
 import VerifieduserTable from './table/verifieduserTable.jsx';
-import UnVerifieduserTable from './table/underifiedUsertable.jsx'
-import { useState, useEffect } from 'react';
+import UnVerifieduserTable from './table/underifiedUsertable.jsx';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import ModalCreateUser from './modal/createUserModal.jsx'; // Import the modal component
 
 export default function ManageUsers() {
-    
     const [searchQuery, setSearchQuery] = useState('');
-    const [activeFilter, setActiveFilter] = useState('valid'); // Track active filter
-    
+    const [activeFilter, setActiveFilter] = useState('valid');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { data: verifiedUser, isLoading:  userloading, error: userError } = useQuery({
+    const { data: verifiedUser, isLoading: userloading, error: userError } = useQuery({
         queryKey: ['verifiedUser'],
         queryFn: async () => {
           const response = await axios.get('http://localhost:9220/api/admin/all-users');
           console.log("manageUser: get all users");
-          return response.data.users; // Corrected return to match the logged structure
+          return response.data.users;
         }
-      });
+    });
 
-      const { data: unverifiedUser, isLoading:  unVUserloading, error: unVuserError } = useQuery({
+    const { data: unverifiedUser, isLoading: unVUserloading, error: unVuserError } = useQuery({
         queryKey: ['UnVerifiedUser'],
         queryFn: async () => {
           const response = await axios.get('http://localhost:9220/api/admin/all-unverify-users');
           console.log("UnVerifiedUser: ",response.data.unverifiedUsers);
-          return response.data.unverifiedUsers; // Corrected return to match the logged structure
+          return response.data.unverifiedUsers;
         }
-      });
-      
-    useEffect(()=>{
-        console.log("console users: ",verifiedUser)
-    },[verifiedUser]);
-    useEffect(()=>{
-        console.log("console unverifiedUser: ",unverifiedUser)
-    },[unverifiedUser]);
+    });
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
 
     const handleFilterToggle = (filter) => {
-        setActiveFilter(filter); // Update active filter when clicked
+        setActiveFilter(filter);
     };
 
+    const filteredPersons = activeFilter === 'valid' ? 
+        verifiedUser?.filter((user) => user.name.toLowerCase().includes(searchQuery.toLowerCase())) : 
+        unverifiedUser?.filter((user) => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
     if (userloading && unVUserloading) return <div>Loading...</div>;
-    if (userError ) return <div>userError: {userError.message}</div>;
+    if (userError) return <div>userError: {userError.message}</div>;
     if (unVuserError) return <div>unVuserError: {unVuserError.message}</div>;
+
     return (
         <div id="manageuser-container">
-            {/* Row with Valid User, Invalid User and Create New Button */}
             <div className="manageuser-top">
                 <div className="user-filters">
                     <button
@@ -66,11 +63,15 @@ export default function ManageUsers() {
                     </button>
                 </div>
                 <div className="create-user">
-                    <button className="create-user-btn">Create New User</button>
+                    <button 
+                        className="create-user-btn" 
+                        onClick={() => setIsModalOpen(true)} // Open modal on button click
+                    >
+                        Create New User
+                    </button>
                 </div>
             </div>
 
-            {/* Search Bar */}
             <div className="search-bar">
                 <input
                     type="text"
@@ -80,12 +81,15 @@ export default function ManageUsers() {
                 />
             </div>
 
-            {/* Table */}
             {activeFilter === 'valid' ? 
-            <VerifieduserTable searchQuery={searchQuery} verifiedUser={verifiedUser}/> 
-            : 
-            <UnVerifieduserTable searchQuery={searchQuery} />}
-            
+                <VerifieduserTable searchQuery={searchQuery} filteredPersons={filteredPersons}/> : 
+                <UnVerifieduserTable searchQuery={searchQuery} filteredPersons={filteredPersons}/>}
+
+            {/* Modal for creating a new user */}
+            <ModalCreateUser 
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)}
+            />
         </div>
     );
 }

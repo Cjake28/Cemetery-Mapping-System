@@ -20,4 +20,4 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRouter);
-app.use("/api", gravesiteRoute );
+app.use("/api/", gravesiteRoute );

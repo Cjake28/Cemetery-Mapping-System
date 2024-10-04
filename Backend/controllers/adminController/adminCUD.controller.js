@@ -1,26 +1,26 @@
 import bcrypt from 'bcrypt';
-import { check_userExist_by_username, 
-        createUserInDB, 
-        updatePassword_by_username, 
-        unverified_a_user, 
-        Get_all_userInDB ,
-        Get_unverified_users_fromDB,
-        verify_a_user
-    } from '../../models/admin/adminCUD.model.js';
+import { 
+    check_userExist_by_username, 
+    createUserInDB, 
+    updatePassword_by_username, 
+    unverified_a_user, 
+    Get_all_userInDB, 
+    Get_unverified_users_fromDB, 
+    verify_a_user 
+} from '../../models/admin/adminCUD.model.js';
 
 export async function createUser(req, res) {
-    let { name, username, password, role } = req.body;
+    let { name, username, password } = req.body;
 
     try {
         // Check if all fields are provided
-        if (!name || !username || !password || !role) {
+        if (!name || !username || !password) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
         // Normalize inputs
         name = name.toLowerCase();
         username = username.toLowerCase();
-        role = role.toLowerCase();
 
         // Check if the user already exists
         const userExist = await check_userExist_by_username(username);
@@ -33,7 +33,7 @@ export async function createUser(req, res) {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create the user in the database
-        const createUserResult = await createUserInDB(name, username, hashedPassword, role);
+        const createUserResult = await createUserInDB(name, username, hashedPassword);
 
         // Send success response
         res.status(200).send({ success: true, message: "User created successfully", userId: createUserResult });
@@ -43,27 +43,20 @@ export async function createUser(req, res) {
     }
 }
 
-
-export async function UpdatePassword(req, res) {
-    const { username, newPassword } = req.body;
+export async function updatePassword(req, res) {
+    const { userID, newPassword } = req.body;
 
     try {
         // Validate input fields
-        if (!username || !newPassword) {
-            return res.status(400).json({ success: false, message: "Username and new password are required" });
-        }
-
-        // Check if user exists
-        const userExist = await check_userExist_by_username(username);
-        if (!userExist) {
-            return res.status(404).json({ success: false, message: "User not found" });
+        if (!userID || !newPassword) {
+            return res.status(400).json({ success: false, message: "User ID and new password are required" });
         }
 
         // Hash the new password
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         // Update the password in the database
-        await updatePassword_by_username(username, hashedPassword);
+        await updatePassword_by_username(userID, hashedPassword);
 
         res.status(200).json({ success: true, message: "Password updated successfully" });
     } catch (error) {
@@ -73,22 +66,16 @@ export async function UpdatePassword(req, res) {
 }
 
 export async function disable_user(req, res) {
-    const { username } = req.body;
+    const { userID } = req.body;
 
     try {
         // Validate input
-        if (!username) {
-            return res.status(400).json({ success: false, message: "Username is required" });
+        if (!userID) {
+            return res.status(400).json({ success: false, message: "User ID is required" });
         }
 
-        // Check if user exists
-        const userExist = await check_userExist_by_username(username);
-        if (!userExist) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
-
-        // Disable the user (e.g., setting their account to inactive or unverified)
-        await unverified_a_user(username);
+        // Disable the user (unverify them)
+        await unverified_a_user(userID);
 
         res.status(200).json({ success: true, message: "User disabled successfully" });
     } catch (error) {
@@ -105,20 +92,15 @@ export async function Get_all_user(req, res) {
         // Return the result
         res.status(200).json({ success: true, users });
     } catch (error) {
-        console.log("Error Get all user:", error);
+        console.log("Error getting all users:", error);
         res.status(500).json({ success: false, message: "An error occurred while fetching users" });
     }
 }
 
-
 export async function getUnverifiedUsers(req, res) {
     try {
-        // Fetch unverified users from the database (this assumes you have a field like 'isVerified')
+        // Fetch unverified users from the database
         const unverifiedUsers = await Get_unverified_users_fromDB();
-
-        // if (unverifiedUsers.length === 0) {
-        //     return res.status(404).json({ success: true, unverifiedUsers});
-        // }
 
         res.status(200).json({ success: true, unverifiedUsers });
     } catch (error) {
@@ -127,24 +109,17 @@ export async function getUnverifiedUsers(req, res) {
     }
 }
 
-
 export async function reverifyUser(req, res) {
-    const { username } = req.body;
+    const { userID } = req.body;
 
     try {
         // Validate input
-        if (!username) {
-            return res.status(400).json({ success: false, message: "Username is required" });
+        if (!userID) {
+            return res.status(400).json({ success: false, message: "User ID is required" });
         }
 
-        // Check if user exists
-        const userExist = await check_userExist_by_username(username);
-        if (!userExist) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
-
-        // Re-verify the user (this assumes you have a field like 'isVerified' in your DB)
-        await verify_a_user(username);
+        // Re-verify the user
+        await verify_a_user(userID);
 
         res.status(200).json({ success: true, message: "User re-verified successfully" });
     } catch (error) {
