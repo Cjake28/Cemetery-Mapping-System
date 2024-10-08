@@ -11,6 +11,7 @@ import ProtectedsigninRoute from '../components/protectedRoute/signinProtectedRo
 import { useEffect } from 'react';  // Import useEffect
 import AdminProtectedRoute from '../components/protectedRoute/adminProtectedRoute.jsx'
 import ManageUsers from './admin/mageuser/manageUsers.jsx'
+import ManageGraveSite from './admin/manageGravesite/manaGraveSite.jsx'
 import './App.css';
 
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
               {
                 path: '',  // Maps to '/admin'
                 element: <ManageUsers />,
+              },
+              {
+                path: 'manage-gravesite',  // Maps to '/manage-gravesite'
+                element: <ManageGraveSite />,
               }
             ],
           },

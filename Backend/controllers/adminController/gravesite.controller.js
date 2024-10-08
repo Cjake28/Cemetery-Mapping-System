@@ -6,8 +6,7 @@ export async function getAllPersons(req, res) {
         const persons = await Get_all_personInDB();
         res.status(200).json({
             success: true,
-            data: persons,
-        });
+            persons});
     } catch (error) {
         console.error("Error in getAllPersons:", error);
         res.status(500).json({
@@ -23,7 +22,7 @@ export async function createPerson(req, res) {
     const { fullname, date_of_birth, date_of_death, location, burial_date, expiration_date, owner_name } = req.body;
 
     // Simple validation
-    if (!fullname || !date_of_birth || !date_of_death || !location || !burial_date || !owner_name) {
+    if (!fullname || !date_of_birth || !date_of_death || !location || !owner_name){
         return res.status(400).json({
             success: false,
             message: 'Please provide all required fields',
@@ -61,10 +60,10 @@ export async function createPerson(req, res) {
 // Controller for deleting a person from the database
 // Your delete function
 export async function deletePerson(req, res) {
-    const id = req.params.id; // Extract ID from the route parameter
+    const {userID} = req.body; // Extract ID from the route parameter
 
     try {
-        const result = await delete_personInDB(id); // Call your delete model function
+        const result = await delete_personInDB(userID); // Call your delete model function
         if (result.affectedRows === 0) {
             return res.status(404).json({
                 success: false,

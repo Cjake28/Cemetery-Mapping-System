@@ -1,0 +1,74 @@
+/* enableUserModal.css */
+
+.enable-user-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.enable-user-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 100%;
+}
+
+.enable-user-modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.enable-user-modal-text {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.enable-user-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.enable-user-btn,
+.cancel-enable-btn {
+    padding: 8px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.enable-user-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.enable-user-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.cancel-enable-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cancel-enable-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.enable-user-error {
+    color: #dc3545;
+    margin-bottom: 10px;
+}
