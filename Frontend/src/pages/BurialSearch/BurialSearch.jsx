@@ -12,7 +12,7 @@ export default function BurialSearch() {
     queryFn: async () => {
       const response = await axios.get('http://localhost:9220/api/get-all-person');
       console.log("tae");
-      return response.data.data; // Assuming the data is under `data`
+      return response.data.persons; // Assuming the data is under `data`
     }
   });
 
@@ -32,7 +32,7 @@ export default function BurialSearch() {
     //todo right now the scene is set to all of person data need to update to specific data later
     setSceneID(person);
     console.log("Scene ID set to: ", person.id);
-    navigate("/VirtualTour");
+    navigate("VirtualTour");
   };
 
   if (isLoading) return <div>Loading...</div>;

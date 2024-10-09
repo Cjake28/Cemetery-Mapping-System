@@ -4,9 +4,15 @@ import { Get_all_personInDB, createPersonInDB, delete_personInDB, findPersonInDB
 export async function getAllPersons(req, res) {
     try {
         const persons = await Get_all_personInDB();
+        const personsWithFullname = persons.map(person => ({
+            ...person,
+            fullname: `${person.name} ${person.middle_name} ${person.surname}`
+        }));
+
         res.status(200).json({
             success: true,
-            persons});
+            persons: personsWithFullname
+        });
     } catch (error) {
         console.error("Error in getAllPersons:", error);
         res.status(500).json({
@@ -17,12 +23,11 @@ export async function getAllPersons(req, res) {
 }
 
 // Controller for creating a new person entry in the database
-
 export async function createPerson(req, res) {
-    const { fullname, date_of_birth, date_of_death, location, burial_date, expiration_date, owner_name } = req.body;
-
+    const { name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name } = req.body;
+    console.log("createPerson: ",req.body);
     // Simple validation
-    if (!fullname || !date_of_birth || !date_of_death || !location || !owner_name){
+    if (!name || !middle_name || !surname || !date_of_birth || !date_of_death || !location || !burial_date || !owner_name) {
         return res.status(400).json({
             success: false,
             message: 'Please provide all required fields',
@@ -31,8 +36,8 @@ export async function createPerson(req, res) {
 
     try {
         // Check if the person already exists in the database
-        const existingPerson = await findPersonInDB(fullname, date_of_birth, date_of_death);
-        
+        const existingPerson = await findPersonInDB(name, surname, date_of_birth, date_of_death);
+
         if (existingPerson) {
             return res.status(409).json({
                 success: false,
@@ -41,8 +46,8 @@ export async function createPerson(req, res) {
         }
 
         // If no existing person, create a new entry
-        const personId = await createPersonInDB(fullname, date_of_birth, date_of_death, location, burial_date, expiration_date, owner_name);
-        
+        const personId = await createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name);
+
         res.status(201).json({
             success: true,
             message: 'Person added successfully',
@@ -58,13 +63,12 @@ export async function createPerson(req, res) {
 }
 
 // Controller for deleting a person from the database
-// Your delete function
 export async function deletePerson(req, res) {
-    const {userID} = req.body; // Extract ID from the route parameter
-
+    const { id } = req.params; // Extract ID from the request body
+    console.log("deleteperosn: ", req.params );
     try {
-        const result = await delete_personInDB(userID); // Call your delete model function
-        if (result.affectedRows === 0) {
+        const result = await delete_personInDB(id);
+        if (!result) { // If no row was affected
             return res.status(404).json({
                 success: false,
                 message: 'Person not found',

@@ -3,11 +3,11 @@ import db from '../../db/db.connect.js';
 export async function Get_all_personInDB() {
     try {
         const [result] = await db.query(`
-            SELECT *, LOWER(fullname) AS fullname
+            SELECT *
             FROM gravesites
             WHERE isVerified = true
         `);
-        
+
         return result;
     } catch (error) {
         console.error("Error Get_all_personInDB: ", error);
@@ -15,14 +15,13 @@ export async function Get_all_personInDB() {
     }
 }
 
-export async function createPersonInDB(fullname, date_of_birth, date_of_death,location, burial_date,expiration_date,owner_name){
+export async function createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name) {
     try {
         const [result] = await db.query(`
-            INSERT INTO 
-            gravesites(fullname, date_of_birth, date_of_death, location, burial_date, expiration_date, owner_name)
-            VALUES(?, ?, ?, ?, ?, ?, ?) 
-        `,[fullname, date_of_birth, date_of_death, location, burial_date, expiration_date, owner_name]);
-    
+           INSERT INTO gravesites (name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, isVerified)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, true)
+        `, [name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name]);
+
         return result.insertId;
     } catch (error) {
         console.error("Error createPersonInDB: ", error);
@@ -36,23 +35,24 @@ export async function delete_personInDB(id) {
             DELETE FROM gravesites
             WHERE id = ?
         `, [id]);
-        
-        return result.affectedRows > 0; // Return true if a row was deleted, false otherwise
+
+        return result.affectedRows > 0; // Return true if a row was deleted
     } catch (error) {
         console.error("Error delete_personInDB: ", error);
         throw new Error("Database error occurred while deleting a person");
     }
 }
 
-export async function findPersonInDB(fullname, date_of_birth, date_of_death) {
+export async function findPersonInDB(name, surname, date_of_birth, date_of_death) {
     try {
         const [result] = await db.query(`
             SELECT * 
             FROM gravesites 
-            WHERE LOWER(fullname) = LOWER(?) 
+            WHERE LOWER(name) = LOWER(?)
+              AND LOWER(surname) = LOWER(?) 
               AND date_of_birth = ? 
               AND date_of_death = ?
-        `, [fullname, date_of_birth, date_of_death]);
+        `, [name, surname, date_of_birth, date_of_death]);
 
         // If person exists, return the result, otherwise return null
         return result.length > 0 ? result[0] : null;

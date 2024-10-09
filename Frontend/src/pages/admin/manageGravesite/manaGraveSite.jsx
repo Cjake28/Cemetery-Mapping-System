@@ -1,44 +1,71 @@
-import './manageGravesite.css'
+import './manageGravesite.css';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import axios from 'axios';
-import PersonsTable from './modal/personsTable.jsx';
+import PersonsTable from './table/personsTable.jsx';
+import CreatePersonModal from './modal/createPersonModal.jsx';
 
-export default function ManageGraveSite(){
+export default function ManageGraveSite() {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Fetch persons data with useQuery
     const { data: persons, isLoading, error } = useQuery({
         queryKey: ['persons'],
         queryFn: async () => {
-          const response = await axios.get('http://localhost:9220/api/get-all-person');
-          console.log("console data: ",response.data);
-          return response.data.persons; // Assuming the data is under `data`
+            const response = await axios.get('http://localhost:9220/api/get-all-person');
+            return response.data.persons;
+        },
+    });
+
+  // Handle person creation without using useMutation (e.g., using axios directly)
+    const handleCreatePerson = async (personData) => {
+        try {
+            await axios.post('http://localhost:9220/api/admin/create-person', personData);
+        // Optionally refetch the persons data after successful creation
+        //   queryClient.invalidateQueries(['persons']);
+        } catch (err) {
+            console.error('Error creating person:', err);
         }
-      });
+        setIsModalOpen(false); // Close modal after creating
+    };
 
-      useEffect(()=>{
-        console.log(persons);
-      }, [persons])
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
-    return(
-        <div id="manageGravesite-container">
-            <div className="manageuser-top">
-                <div className="create-person">
-                    <button 
-                        className="create-person-btn" 
-                        // onClick={() => setIsModalOpen(true)} // Open modal on button click
-                    >
-                        Create New Person
-                    </button>
-                </div>
-            </div>
-            <div className="search-bar">
-                <input
-                    type="text"
-                    placeholder="Search persons..."
-                    // value={searchQuery}
-                    // onChange={handleSearch}
-                />
-            </div>
-            <PersonsTable persons={persons}/>
+    const filteredPersons =  persons?.filter((person) => person.name.toLowerCase().includes(searchQuery.toLowerCase()) || person.surname.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching persons</div>;
+
+  return (
+    <div id="manageGravesite-container">
+      <div className="manageuser-top">
+        <div className="create-person">
+          <button className="create-person-btn" onClick={() => setIsModalOpen(true)}>
+            Create New Person
+          </button>
         </div>
-    )
+      </div>
+
+      <div className="search-bar">
+        <input 
+            type="text" 
+            placeholder="Search persons..." 
+            value={searchQuery}
+            onChange={handleSearch}
+        />
+      </div>
+
+      <PersonsTable filteredPersons={filteredPersons}/>
+
+      {isModalOpen && (
+        <CreatePersonModal
+          onClose={() => setIsModalOpen(false)}
+          onCreatePerson={handleCreatePerson}
+        />
+      )}
+    </div>
+  );
 }
