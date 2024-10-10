@@ -21,47 +21,52 @@
     overflow-y: auto; /* Make content scrollable if it's too tall */
   }
   
-  h2 {
+  .create-new-person-h2 {
     margin-top: 0;
   }
   
-  form {
+  .form-persons {
     display: flex;
     flex-direction: column;
   }
   
-  label {
-    margin-bottom: 15px;
+  .modal-form-label-persons{
+    margin-bottom: 5px;
     font-weight: bold;
   }
   
-  input {
-    margin-top: 5px;
+  .modal-form-input-persons {
+    margin-bottom: 20px;
     padding: 8px;
     width: 100%;
     box-sizing: border-box;
   }
   
-  button {
+  .btn-perons {
     margin-top: 10px;
     padding: 10px;
     cursor: pointer;
   }
   
-  button[type="submit"] {
+  .submit-btn-persons{
     background-color: #4CAF50;
     color: white;
     border: none;
   }
   
-  button[type="button"] {
+  .cancel-btn-persons{
     background-color: #f44336;
     color: white;
     border: none;
   }
   
-  button[type="button"]:hover,
-  button[type="submit"]:hover {
+  .submit-btn-persons:hover,
+  .cancel-btn-persons:hover {
     opacity: 0.9;
   }
   
+  .error-text-persons {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 5px;
+  }

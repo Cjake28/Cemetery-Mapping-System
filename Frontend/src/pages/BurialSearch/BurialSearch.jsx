@@ -28,11 +28,11 @@ export default function BurialSearch() {
     person.fullname.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handlePersonClick = (person) => {
+  const handlePersonClick =(person) =>{
     //todo right now the scene is set to all of person data need to update to specific data later
     setSceneID(person);
     console.log("Scene ID set to: ", person.id);
-    navigate("VirtualTour");
+    navigate("cementerylot");
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -42,7 +42,7 @@ export default function BurialSearch() {
     <div className="Burial_Search_Container">
       <div className='Search-Bar-container'>
         {/* Pass the search query state and the setter function to SearchBar */}
-        <SearchBar setSearchQuery={setSearchQuery} className='Search-Bar-component' />
+        <SearchBar setSearchQuery={setSearchQuery} className='Search-Bar-component'/>
         <ul id="search-person-container" >
             {
                 searchQuery.length > 0 &&

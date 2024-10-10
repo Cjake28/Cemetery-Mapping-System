@@ -12,10 +12,9 @@ export default function EnableUserModal({ isOpen, onClose, name, userID }) {
 
         try {
             await axios.patch('http://localhost:9220/api/admin/reverify-user', { userID });
-            alert(`User ${name} has been re-verified successfully`);
+            onClose();
         } catch (error) {
             console.error('Error re-verifying user:', error);
-
             // Set the error message based on the type of error
             if (error.response) {
                 setErrorMessage(error.response.data.message || 'Failed to reverify user.');

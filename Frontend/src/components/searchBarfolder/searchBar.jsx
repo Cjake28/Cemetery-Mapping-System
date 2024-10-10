@@ -9,6 +9,7 @@ export function SearchBar({ setSearchQuery }) {
         placeholder="Type to Search" 
         id="burial-search-input"
         onChange={(e) => setSearchQuery(e.target.value)}
+        autoComplete="off"
       /> 
     </div>
   );

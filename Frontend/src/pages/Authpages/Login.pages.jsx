@@ -46,6 +46,7 @@ export default function LoginPage() {
                                 placeholder='Username'
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
+                                autoComplete="off"
                             />
 
                             <input
@@ -56,6 +57,7 @@ export default function LoginPage() {
                                 placeholder='Password'
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                autoComplete="off"
                             />
 
                             <button className="login-button" type="submit" disabled={loading}>
