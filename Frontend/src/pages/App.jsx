@@ -12,6 +12,7 @@ import { useEffect } from 'react';  // Import useEffect
 import AdminProtectedRoute from '../components/protectedRoute/adminProtectedRoute.jsx'
 import ManageUsers from './admin/mageuser/manageUsers.jsx'
 import ManageGraveSite from './admin/manageGravesite/manaGraveSite.jsx'
+import RoleBasedRedirect from '../components/protectedRoute/rolebasedRedirect.jsx'
 import './App.css';
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     errorElement: <NotFoundPage />,
     children: [
+      {
+        index: true,  // Default route for '/'
+        element: <RoleBasedRedirect />,  // Custom redirection component
+      },
       {
         element: <UserProtectedRoute />,
         children: [

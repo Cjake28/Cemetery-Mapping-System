@@ -15,12 +15,12 @@ export async function Get_all_personInDB() {
     }
 }
 
-export async function createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name) {
+export async function createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, userId) {
     try {
         const [result] = await db.query(`
-           INSERT INTO gravesites (name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, isVerified)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, true)
-        `, [name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name]);
+           INSERT INTO gravesites (name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, isVerified, user_id)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, true, ?)
+        `, [name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, userId]);
 
         return result.insertId;
     } catch (error) {

@@ -3,7 +3,7 @@ import db from '../../db/db.connect.js';
 export const get_id_name_role_ByID = async (id) => {
   try {
     const [result] = await db.query(`
-      SELECT id, name, role 
+      SELECT id, name, role, isVerified
       FROM users 
       WHERE id = ?
     `, [id]);

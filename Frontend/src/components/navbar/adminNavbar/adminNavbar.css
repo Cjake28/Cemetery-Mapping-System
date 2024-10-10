@@ -1,29 +1,61 @@
-nav{
+.user-navbar-container {
+    height: 3.3rem;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding:0.9rem;
-    /* position: absolute; */
-    /* background-color: pink; */
+    justify-content: space-between;
 }
 
-ul{
-    width: 40%;
+.ul-user-navbar {
+    margin-left: 6rem;
     display: flex;
-    justify-content: space-evenly;
-    /* background-color: red; */
+    justify-content: center;
+    width: 100%;
+    flex: 1;
 }
 
-li{
+.li-user-navbar {
     list-style: none;
 }
 
-a{
+.a-user-navbar {
     text-decoration: none;
-    color: black
+    color: #000000;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Open Sans', sans-serif;
+    transition: color 1.5s ease, background-color 0.5s ease, border-radius 2s ease;
+    border-radius: 8px;
+    margin-left: 30px;
 }
 
-a:hover {
-    cursor:pointer;
+.a-user-navbar:hover {
+    color: white;
+    background-color: #505050;
+    border-radius: 100px;
+}
+
+.a-user-navbar.active {
+    color: white;
+    background-color: #505050;
+    border-radius: 100px;
+}
+
+.user-navbar-signoutButton {
+    height: 75%;
+    width: 5.5rem;
+    margin-right: 3rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #505050;
+    font-size: 0.8rem;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.user-navbar-signoutButton:hover {
+    background-color: #696969;
+    transform: scale(1.07);
 }

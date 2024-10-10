@@ -25,7 +25,8 @@ export async function getAllPersons(req, res) {
 // Controller for creating a new person entry in the database
 export async function createPerson(req, res) {
     const { name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name } = req.body;
-    console.log("createPerson: ",req.body);
+    const userId = req.userId; 
+
     // Simple validation
     if (!name || !middle_name || !surname || !date_of_birth || !date_of_death || !location || !burial_date || !owner_name) {
         return res.status(400).json({
@@ -35,8 +36,8 @@ export async function createPerson(req, res) {
     }
 
     try {
-        // Check if the person already exists in the database
-        const existingPerson = await findPersonInDB(name, surname, date_of_birth, date_of_death);
+        // Check if the person already exists for the current user
+        const existingPerson = await findPersonInDB(name, surname, date_of_birth, date_of_death, userId);
 
         if (existingPerson) {
             return res.status(409).json({
@@ -46,7 +47,7 @@ export async function createPerson(req, res) {
         }
 
         // If no existing person, create a new entry
-        const personId = await createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name);
+        const personId = await createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, userId);
 
         res.status(201).json({
             success: true,

@@ -15,6 +15,12 @@ export const checkAuth = async (req, res) => {
 			return res.status(400).json({ success: false, message: "User not found" });
 		}
 
+		const isverified = userDetails[0]?.isVerified;
+
+		if(!isverified){
+			return res.status(403).json({ success: false, message: "User not verified" });
+		}
+
 		const user = {
 			userId: userDetails[0]?.id,
 			name: userDetails[0]?.name,
