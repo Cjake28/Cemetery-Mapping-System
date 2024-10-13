@@ -10,7 +10,9 @@ export default function DeletePersonModal({ isOpen, onClose, name, personID }) {
         setErrorMessage(''); // Reset any previous error message
         try {
             await axios.delete(`http://localhost:9220/api/admin/delete-person/${personID}` );
-            onClose(); // Close the modal after submission
+            setTimeout(function() {
+                onClose();
+            }, 80)
         } catch (error) {
             console.error('Error disabling user:', error);
             // Handle error and set error message
@@ -34,9 +36,9 @@ export default function DeletePersonModal({ isOpen, onClose, name, personID }) {
     return (
         <div className="disable-user-modal-overlay">
             <div className="disable-user-modal-content">
-                <h2 className="disable-user-modal-title">Disable User</h2>
+                <h2 className="disable-user-modal-title">Delete Person</h2>
                 <p className="disable-user-modal-text">
-                    Are you sure you want to disable this user: <strong>{name}</strong>?
+                    Are you sure you want to Delete this Person: <strong>{name}</strong>?
                 </p>
 
                 {/* Display error message if present */}
@@ -48,7 +50,7 @@ export default function DeletePersonModal({ isOpen, onClose, name, personID }) {
                         onClick={handleDisable}
                         disabled={isLoading} // Disable button during loading
                     >
-                        {isLoading ? 'Disabling...' : 'Disable'}
+                        {isLoading ? 'Deleting...' : 'Delete'}
                     </button>
                     <button 
                         className="cancel-disable-btn" 

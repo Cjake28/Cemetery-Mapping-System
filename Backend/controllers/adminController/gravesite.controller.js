@@ -1,4 +1,4 @@
-import { Get_all_personInDB, createPersonInDB, delete_personInDB, findPersonInDB } from '../../models/admin/gravesite.model.js';
+import { Get_all_personInDB, createPersonInDB, delete_personInDB, findPersonInDB, updateLatLngPointsInDB } from '../../models/admin/gravesite.model.js';
 
 // Controller for getting all verified persons from the database
 export async function getAllPersons(req, res) {
@@ -23,7 +23,7 @@ export async function getAllPersons(req, res) {
 }
 
 // Controller for creating a new person entry in the database
-export async function createPerson(req, res) {
+export async function createPerson(req, res){
     const { name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name } = req.body;
     const userId = req.userId; 
 
@@ -84,6 +84,42 @@ export async function deletePerson(req, res) {
         res.status(500).json({
             success: false,
             message: 'Error deleting person from the database',
+        });
+    }
+}
+
+export async function updateLatLngPoints(req, res) {
+    const { id } = req.params;  // Get the gravesite ID from the request params
+    const { lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four } = req.body;  // Get the new lat/long points from the request body
+
+    // Validate the input
+    if (!lat_lng_point_one || !lat_lng_point_two || !lat_lng_point_three || !lat_lng_point_four) {
+        return res.status(400).json({
+            success: false,
+            message: 'Please provide all four lat/lng points',
+        });
+    }
+
+    try {
+        // Update the lat/lng points in the database
+        const updateSuccess = await updateLatLngPointsInDB(id, lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four);
+
+        if (!updateSuccess) {
+            return res.status(404).json({
+                success: false,
+                message: 'Gravesite not found or no changes were made',
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Latitude and longitude points updated successfully',
+        });
+    } catch (error) {
+        console.error("Error in updateLatLngPoints:", error);
+        res.status(500).json({
+            success: false,
+            message: 'Error updating lat/lng points in the database',
         });
     }
 }

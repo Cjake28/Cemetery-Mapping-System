@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import './VirtualTour.css'
-import {useSceneIdContext} from '../../Context/SceneIDcontext.jsx';
+// import {useSceneIdContext} from '../../Context/SceneIDcontext.jsx';
 
 export default function VirtualTour() {
-  const { sceneID } = useSceneIdContext(); 
+  // const { sceneID } = useSceneIdContext(); 
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function VirtualTour() {
         console.log(scnID);
         window.KuulaPlayerAPI.load(event.data.uuid, scnID);
         setLoading(false);
-        console.log("Current sceneID in VirtualTour: ", sceneID);
+        // console.log("Current sceneID in VirtualTour: ", sceneID);
       }
     };
 

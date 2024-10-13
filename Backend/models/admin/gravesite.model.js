@@ -61,3 +61,24 @@ export async function findPersonInDB(name, surname, date_of_birth, date_of_death
         throw new Error("Database error occurred while finding the person");
     }
 }
+
+
+// Add to your model file
+export async function updateLatLngPointsInDB(id, lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four) {
+    try {
+        const [result] = await db.query(`
+            UPDATE gravesites
+            SET 
+                lat_lng_point_one = ?, 
+                lat_lng_point_two = ?, 
+                lat_lng_point_three = ?, 
+                lat_lng_point_four = ?
+            WHERE id = ?
+        `, [lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four, id]);
+
+        return result.affectedRows > 0; // Return true if a row was updated
+    } catch (error) {
+        console.error("Error updating lat/long points in updateLatLngPointsInDB: ", error);
+        throw new Error("Database error occurred while updating lat/long points");
+    }
+}

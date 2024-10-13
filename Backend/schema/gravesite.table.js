@@ -14,10 +14,10 @@ const createGravesiteTable = async () => {
     isVerified BOOLEAN DEFAULT TRUE,
     owner_name VARCHAR(255),
     notes TEXT,
-    lat_lng_top_right VARCHAR(255),  -- Example value: "14.888419,120.779195"
-    lat_lng_top_left VARCHAR(255),
-    lat_lng_bottom_right VARCHAR(255),
-    lat_lng_bottom_left VARCHAR(255),
+    lat_lng_point_one VARCHAR(255),  -- Example value: "14.888419,120.779195"
+    lat_lng_point_two VARCHAR(255),
+    lat_lng_point_three VARCHAR(255),
+    lat_lng_point_four VARCHAR(255),
     user_id INT,  -- Foreign key column linking to the users table
     CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
 );

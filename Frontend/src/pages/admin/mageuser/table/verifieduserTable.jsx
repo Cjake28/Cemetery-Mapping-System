@@ -31,7 +31,7 @@ export default function VerifieduserTable({ filteredPersons }) {
                     </tr>
                 </thead>
                 <tbody id="user-table-body">
-                    {filteredPersons.map((user) => (
+                    {filteredPersons?.map((user) => (
                         <tr key={user.username} className="user-table-row user-table-row-content">
                             <td className="user-table-cell">{user.name}</td>
                             <td className="user-table-cell">{user.username}</td>

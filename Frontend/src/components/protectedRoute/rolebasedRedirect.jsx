@@ -17,7 +17,7 @@ export default function RoleBasedRedirect() {
   if (user?.role === 'admin') {
     return <Navigate to="/admin" replace />;
   }
-
+  
   // Default fallback (though should never hit this if roles are set properly)
   return <Navigate to="/auth/signin" replace />;
 }

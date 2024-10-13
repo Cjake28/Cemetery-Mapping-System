@@ -9,7 +9,7 @@ const AuthContext = createContext();
 
 // Auth Reducer to manage state transitions
 const authReducer = (state, action) => {
-  switch (action.type) {
+  switch (action.type){
     case 'LOGIN_SUCCESS':
       return {
         ...state,

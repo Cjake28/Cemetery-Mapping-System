@@ -8,12 +8,13 @@ import LoginPage from './Authpages/Login.pages.jsx';
 import { useAuth } from '../Context/authContext.jsx';
 import UserProtectedRoute from '../components/protectedRoute/userProtectedRoute.jsx';
 import ProtectedsigninRoute from '../components/protectedRoute/signinProtectedRoute.jsx'
-import { useEffect } from 'react';  // Import useEffect
+import { useEffect } from 'react'; 
 import AdminProtectedRoute from '../components/protectedRoute/adminProtectedRoute.jsx'
 import ManageUsers from './admin/mageuser/manageUsers.jsx'
 import ManageGraveSite from './admin/manageGravesite/manaGraveSite.jsx'
 import RoleBasedRedirect from '../components/protectedRoute/rolebasedRedirect.jsx'
 import './App.css';
+import VisitorProtectedRoute from '../components/protectedRoute/visitorProtectedRoute.jsx'
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,21 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,  // Default route for '/'
-        element: <RoleBasedRedirect />,  // Custom redirection component
+        element: <RoleBasedRedirect/>,  // Custom redirection component
+      },
+      {
+        element: <VisitorProtectedRoute/>,
+        children: [
+          {
+            path:'visitor',
+            children:[
+              {
+                path: '', 
+                element: <VirtualTour />,
+              },
+            ]
+          }
+        ]
       },
       {
         element: <UserProtectedRoute />,

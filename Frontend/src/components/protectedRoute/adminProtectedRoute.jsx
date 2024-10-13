@@ -4,11 +4,11 @@ import { useAuth } from '../../Context/authContext.jsx';
 export default function AdminProtectedRoute() {
     const { isAuthenticated, user } = useAuth();
   
-    if (!isAuthenticated) {
+    if(!isAuthenticated) {
       return <Navigate to="/auth/signin" replace />;
     }
   
-    if (user?.role !== 'admin') {
+    if(user?.role !== 'admin') {
       return <Navigate to="/user" replace />;
     }
   
