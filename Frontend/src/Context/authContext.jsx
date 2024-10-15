@@ -86,9 +86,16 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       const response = await axios.get(`${API_URL}/check-auth`);
-      // console.log("checkAuth data: ", response.data);
-      // console.log("checkAuth user: ", response.data.user);
+
+      if(!response.data.success){
+        dispatch({ type: 'CHECK_AUTH_FAILURE' });
+        console.log("checkAuth user success false");
+        return
+      }
+
       dispatch({ type: 'CHECK_AUTH_SUCCESS', payload: response.data.user });
+      console.log("cehckAUth response: ",response)
+
     } catch (error) {
       console.log(error);
       dispatch({ type: 'CHECK_AUTH_FAILURE' });

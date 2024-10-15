@@ -13,10 +13,18 @@ export default function VisitorNabvar() {
       <ul className='ul-user-navbar'>
         <li className='li-user-navbar'>
           <Link
-            to="/vistor"
+            to="/visitor"
             className={`a-user-navbar ${location.pathname === '/visitor' ? 'active' : ''}`}
           >
             Virtual Tour
+          </Link>
+        </li>
+        <li className='li-user-navbar'>
+          <Link
+            to="/visitor/vacant-lot"
+            className={`a-user-navbar ${location.pathname === '/visitor/vacant-lot' ? 'active' : ''}`}
+          >
+            Vacant Lot
           </Link>
         </li>
 

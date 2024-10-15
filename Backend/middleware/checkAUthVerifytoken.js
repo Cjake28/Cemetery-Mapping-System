@@ -1,17 +1,17 @@
 import jwt from "jsonwebtoken";
 
-export const verifyToken = (req, res, next) => {
+export const checkAuth_VerifyToken = (req, res, next) => {
 	const token = req.cookies.HimlayanToken;
 	 
 	if (!token){
-		return res.status(401).json({ success: false, message: "Unauthorized - no token provided" });
+		return res.status(200).json({ success: false, message: "No token" });
 	}
 	
 	try {
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
 		if (!decoded){
-			return res.status(401).json({ success: false, message: "Unauthorized - invalid token" });
+			return res.status(200).json({ success: false, message: "Invalid token" });
 		}
 
 		req.userId = decoded.userId;

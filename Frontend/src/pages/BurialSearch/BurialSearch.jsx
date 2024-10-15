@@ -5,8 +5,16 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
+import {GeolocationContext} from '../../Context/geolocationContext.jsx';
 
 export default function BurialSearch() {
+  const {requestLocationPermission} = GeolocationContext();
+
+  useEffect(() => {
+    // Request location permission as soon as the page loads
+    requestLocationPermission();
+  }, []);
+  
     const { data: persons, isLoading, error } = useQuery({
     queryKey: ['persons'],
     queryFn: async () => {

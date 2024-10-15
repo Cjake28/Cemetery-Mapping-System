@@ -1,7 +1,8 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { GoogleMap, useJsApiLoader, Polygon, Marker, Rectangle } from '@react-google-maps/api';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
+
 import markerSvg from '../../assets/uncle-svgrepo-com.svg'
 const containerStyle = {
   width: '100vw',
@@ -27,20 +28,25 @@ const currentPosition = {
 }
 
 // Define polygon coordinates
-// const polygonPath = [
-//   { lat: 14.888419, lng: 120.779195 },
-//   { lat: 14.888506, lng: 120.779484 },
-//   { lat: 14.888511, lng: 120.779491 },
-//   { lat: 14.888521, lng: 120.779501 },
-//   { lat: 14.888558, lng: 120.779509 },
-//   { lat: 14.888750, lng: 120.779469 },
-//   { lat: 14.888907, lng: 120.779440 },
-//   { lat: 14.889165, lng: 120.779383 },
-//   { lat: 14.889235, lng: 120.779327 },
-//   { lat: 14.889100, lng: 120.779037 },
-//   { lat: 14.888964, lng: 120.779094 },
-//   { lat: 14.888490, lng: 120.779125 },
-// ];
+const polygonPath = [
+  { lat: 14.888419, lng: 120.779195 },
+  { lat: 14.888506, lng: 120.779484 },
+  { lat: 14.888511, lng: 120.779491 },
+  { lat: 14.888521, lng: 120.779501 },
+  { lat: 14.888558, lng: 120.779509 },
+  { lat: 14.888750, lng: 120.779469 },
+  { lat: 14.888907, lng: 120.779440 },
+  { lat: 14.889165, lng: 120.779383 },
+  { lat: 14.889235, lng: 120.779327 },
+  { lat: 14.889100, lng: 120.779037 },
+  { lat: 14.888964, lng: 120.779094 },
+  { lat: 14.888490, lng: 120.779125 },
+];
+
+const point = {
+  lat:14.888656062925538, 
+  lng: 120.77965846330041
+}
 
 // const polygonPaths = [
 //   {lat: 14.888947, lng:120.779360},
@@ -92,16 +98,30 @@ const Cementerylot = () => {
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries: ['geometry']
   });
 
-  const customMarkerIcon = {
-    url: markerSvg, // This is the imported SVG file
-    scaledSize: new window.google.maps.Size(25, 25), // Adjust the size as necessary
-  };
+  useEffect(() => {
+    if (isLoaded && window.google && window.google.maps.geometry) {
+      const polygon = new window.google.maps.Polygon({ paths: polygonPath });
+      const location = new window.google.maps.LatLng(point.lat, point.lng);
+      
+      // Check if the point is inside the polygon
+      const inside = window.google.maps.geometry.poly.containsLocation(location, polygon);
+      console.log("poligon");
+      console.log(inside);
+    }
+  }, [isLoaded]);
+
   
   if (!isLoaded) {
     return <div>Loading...</div>;
   }
+
+    const customMarkerIcon = {
+    url: markerSvg, // This is the imported SVG file
+    scaledSize: new window.google.maps.Size(25, 25),
+  };
 
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
@@ -113,6 +133,7 @@ const Cementerylot = () => {
       >
         {/* Polygon Component */}
         {locationContext && <Polygon path={locationContext} options={polygonOptions} />}
+        <Polygon path={polygonPath} options={polygonOptions}/>
         <Marker
           position={center} // You can change this to any lat/lng you prefer
           icon={customMarkerIcon}

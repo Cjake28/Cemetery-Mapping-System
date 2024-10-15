@@ -13,6 +13,7 @@ import AdminProtectedRoute from '../components/protectedRoute/adminProtectedRout
 import ManageUsers from './admin/mageuser/manageUsers.jsx'
 import ManageGraveSite from './admin/manageGravesite/manaGraveSite.jsx'
 import RoleBasedRedirect from '../components/protectedRoute/rolebasedRedirect.jsx'
+import VacantLot from '../pages/vacantLot/vaCantLot.jsx'
 import './App.css';
 import VisitorProtectedRoute from '../components/protectedRoute/visitorProtectedRoute.jsx'
 
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
               {
                 path: '', 
                 element: <VirtualTour />,
+              },
+              {
+                path: 'vacant-lot', 
+                element: <VacantLot />,
               },
             ]
           }
