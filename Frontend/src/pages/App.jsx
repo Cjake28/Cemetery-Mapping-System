@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import AdminProtectedRoute from '../components/protectedRoute/adminProtectedRoute.jsx'
 import ManageUsers from './admin/mageuser/manageUsers.jsx'
 import ManageGraveSite from './admin/manageGravesite/manaGraveSite.jsx'
+import ManageVacantLot from './admin/manageVacantLot/manageVaCantLot.jsx'
 import RoleBasedRedirect from '../components/protectedRoute/rolebasedRedirect.jsx'
 import VacantLot from '../pages/vacantLot/vaCantLot.jsx'
 import './App.css';
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
               {
                 path: 'manage-gravesite',  // Maps to '/manage-gravesite'
                 element: <ManageGraveSite />,
+              },
+              {
+                path:'manage-vacant-lot',
+                element: <ManageVacantLot/>
               }
             ],
           },

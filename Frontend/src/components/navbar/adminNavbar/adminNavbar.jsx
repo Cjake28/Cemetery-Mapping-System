@@ -25,6 +25,14 @@ export default function AdminNavbar() {
             Manage Gravesite
           </Link>
         </li>
+        <li className='li-user-navbar'>
+          <Link 
+            to="admin/manage-vacant-lot" 
+            className={`a-user-navbar ${location.pathname === '/admin/manage-vacant-lot' ? 'active' : ''}`}
+          >
+            Manage Vacant Lot
+          </Link>
+        </li>
         {/* <li className='li-user-navbar'>
           <Link to="user/VirtualTour" className={`a-user-navbar ${location.pathname === '/VirtualTour' ? 'active' : ''}`}>
             Virtual Tour

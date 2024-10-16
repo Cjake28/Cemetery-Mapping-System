@@ -1,8 +1,8 @@
-import {useEffect} from 'react';
+import {useEffect,useState} from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { GoogleMap, useJsApiLoader, Polygon, Marker, Rectangle } from '@react-google-maps/api';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
-
+import {GeolocationContext} from '../../Context/geolocationContext.jsx'
 import markerSvg from '../../assets/uncle-svgrepo-com.svg'
 const containerStyle = {
   width: '100vw',
@@ -93,23 +93,31 @@ const options = {
 };
 
 const Cementerylot = () => {
-
   const {locationContext} = useLocationContext();
-
+  const {location, startWatchingLocation, getCurrentLocation } = GeolocationContext();
+  const [insideCemetery, setInsideCemetery] = useState(false);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ['geometry']
   });
 
   useEffect(() => {
-    if (isLoaded && window.google && window.google.maps.geometry) {
-      const polygon = new window.google.maps.Polygon({ paths: polygonPath });
-      const location = new window.google.maps.LatLng(point.lat, point.lng);
-      
-      // Check if the point is inside the polygon
-      const inside = window.google.maps.geometry.poly.containsLocation(location, polygon);
-      console.log("poligon");
-      console.log(inside);
+    if (window.google && window.google.maps.geometry) {
+      getCurrentLocation()
+        .then(({ latitude, longitude }) => {
+          const polygon = new window.google.maps.Polygon({ paths: polygonPath });
+          const currentLocation = new window.google.maps.LatLng(latitude, longitude);
+  
+          const inside = window.google.maps.geometry.poly.containsLocation(currentLocation, polygon);
+          if (inside) {
+            startWatchingLocation(); // Now starts watching without affecting state
+            setInsideCemetery(true);
+          }
+        })
+        .catch((error) => {
+          console.error('Error getting location:', error);
+          setInsideCemetery(false);
+        });
     }
   }, [isLoaded]);
 
@@ -133,11 +141,12 @@ const Cementerylot = () => {
       >
         {/* Polygon Component */}
         {locationContext && <Polygon path={locationContext} options={polygonOptions} />}
+
         <Polygon path={polygonPath} options={polygonOptions}/>
-        <Marker
-          position={center} // You can change this to any lat/lng you prefer
+        {insideCemetery && location && <Marker
+          position={{ lat: location.latitude, lng: location.longitude }}
           icon={customMarkerIcon}
-        />
+        />}
         {/* Rectangle Component */}
         {/* <Rectangle bounds={rectangleBounds} options={rectangleOptions} /> */}
       </GoogleMap>

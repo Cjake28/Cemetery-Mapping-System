@@ -30,6 +30,30 @@ export const GeolocationProvider = ({ children }) => {
     }
   };
 
+  const getCurrentLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            resolve({ latitude, longitude }); // Return the latitude and longitude
+          },
+          (error) => {
+            reject(error.message); // Return the error if there's an issue
+          },
+          {
+            enableHighAccuracy: true,
+            maximumAge: 10000,
+            timeout: 5000,
+          }
+        );
+      } else {
+        reject('Geolocation is not supported by this browser');
+      }
+    });
+  };
+  
+
   // Function to start continuous location tracking
   const startWatchingLocation = () => {
     if (navigator.geolocation && !isWatching) {
@@ -50,13 +74,16 @@ export const GeolocationProvider = ({ children }) => {
       setIsWatching(true);
 
       // Stop watching when the component unmounts or user leaves the page
-      return () => navigator.geolocation.clearWatch(watchId);
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+        setIsWatching(false);
+      };
     }
   };
 
   return (
     <geolocationcontext.Provider
-      value={{ location, error, requestLocationPermission, startWatchingLocation }}
+      value={{ location, error, requestLocationPermission, startWatchingLocation, getCurrentLocation }}
     >
       {children}
     </geolocationcontext.Provider>
