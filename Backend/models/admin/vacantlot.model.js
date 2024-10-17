@@ -15,7 +15,7 @@ export async function getAllVacantLots() {
 }
 
 // Create a vacant lot
-export const createVacantLot = async (vacantLotData) => {
+export const createVacantLot = async (vacantLotData, user_id) => {
   const {
     location,
     lat_lng_point_one,
@@ -23,7 +23,6 @@ export const createVacantLot = async (vacantLotData) => {
     lat_lng_point_three,
     lat_lng_point_four,
     lat_lng_point_center,
-    user_id
   } = vacantLotData;
 
   const query = `
@@ -39,7 +38,7 @@ export const createVacantLot = async (vacantLotData) => {
       lat_lng_point_three,
       lat_lng_point_four,
       lat_lng_point_center,
-      user_id,
+      user_id,  // user_id is still being inserted here
     ]);
     return result.insertId;  // Return the ID of the newly created vacant lot
   } catch (error) {
@@ -57,7 +56,6 @@ export const updateVacantLot = async (id, updatedData) => {
     lat_lng_point_three,
     lat_lng_point_four,
     lat_lng_point_center,
-    user_id
   } = updatedData;
 
   const query = `
@@ -68,8 +66,7 @@ export const updateVacantLot = async (id, updatedData) => {
       lat_lng_point_two = ?,
       lat_lng_point_three = ?,
       lat_lng_point_four = ?,
-      lat_lng_point_center = ?,
-      user_id = ?
+      lat_lng_point_center = ?
     WHERE id = ?;
   `;
 
@@ -81,7 +78,6 @@ export const updateVacantLot = async (id, updatedData) => {
       lat_lng_point_three,
       lat_lng_point_four,
       lat_lng_point_center,
-      user_id,
       id
     ]);
     return result.affectedRows;  // Returns the number of rows updated (1 if successful)
@@ -90,6 +86,7 @@ export const updateVacantLot = async (id, updatedData) => {
     throw new Error("Failed to update vacant lot");
   }
 };
+
 
 export const getVacantLotByLocation = async (location) => {
     const query = `SELECT * FROM vacantLot WHERE LOWER(location) = LOWER(?);`;
@@ -106,3 +103,17 @@ export const getVacantLotByLocation = async (location) => {
       throw new Error('Fialed checking vacant lot by location');
     }
   };
+
+
+// Model function to delete a vacant lot
+export const deleteVacantLot = async (id) => {
+  const query = `DELETE FROM vacantLot WHERE id = ?`;
+
+  try {
+    const [result] = await db.query(query, [id]);
+    return result.affectedRows;  // Returns the number of rows deleted (should be 1 if successful)
+  } catch (error) {
+    console.error("Error deleting vacant lot: ", error);
+    throw new Error("Failed to delete vacant lot");
+  }
+};

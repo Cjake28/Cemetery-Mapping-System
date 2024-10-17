@@ -1,4 +1,4 @@
-// import './manageGravesite.css';
+import './managevacantLot.css';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -10,13 +10,21 @@ export default function ManageVacantLot() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch persons data with useQuery
-    // const { data: persons, isLoading, error } = useQuery({
-    //     queryKey: ['persons'],
-    //     queryFn: async () => {
-    //         const response = await axios.get('http://localhost:9220/api/get-all-person');
-    //         return response.data.persons;
-    //     },
-    // });
+  const { data: vacantLots, isLoading, error } = useQuery({
+    queryKey: ['vacantLots'],
+    queryFn: async () => {
+        try {
+            const response = await axios.get('http://localhost:9220/api/vacantlots');
+            console.log(response);
+            return response.data.data; // Assuming 'vacantLots' is the correct field in your response
+        } catch (err) {
+            throw new Error(err.response?.data?.message || 'Failed to fetch vacant lots.');
+        }
+    },
+    retry: 3, // Retry failed request up to 3 times
+    retryDelay: 1000, // Wait 1 second before retrying
+    refetchOnWindowFocus: false, // Don't refetch when the window is refocused
+});
 
   // Handle person creation without using useMutation (e.g., using axios directly)
     // const handleCreatePerson = async (personData) => {
@@ -30,27 +38,32 @@ export default function ManageVacantLot() {
     //     setIsModalOpen(false); // Close modal after creating
     // };
 
-    // const handleSearch = (event) => {
-    //     setSearchQuery(event.target.value);
-    // };
-
-    // const filteredPersons =  persons?.filter((person) => person.name.toLowerCase().includes(searchQuery.toLowerCase()) || person.surname.toLowerCase().includes(searchQuery.toLowerCase()));
-
-//   if (isLoading) return <div>Loading...</div>;
-//   if (error) return <div>Error fetching persons</div>;
+    const handleSearch = (event) => {
+      setSearchQuery(event.target.value);
+  };
+  
+  const filteredLots = vacantLots?.filter((lot) => 
+      lot.owner_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      lot.location.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+    
+  if (isLoading) return <div>Loading vacant lots...</div>;
+  if (error) return <div>Error fetching vacant lots: {error.message}</div>;
+  
 
   return (
-    <div id="manageGravesite-container">
+    <div id="manageVacantLot-container">
       <div className="manageuser-top">
-        <div className="create-person">
+        <div className="create-vacnatLot">
           <button className="create-person-btn" >
             Create vacant Lot
           </button>
         </div>
       </div>
 
-      <div className="search-bar">
-        <input 
+      <div className="search-bar-vacatLot">
+        <input
+            className='inputVacant-lot' 
             type="text" 
             placeholder="Search persons..." 
             // value={searchQuery}
@@ -58,7 +71,7 @@ export default function ManageVacantLot() {
         />
       </div>
 
-      <VacantLOtTable filteredPersons={null}/>
+      <VacantLOtTable filteredLots={filteredLots}/>
 
       {/* {isModalOpen && (
         <CreatePersonModal
