@@ -12,7 +12,7 @@ export default function CreatePersonModal({ onClose, onCreatePerson }) {
     burial_date: '',
     owner_name: '',
   });
-
+  
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {

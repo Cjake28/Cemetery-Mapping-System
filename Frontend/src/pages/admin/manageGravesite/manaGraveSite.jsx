@@ -1,6 +1,6 @@
 import './manageGravesite.css';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import PersonsTable from './table/personsTable.jsx';
 import CreatePersonModal from './modal/createPersonModal.jsx';
@@ -9,6 +9,8 @@ export default function ManageGraveSite() {
     const [searchQuery, setSearchQuery] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const queryClient = useQueryClient();
+    
   // Fetch persons data with useQuery
     const { data: persons, isLoading, error } = useQuery({
         queryKey: ['persons'],
@@ -23,7 +25,7 @@ export default function ManageGraveSite() {
         try {
             await axios.post('http://localhost:9220/api/admin/create-person', personData);
         // Optionally refetch the persons data after successful creation
-        //   queryClient.invalidateQueries(['persons']);
+            queryClient.invalidateQueries(['persons']);
         } catch (err) {
             console.error('Error creating person:', err);
         }

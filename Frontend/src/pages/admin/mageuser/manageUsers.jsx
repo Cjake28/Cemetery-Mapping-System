@@ -2,7 +2,7 @@ import './manageUser.css';
 import VerifieduserTable from './table/verifieduserTable.jsx';
 import UnVerifieduserTable from './table/underifiedUsertable.jsx';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import ModalCreateUser from './modal/createUserModal.jsx'; // Import the modal component
 
@@ -10,6 +10,8 @@ export default function ManageUsers() {
     const [searchQuery, setSearchQuery] = useState('');
     const [activeFilter, setActiveFilter] = useState('valid');
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const queryClient = useQueryClient();
 
     const { data: verifiedUser, isLoading: userloading, error: userError } = useQuery({
         queryKey: ['verifiedUser'],

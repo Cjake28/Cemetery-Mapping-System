@@ -23,8 +23,12 @@ export const getVacantLotsController = async (req, res) => {
 export const createVacantLotController = async (req, res) => {
   const { vacantLotData } = req.body;
   const userId = req.userId;  // User ID still needed for creation
-
+  const {location, lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four, lat_lng_point_center} = vacantLotData;
+  console.log(req.body);
   try {
+    if(!location || !lat_lng_point_one || !lat_lng_point_two || !lat_lng_point_three || !lat_lng_point_four || !lat_lng_point_center){
+      return res.status(400).json({success: false, message:'All fields are required'});
+    }
     // Step 1: Check if the location already exists
     const existingLot = await getVacantLotByLocation(vacantLotData.location);
     

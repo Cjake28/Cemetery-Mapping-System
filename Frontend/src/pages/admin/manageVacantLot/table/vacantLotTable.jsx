@@ -25,7 +25,7 @@ export default function VacantLOtTable({ filteredLots }) {
                 <thead className="user-table-head">
                     <tr className="user-table-row">
                         <th className="user-table-heading">Location</th>
-                        <th className="user-table-heading">Owner Name</th>
+                        <th className="user-table-heading">Map coordinates</th>
                         <th className="user-table-heading">Actions</th>
                     </tr>
                 </thead>
@@ -34,7 +34,7 @@ export default function VacantLOtTable({ filteredLots }) {
                         filteredLots.map((lot) => (
                             <tr className="user-table-row user-table-row-content" key={lot.id}>
                                 <td className="user-table-cell">{lot.location || 'N/A'}</td>
-                                <td className="user-table-cell">{lot.owner_name || 'N/A'}</td>
+                                <td className="user-table-cell">{lot.lat_lng_point_center || 'N/A'}</td>
                                 <td className="user-table-cell">
                                     <span className="user-actions">
                                         <BsExclamationCircle className="edit-icon" />
