@@ -1,0 +1,126 @@
+/* Table Wrapper */
+.vacantlot-table-wrapper {
+    width: 75%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* Table */
+.vacantlot-table {
+    height: 100%;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    table-layout: fixed;
+}
+
+/* Table Head */
+.vacantlot-table-head {
+    background-color: #575757;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.vacantlot-table-heading {
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Table Body */
+#vacantlot-table-body {
+    display: block;
+    height: 90%;
+    overflow-y: auto;
+    padding-bottom: 10px;
+}
+
+/* Row and Column Styling */
+.vacantlot-table .vacantlot-table-head, 
+.vacantlot-table-row {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.vacantlot-table-row {
+    border-bottom: 1px solid #ddd;
+}
+
+.vacantlot-table-row:last-child {
+    border-bottom: none;
+}
+
+.vacantlot-table-cell {
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Striped Rows */
+.vacantlot-table-row:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.vacantlot-table-row-content:hover {
+    background-color: rgb(209, 209, 209);
+}
+
+.vacantlot-actions{
+    display: flex;
+    gap: 3rem;
+}
+
+/* Hover Effects for Icons */
+.edit-icon:hover {
+    color: #007bff;
+}
+
+.delete-icon:hover {
+    color: #dc3545;
+}
+
+/* Scrollbar Customization */
+#vacantlot-table-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+#vacantlot-table-body::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+#vacantlot-table-body::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+
+/* For scrollable content inside the lat/lng cell */
+.scrollable-cell {
+    overflow-x: auto;
+    white-space: nowrap;
+    max-width: 150px;  /* You can adjust the width based on your layout */
+}
+
+.scrollable-cell::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scrollable-cell::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.scrollable-cell::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}

@@ -62,7 +62,8 @@ export const createVacantLotController = async (req, res) => {
 export const updateVacantLotController = async (req, res) => {
   const { id } = req.params;  // assuming the ID of the lot to update is in the URL parameters
   const updatedData = req.body;  // assuming updated data is sent in the request body
-
+  console.log(updatedData);
+  console.log(req.body);
   try {
     const affectedRows = await updateVacantLot(id, updatedData);
     if (affectedRows > 0) {

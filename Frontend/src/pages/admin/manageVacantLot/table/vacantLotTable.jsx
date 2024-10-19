@@ -1,45 +1,67 @@
 import { BsFillTrashFill, BsExclamationCircle, BsGeoAltFill } from 'react-icons/bs';
 import { useState } from 'react';
-// import DeletePersonModal from '../modal/deletePersonModal.jsx';
-// import UpdateGraveLocationModal from '../modal/updateGraveLocationModal.jsx';  // Import the new modal
+import UpdateVacantLotModal from '../modal/updateLotModal.jsx';
+import DeleteVacantLotModal from '../modal/deleteLotModal.jsx'
+import './vacantlottbale.css';
+// import DeleteVacantLotModal from '../modal/DeleteVacantLotModal.jsx';  // Assume you have a delete modal as well
 
-export default function VacantLOtTable({ filteredLots }) {
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPerson, setSelectedPerson] = useState(null);
+
+export default function VacantLotTable({ filteredLots }) {
+    const [selectedLot, setSelectedLot] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    // const [isGeoModalOpen, setIsGeoModalOpen] = useState(false);  // For updating location modal
+    const [isGeoModalOpen, setIsGeoModalOpen] = useState(false);
 
-    const handleDeleteClick = (person) => {
-        setSelectedPerson(person);
+    const handleDeleteClick = (lot) => {
+        setSelectedLot(lot);
         setIsDeleteModalOpen(true);
     };
 
-    // const handleUpdateSuccess = () => {
-    //     setIsGeoModalOpen(false);  // Close the modal after successful update
-    //     // Optionally refetch data or update UI to reflect the changes
-    // };
+    const handleGeoClick = (lot) => {
+        setSelectedLot(lot);
+        setIsGeoModalOpen(true);
+    };
+
+    const handleUpdateSuccess = () => {
+        setIsGeoModalOpen(false);  // Close the modal after successful update
+        // Optionally refetch data or update UI to reflect the changes
+    };
+
+    const handelupdatemodalClose = () => {
+        setSelectedLot(null);
+        setIsGeoModalOpen(false);
+    }
+
+    const handelDeletemodalClose = () => {
+        setSelectedLot(null);
+        setIsDeleteModalOpen(false)
+    }
 
     return (
-        <div className="table-wrapper">
-            <table className="user-table">
-                <thead className="user-table-head">
-                    <tr className="user-table-row">
-                        <th className="user-table-heading">Location</th>
-                        <th className="user-table-heading">Map coordinates</th>
-                        <th className="user-table-heading">Actions</th>
+        <div className="vacantlot-table-wrapper">
+            <table className="vacantlot-table">
+                <thead className="vacantlot-table-head">
+                    <tr className="vacantlot-table-row">
+                        <th className="vacantlot-table-heading">Location</th>
+                        <th className="vacantlot-table-heading">Map coordinates</th>
+                        <th className="vacantlot-table-heading">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="user-table-body">
+                <tbody id="vacantlot-table-body">
                     {filteredLots && filteredLots.length > 0 ? (
                         filteredLots.map((lot) => (
-                            <tr className="user-table-row user-table-row-content" key={lot.id}>
-                                <td className="user-table-cell">{lot.location || 'N/A'}</td>
-                                <td className="user-table-cell">{lot.lat_lng_point_center || 'N/A'}</td>
-                                <td className="user-table-cell">
-                                    <span className="user-actions">
-                                        <BsExclamationCircle className="edit-icon" />
-                                        <BsFillTrashFill className="delete-icon" />
-                                        {/* Add click handlers for actions if needed */}
+                            <tr className="vacantlot-table-row vacantlot-table-row-content" key={lot.id}>
+                                <td className="vacantlot-table-cell">{lot.location || 'N/A'}</td>
+                                <td className="vacantlot-table-cell scrollable-cell">{lot.lat_lng_point_center || 'N/A'}</td>
+                                <td className="vacantlot-table-cell">
+                                    <span className="vacantlot-actions">
+                                        <BsGeoAltFill
+                                            className="geo-icon"
+                                            onClick={() => handleGeoClick(lot)}
+                                        />
+                                        <BsFillTrashFill
+                                            className="delete-icon"
+                                            onClick={() => handleDeleteClick(lot)}
+                                        />
                                     </span>
                                 </td>
                             </tr>
@@ -52,25 +74,24 @@ export default function VacantLOtTable({ filteredLots }) {
                 </tbody>
             </table>
 
-            {/* Modal for Deleting a Person */}
-            {/* {selectedPerson && (
-                <DeletePersonModal
+            {selectedLot && (
+                <DeleteVacantLotModal
                     isOpen={isDeleteModalOpen}
-                    onClose={() => setIsDeleteModalOpen(false)}
-                    name={selectedPerson.name}
-                    personID={selectedPerson.id}
+                    onClose={handelDeletemodalClose}
+                    location={selectedLot.location}
+                    lotID={selectedLot.id}
                 />
-            )} */}
+            )}
 
-            {/* Modal for Updating Grave Location */}
-            {/* {selectedPerson && (
-                <UpdateGraveLocationModal
+            {/* Modal for Updating Vacant Lot Location */}
+            {selectedLot && (
+                <UpdateVacantLotModal
                     isOpen={isGeoModalOpen}
-                    onClose={() => setIsGeoModalOpen(false)}
-                    person={selectedPerson}
+                    onClose={handelupdatemodalClose}
+                    lot={selectedLot}
                     onUpdateSuccess={handleUpdateSuccess}
                 />
-            )} */}
+            )}
         </div>
     );
 }
