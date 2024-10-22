@@ -1,4 +1,4 @@
-.user-navbar-container {
+.visitor-navbar-container {
     height: 3.3rem;
     display: flex;
     justify-content: center;
@@ -8,15 +8,15 @@
     padding: 0 1rem;
 }
 
-.user-menu-container {
+.visitor-menu-container {
     height: 100%;
-    width: 35%;
+    width: 25%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
-.a-user-navbar {
+.a-visitor-navbar {
     position: relative;
     height: 80%;
     width: 33%;
@@ -29,7 +29,7 @@
     transition: color 0.3s ease, background-color 0.5s ease;
 }
 
-.a-user-navbar::before {
+.a-visitor-navbar::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -40,20 +40,20 @@
     transition: width 0.5s ease-in-out;
 }
 
-.a-user-navbar:hover::before {
+.a-visitor-navbar:hover::before {
     width: 100%;
 }
 
-.a-user-navbar:hover {
+.a-visitor-navbar:hover {
     color: #505050;
     background-color: #e7e7e7;
 }
 
-.a-user-navbar.active {
+.a-visitor-navbar.active {
     border-bottom: 2px solid #505050;
 }
 
-.desktop-signout {
+.desktop-login {
     position: absolute;
     right: 3rem;
     height: 75%;
@@ -68,20 +68,20 @@
     transition: background-color 0.5s ease, transform 0.5s ease;
 }
 
-.desktop-signout:hover {
+.desktop-login:hover {
     background-color: #696969;
     transform: scale(1.07);
 }
 
-.user-burger {
+.visitor-burger {
     display: none;
-    font-size: 1.5rem;
+    font-size: 2.1rem;
     cursor: pointer;
     margin-left: auto;
-    margin-right: 2rem;
+    margin-right: 0.5rem;
 }
 
-.user-mobile-menu {
+.visitor-mobile-menu {
     position: absolute;
     top: 3.3rem;
     left: 0;
@@ -95,13 +95,13 @@
     z-index: 10;
 }
 
-.user-mobile-menu .a-user-navbar {
+.visitor-mobile-menu .a-visitor-navbar {
     width: 100%;
     text-align: center;
     padding: 0.5rem 0;
 }
 
-.user-mobile-menu button {
+.visitor-mobile-menu button {
     width: 100%;
     padding: 0.5rem 0;
     background-color: #505050;
@@ -112,20 +112,26 @@
     transition: background-color 0.5s ease;
 }
 
-.user-mobile-menu button:hover {
+.visitor-mobile-menu button:hover {
     background-color: #696969;
 }
 
 @media screen and (max-width: 768px) {
-    .user-menu-container {
+    .visitor-menu-container {
         display: none;
     }
 
-    .user-burger {
+    .visitor-burger {
         display: block;
     }
 
-    .desktop-signout {
+    .desktop-login {
         display: none;
+    }
+    .a-visitor-navbar{
+        height: 4rem;
+        font-size: large;
+        font-weight: 700;
+        color: #505050;
     }
 }

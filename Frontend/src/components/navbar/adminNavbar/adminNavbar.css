@@ -1,48 +1,61 @@
-.user-navbar-container {
+.admin-navbar-container {
     height: 3.3rem;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #f8f9fa; /* Optional background color */
+    padding: 0 1rem;
+}
+
+.admin-menu-container {
+    height: 100%;
+    width: 35%;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.ul-user-navbar {
-    margin-left: 6rem;
+.a-admin-navbar {
+    position: relative; /* Ensure the pseudo-element is positioned correctly */
+    height: 80%;
+    width: 33%;
     display: flex;
+    align-items: center;
     justify-content: center;
-    width: 100%;
-    flex: 1;
+    cursor: pointer;
+    color: inherit;
+    background-color: transparent;
+    transition: color 0.3s ease, background-color 0.5s ease; /* Transitions for color and background */
 }
 
-.li-user-navbar {
-    list-style: none;
+.a-admin-navbar::before {
+    content: ''; /* Create the pseudo-element */
+    position: absolute;
+    bottom: 0; /* Position it at the bottom */
+    left: 0;
+    height: 2px;
+    width: 0; /* Start with no width */
+    background-color: #505050; /* Border color */
+    transition: width 0.5s ease-in-out; /* Animate width */
 }
 
-.a-user-navbar {
-    text-decoration: none;
-    color: #000000;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: 500;
-    font-family: 'Open Sans', sans-serif;
-    transition: color 1.5s ease, background-color 0.5s ease, border-radius 2s ease;
-    border-radius: 8px;
-    margin-left: 30px;
+.a-admin-navbar:hover::before {
+    width: 100%; /* Expand width on hover */
 }
 
-.a-user-navbar:hover {
-    color: white;
-    background-color: #505050;
-    border-radius: 100px;
+.a-admin-navbar:hover {
+    color: #505050; /* Change text color on hover */
+    background-color: #e7e7e7; /* Optional: Change background color */
 }
 
-.a-user-navbar.active {
-    color: white;
-    background-color: #505050;
-    border-radius: 100px;
+.a-admin-navbar.active {
+    border-bottom: 2px solid #505050; /* Optional active state style */
 }
 
-.user-navbar-signoutButton {
+.desktop-signout {
+    position: absolute;
+    right: 3rem;
     height: 75%;
     width: 5.5rem;
     margin-right: 3rem;
@@ -52,10 +65,69 @@
     font-size: 0.8rem;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.5s ease, transform 0.5s ease; /* Transitions for background and transform */
 }
 
-.user-navbar-signoutButton:hover {
+.desktop-signout:hover {
     background-color: #696969;
-    transform: scale(1.07);
+    transform: scale(1.07); /* Smooth scaling on hover */
+}
+
+/* Mobile-specific styles */
+.admin-burger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 2rem;
+}
+
+.admin-mobile-menu {
+    position: absolute;
+    top: 3.3rem;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    z-index: 10;
+}
+
+.admin-mobile-menu .a-admin-navbar {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+}
+
+.admin-mobile-menu button {
+    width: 100%;
+    padding: 0.5rem 0;
+    background-color: #505050;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.5s ease; /* Smooth background color change */
+}
+
+.admin-mobile-menu button:hover {
+    background-color: #696969; /* Optional hover effect for button */
+}
+
+/* Responsive styling */
+@media screen and (max-width: 768px) {
+    .admin-menu-container {
+        display: none; /* Hide desktop menu on mobile */
+    }
+
+    .admin-burger {
+        display: block; /* Show burger menu icon */
+    }
+
+    .desktop-signout {
+        display: none; /* Hide desktop signout button on mobile */
+    }
 }

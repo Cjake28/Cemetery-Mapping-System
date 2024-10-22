@@ -2,8 +2,9 @@ import {useEffect,useState} from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { GoogleMap, useJsApiLoader, Polygon, Marker, Rectangle } from '@react-google-maps/api';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
-import {GeolocationContext} from '../../Context/geolocationContext.jsx'
-import markerSvg from '../../assets/uncle-svgrepo-com.svg'
+import {GeolocationContext} from '../../Context/geolocationContext.jsx';
+import markerSvg from '../../assets/uncle-svgrepo-com.svg';
+
 const containerStyle = {
   width: '100vw',
   height: '100vh',
@@ -60,7 +61,7 @@ const polygonOptions = {
   strokeColor: '#00FF00',
   strokeOpacity: 0.8,
   strokeWeight: 1.5,
-  fillOpacity: 0,
+  fillOpacity: 0.5,
 };
 
 
@@ -143,6 +144,7 @@ const Cementerylot = () => {
         {locationContext && <Polygon path={locationContext} options={polygonOptions} />}
 
         <Polygon path={polygonPath} options={polygonOptions}/>
+        
         {insideCemetery && location && <Marker
           position={{ lat: location.latitude, lng: location.longitude }}
           icon={customMarkerIcon}

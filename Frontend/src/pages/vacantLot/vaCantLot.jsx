@@ -1,154 +1,97 @@
-import {useEffect,useState} from 'react';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import { GoogleMap, useJsApiLoader, Polygon, Marker, Rectangle } from '@react-google-maps/api';
-import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
-import {GeolocationContext} from '../../Context/geolocationContext.jsx'
-import markerSvg from '../../assets/uncle-svgrepo-com.svg'
+import { useState, useEffect } from 'react';
+import { GoogleMap, useJsApiLoader, Polygon } from '@react-google-maps/api';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+
 const containerStyle = {
   width: '100vw',
   height: '100vh',
 };
 
-// Set to your desired center coordinates
-const center = { lat: 14.90398336194856, lng: 120.78880285576372 }
+const center = { lat: 14.88886531493886, lng: 120.77947973952769 };
 
 const mapBounds = {
-  north: center.lat + 0.0018,  // A bit north of the center
-  south: center.lat - 0.001,  // A bit south of the center
-  east: center.lng + 0.0018,   // A bit east of the center
-  west: center.lng - 0.0018    // A bit west of the center
+  north: center.lat + 0.0018,
+  south: center.lat - 0.001,
+  east: center.lng + 0.0018,
+  west: center.lng - 0.0018,
 };
 
-const currentPosition = {
-  lat: 14.888821,
-  lng: 120.779467,
-}
-
-// Define polygon coordinates
-const polygonPath = [
-  { lat: 14.90398336194856, lng: 120.78880285576372 },
-  { lat: 14.903927092663, lng: 120.78896977655104 },
-  { lat: 14.903780792451737, lng: 120.78893678058145 },
-  // { lat: 14.888419, lng: 120.779195 },
-  // { lat: 14.888506, lng: 120.779484 },
-  // { lat: 14.888511, lng: 120.779491 },
-  // { lat: 14.888521, lng: 120.779501 },
-  // { lat: 14.888558, lng: 120.779509 },
-  // { lat: 14.888750, lng: 120.779469 },
-  // { lat: 14.888907, lng: 120.779440 },
-  // { lat: 14.889165, lng: 120.779383 },
-  // { lat: 14.889235, lng: 120.779327 },
-  // { lat: 14.889100, lng: 120.779037 },
-  // { lat: 14.888964, lng: 120.779094 },
-  // { lat: 14.888490, lng: 120.779125 },
-];
-
-const point = {
-  lat:14.888656062925538, 
-  lng: 120.77965846330041
-}
-
-// const polygonPaths = [
-//   {lat: 14.888947, lng:120.779360},
-//   {lat:14.888919, lng:120.779374 },
-//   {lat:14.888931, lng:120.779395},
-//   {lat:14.888954, lng:120.779382},
-// ]
-
-// Define polygon options
 const polygonOptions = {
   strokeColor: '#00FF00',
   strokeOpacity: 0.8,
   strokeWeight: 1.5,
-  fillOpacity: 0,
+  fillOpacity: 0.1,
 };
 
-
-// Define rectangle bounds
-// const rectangleBounds = {
-//   north: 14.888954,
-//   south: 14.888919,
-//   east: 120.779395,
-//   west: 120.779360,
-// };
-
-// Define rectangle options
-// const rectangleOptions = {
-//   strokeColor: '#FF0000',
-//   strokeOpacity: 0.1,
-//   strokeWeight: 1,
-//   fillColor: '#FF0000',
-//   fillOpacity: 0.15,
-// };
-
 const options = {
-  mapId:'31df144c8f9b66d4',
-  disableDefaultUI: true,  // Disable default UI controls
-  mapTypeControl: false,   // Hide map type controls
-  mapTypeId: "satellite",  // Satellite view
-  // restriction: {
-  //   latLngBounds: mapBounds,
-  //   strictBounds: true, // Enforce the restriction
-  // }
+  mapId: '31df144c8f9b66d4',
+  disableDefaultUI: true,
+  mapTypeControl: false,
+  mapTypeId: "satellite",
+  restriction: {
+    latLngBounds: mapBounds,
+    strictBounds: true,
+  }
 };
 
 const VacantLot = () => {
-  const {locationContext} = useLocationContext();
-  const {location, startWatchingLocation, getCurrentLocation } = GeolocationContext();
-  const [insideCemetery, setInsideCemetery] = useState(false);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: ['geometry']
   });
 
-  useEffect(() => {
-    if (window.google && window.google.maps.geometry) {
-      getCurrentLocation()
-        .then(({ latitude, longitude }) => {
-          const polygon = new window.google.maps.Polygon({ paths: polygonPath });
-          const currentLocation = new window.google.maps.LatLng(latitude, longitude);
-  
-          const inside = window.google.maps.geometry.poly.containsLocation(currentLocation, polygon);
-          if (inside) {
-            startWatchingLocation(); // Now starts watching without affecting state
-            setInsideCemetery(true);
-          }
-        })
-        .catch((error) => {
-          console.error('Error getting location:', error);
-          setInsideCemetery(false);
-        });
-    }
-  }, [isLoaded]);
+  const { data: vacantLots, isLoading, error, refetch } = useQuery({
+    queryKey: ['vacantLots'],
+    queryFn: async () => {
+      const response = await axios.get('http://localhost:9220/api/vacantlots');
+      return response.data.data;
+    },
+    refetchOnMount: true,  // Fetch fresh data on every mount
+    refetchOnWindowFocus: false,
+  });
 
-  
-  if (!isLoaded) {
+  const [polygonData, setPolygonData] = useState([]);
+
+  useEffect(() => {
+    // Only update polygonData when both map is loaded and lots data is available
+    if (isLoaded && vacantLots) {
+      const parsedLots = vacantLots.map((lot) => ({
+        id: lot.id,
+        path: [
+          parseLatLng(lot.lat_lng_point_one),
+          parseLatLng(lot.lat_lng_point_two),
+          parseLatLng(lot.lat_lng_point_three),
+          parseLatLng(lot.lat_lng_point_four),
+        ],
+      }));
+      setPolygonData(parsedLots);
+    }
+  }, [isLoaded, vacantLots]);
+
+  const parseLatLng = (point) => {
+    const [lat, lng] = point.split(',').map(Number);
+    return { lat, lng };
+  };
+
+  if (!isLoaded || isLoading) {
     return <div>Loading...</div>;
   }
 
-    const customMarkerIcon = {
-    url: markerSvg, // This is the imported SVG file
-    scaledSize: new window.google.maps.Size(25, 25),
-  };
+  if (error) {
+    return <div>Error fetching vacant lots: {error.message}</div>;
+  }
 
   return (
     <div style={{ height: '100vh', width: '100vw' }}>
       <GoogleMap
-        zoom={24} // Adjusted zoom to better see the shapes
+        zoom={24}
         center={center}
         mapContainerStyle={{ height: '100%', width: '100%' }}
         options={options}
       >
-        {/* Polygon Component */}
-        {locationContext && <Polygon path={locationContext} options={polygonOptions} />}
-
-        <Polygon path={polygonPath} options={polygonOptions}/>
-        {insideCemetery && location && <Marker
-          position={{ lat: location.latitude, lng: location.longitude }}
-          icon={customMarkerIcon}
-        />}
-        {/* Rectangle Component */}
-        {/* <Rectangle bounds={rectangleBounds} options={rectangleOptions} /> */}
+        {polygonData.map((lot) => (
+          <Polygon key={lot.id} path={lot.path} options={polygonOptions} />
+        ))}
       </GoogleMap>
     </div>
   );

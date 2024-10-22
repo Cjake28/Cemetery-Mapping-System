@@ -39,7 +39,7 @@ export default function BurialSearch() {
   const handlePersonClick =(person) =>{
     //todo right now the scene is set to all of person data need to update to specific data later
     // setSceneID(person);
-    console.log("Scene ID set to: ", person.id);
+    // console.log("Scene ID set to: ", person.id);
     // console.log(typeof(person?.lat_lng_point_one));
     handleLatlngObjConvertion([
       person?.lat_lng_point_one, 

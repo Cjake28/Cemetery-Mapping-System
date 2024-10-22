@@ -1,37 +1,50 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FiAlignJustify } from "react-icons/fi";
+import { useState } from 'react';
+import './visitorNavbar.css';
 
-export default function VisitorNabvar() {
+export default function VisitorNavbar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const HandleNavigate_to_login = () =>{
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleNavigateToLogin = () => {
     navigate('/auth/signin');
-  }
+  };
 
   return (
-    <nav className='user-navbar-container'>
-      <ul className='ul-user-navbar'>
-        <li className='li-user-navbar'>
-          <Link
-            to="/visitor"
-            className={`a-user-navbar ${location.pathname === '/visitor' ? 'active' : ''}`}
-          >
-            Virtual Tour
-          </Link>
-        </li>
-        <li className='li-user-navbar'>
-          <Link
-            to="/visitor/vacant-lot"
-            className={`a-user-navbar ${location.pathname === '/visitor/vacant-lot' ? 'active' : ''}`}
-          >
-            Vacant Lot
-          </Link>
-        </li>
+    <nav className='visitor-navbar-container'>
+      <div className='visitor-menu-container'>
+        <div className={`a-visitor-navbar ${location.pathname === '/visitor' ? 'active' : ''}`} onClick={() => navigate('/visitor')}>
+          <p>Virtual Tour</p>
+        </div>
+        <div className={`a-visitor-navbar ${location.pathname === '/visitor/vacant-lot' ? 'active' : ''}`} onClick={() => navigate('/visitor/vacant-lot')}>
+          <p>Vacant Lot</p>
+        </div>
 
-      </ul>
-      <button className='user-navbar-signoutButton' onClick={HandleNavigate_to_login}>
-        Login
-      </button>
+        {/* Desktop-only Login button */}
+        <button className='visitor-navbar-loginButton desktop-login' onClick={handleNavigateToLogin}>Login</button>
+      </div>
+
+      {/* Burger icon for mobile menu */}
+      <FiAlignJustify className='visitor-burger' onClick={toggleMenu} />
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="visitor-mobile-menu">
+          <div className={`a-visitor-navbar ${location.pathname === '/visitor' ? 'active' : ''}`} onClick={() => (navigate('/visitor'), setIsOpen(false))}>
+            <p>Virtual Tour</p>
+          </div>
+          <div className={`a-visitor-navbar ${location.pathname === '/visitor/vacant-lot' ? 'active' : ''}`} onClick={() => ( navigate('/visitor/vacant-lot'), setIsOpen(false))}>
+            <p>Vacant Lot</p>
+          </div>
+          <button className='visitor-navbar-loginButton' onClick={handleNavigateToLogin}>Login</button>
+        </div>
+      )}
     </nav>
   );
 }

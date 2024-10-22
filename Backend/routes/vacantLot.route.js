@@ -11,7 +11,7 @@ import {
 const vacantLotRoute = express.Router();
 
 // Route for getting all vacant lots (admin only, requires token and admin role)
-vacantLotRoute.get('/vacantlots', verifyToken, getVacantLotsController);  // GET all vacant lots
+vacantLotRoute.get('/vacantlots', getVacantLotsController);  // GET all vacant lots
 vacantLotRoute.post('/vacantlots', verifyToken, adminRoleValidate, createVacantLotController);  // Create a new vacant lot
 vacantLotRoute.put('/vacantlots/:id', verifyToken, adminRoleValidate, updateVacantLotController);  // Update an existing vacant lot by ID
 
