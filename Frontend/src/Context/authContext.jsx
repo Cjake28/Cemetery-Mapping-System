@@ -1,8 +1,8 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import axios from 'axios';
 
-const API_URL = "http://localhost:9220/api/auth";
-axios.defaults.withCredentials = true;
+const API_URL = "/api/auth";
+// axios.defaults.withCredentials = true;
 
 // Create the Auth Context
 const AuthContext = createContext();
@@ -85,16 +85,16 @@ export const AuthProvider = ({ children }) => {
   // Check authentication function
   const checkAuth = async () => {
     try {
-      const response = await axios.get(`${API_URL}/check-auth`);
+      const response = await axios.get(`${API_URL}/genggeng`);
+      console.log("checkAuth: ",response);
 
       if(!response.data.success){
         dispatch({ type: 'CHECK_AUTH_FAILURE' });
-        console.log("checkAuth user success false");
+        console.log("checkAuth user false");
         return
       }
-
-      dispatch({ type: 'CHECK_AUTH_SUCCESS', payload: response.data.user });
       console.log("cehckAUth response: ",response)
+      dispatch({ type: 'CHECK_AUTH_SUCCESS', payload: response.data.user });
 
     } catch (error) {
       console.log(error);
@@ -103,7 +103,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signout = async (req, res) => {
+  const signout = async () => {
     try{
       const response = await axios.post(`${API_URL}/signout`);
        dispatch({ type: 'CHECK_AUTH_FAILURE' });

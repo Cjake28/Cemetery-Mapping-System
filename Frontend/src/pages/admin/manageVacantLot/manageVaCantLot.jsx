@@ -16,7 +16,7 @@ export default function ManageVacantLot() {
         queryKey: ['vacantLots'],
         queryFn: async () => {
             try {
-                const response = await axios.get('http://localhost:9220/api/vacantlots');
+                const response = await axios.get('/api/vacantlots');
                 return response.data.data; // Assuming 'vacantLots' is the correct field in your response
             } catch (err) {
                 throw new Error(err.response?.data?.message || 'Failed to fetch vacant lots.');

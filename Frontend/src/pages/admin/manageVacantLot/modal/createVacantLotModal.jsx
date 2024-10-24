@@ -53,7 +53,7 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
         }
 
         try {
-            await axios.post('http://localhost:9220/api/vacantlots', { vacantLotData });
+            await axios.post('/api/vacantlots', { vacantLotData });
             onCreateSuccess();  // Refetch the vacant lots or update the UI
             onClose();  // Close the modal after successful creation
         } catch (err) {

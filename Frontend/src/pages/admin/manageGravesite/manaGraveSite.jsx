@@ -15,7 +15,7 @@ export default function ManageGraveSite() {
     const { data: persons, isLoading, error } = useQuery({
         queryKey: ['persons'],
         queryFn: async () => {
-            const response = await axios.get('http://localhost:9220/api/get-all-person');
+            const response = await axios.get('/api/get-all-person');
             return response.data.persons;
         },
     });
@@ -23,7 +23,7 @@ export default function ManageGraveSite() {
   // Handle person creation without using useMutation (e.g., using axios directly)
     const handleCreatePerson = async (personData) => {
         try {
-            await axios.post('http://localhost:9220/api/admin/create-person', personData);
+            await axios.post('/api/admin/create-person', personData);
         // Optionally refetch the persons data after successful creation
             queryClient.invalidateQueries(['persons']);
         } catch (err) {

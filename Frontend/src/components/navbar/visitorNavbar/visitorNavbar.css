@@ -58,7 +58,7 @@
     right: 3rem;
     height: 75%;
     width: 5.5rem;
-    margin-right: 3rem;
+    /* margin-right: 3rem; */
     border: none;
     border-radius: 8px;
     background-color: #505050;
@@ -71,7 +71,7 @@
 .desktop-login:hover {
     background-color: #696969;
     transform: scale(1.07);
-}
+}   
 
 .visitor-burger {
     display: none;
@@ -101,7 +101,7 @@
     padding: 0.5rem 0;
 }
 
-.visitor-mobile-menu button {
+.visitor-mobile-menu button{
     width: 100%;
     padding: 0.5rem 0;
     background-color: #505050;

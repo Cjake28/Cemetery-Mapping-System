@@ -64,7 +64,7 @@ export default function UpdateGraveLocationModal({ isOpen, onClose, person, onUp
 
         try {
             // Make the API request to update the lat/lng points if validation passes
-            await axios.put(`http://localhost:9220/api/admin/update-lat-lng/${person.id}`, latLng);
+            await axios.put(`/api/admin/update-lat-lng/${person.id}`, latLng);
             onUpdateSuccess();  // Refetch the persons list or update the UI
             onClose();  // Close the modal after successful update
         } catch (err) {

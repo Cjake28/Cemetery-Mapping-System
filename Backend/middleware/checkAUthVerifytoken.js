@@ -1,9 +1,12 @@
 import jwt from "jsonwebtoken";
 
 export const checkAuth_VerifyToken = (req, res, next) => {
-	const token = req.cookies.HimlayanToken;
+	console.log("checkAuth_VerifyToken", req);
+	const token = req.cookies.HimlayanToken || req.headers['authorization'];
+	 console.log("checkAuth_VerifyToken", token);
 	 
 	if (!token){
+		console.log('checkAuth: No token');
 		return res.status(200).json({ success: false, message: "No token" });
 	}
 	
@@ -11,6 +14,7 @@ export const checkAuth_VerifyToken = (req, res, next) => {
 		const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
 		if (!decoded){
+			console.log('checkAuth: invalid Token');
 			return res.status(200).json({ success: false, message: "Invalid token" });
 		}
 

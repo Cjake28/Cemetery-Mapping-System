@@ -111,11 +111,11 @@ export default function App() {
   useEffect(() => {
     checkAuth();
     console.log("app.jsx: checkAuth");
-  },[]);  // Ensure `checkAuth` is stable or memoized
+  },[]);
 
   // Show a loading screen while checking authentication
   if (isCheckingAuth) {
-    return <div>Loading...</div>;
+    return <div>checking Auth...</div>;
   }
 
   return (

@@ -9,7 +9,7 @@ export default function DeleteVacantLotModal({ isOpen, onClose, location, lotID 
         setIsLoading(true); // Set loading to true when request starts
         setErrorMessage(''); // Reset any previous error message
         try {
-            await axios.delete(`http://localhost:9220/api/vacantlots/${lotID}`);
+            await axios.delete(`/api/vacantlots/${lotID}`);
             setTimeout(() => {
                 onClose(); // Close the modal after successful delete
             }, 80);

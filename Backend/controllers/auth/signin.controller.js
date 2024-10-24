@@ -4,12 +4,12 @@ import {getUserName_by_Email, get_id_name_role_Byusername} from '../../models/au
 
 export const signin = async (req, res) =>{
     const {username, password} = req.body;
+    console.log(req);
     console.log("input: ",username, password);
     try{
         if(!username || !password){
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
-        console.log("dito umabot");
         const usernameLower = username.toLowerCase();
         const queryUserName_password = await getUserName_by_Email(usernameLower);
 
@@ -39,8 +39,8 @@ export const signin = async (req, res) =>{
         const userPayload = { userId: userId, name: name, role: role};
 
         generateTokenAndSetCookie(res,userPayload);
-
         res.status(200).json({success:true, message: "signed in successfully", user:userPayload})
+        console.log('Signed-in');
     }catch(err){
         console.log(err);
         throw new Error(err);

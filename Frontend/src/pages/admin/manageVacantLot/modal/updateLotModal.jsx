@@ -71,7 +71,7 @@ export default function UpdateVacantLotModal({ isOpen, onClose, lot, onUpdateSuc
         }
 
         try {
-            const response = await axios.put(`http://localhost:9220/api/vacantlots/${lot.id}`, latLng);
+            const response = await axios.put(`/api/vacantlots/${lot.id}`, latLng);
             onUpdateSuccess();  // Trigger the success callback
             onClose();  // Close the modal
             console.log('Update successful:', response.data);
