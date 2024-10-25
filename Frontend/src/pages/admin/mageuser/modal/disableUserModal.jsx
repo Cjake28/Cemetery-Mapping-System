@@ -10,7 +10,7 @@ export default function DisableUserModal({ isOpen, onClose, name, userID }) {
         setIsLoading(true); // Set loading to true when request starts
         setErrorMessage(''); // Reset any previous error message
         try {
-            await axios.patch('http://localhost:9220/api/admin/disable-user', { userID });
+            await axios.patch('/api/admin/disable-user', { userID });
             onClose(); // Close the modal after submission
         } catch (error) {
             console.error('Error disabling user:', error);

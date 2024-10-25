@@ -8,7 +8,7 @@ const authRoutes = express.Router();
 
 authRoutes.post("/signin",signin);
 
-authRoutes.get("/genggeng", checkAuth_VerifyToken, checkAuth);
+authRoutes.get("/check-auth", checkAuth_VerifyToken, checkAuth);
 authRoutes.post("/signout", verifyToken, signout);
 
 export default authRoutes;

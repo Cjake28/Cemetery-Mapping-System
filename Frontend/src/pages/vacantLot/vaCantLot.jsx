@@ -43,7 +43,7 @@ const VacantLot = () => {
   const { data: vacantLots, isLoading, error, refetch } = useQuery({
     queryKey: ['vacantLots'],
     queryFn: async () => {
-      const response = await axios.get('http://localhost:9220/api/vacantlots');
+      const response = await axios.get('/api/vacantlots');
       return response.data.data;
     },
     refetchOnMount: true,  // Fetch fresh data on every mount

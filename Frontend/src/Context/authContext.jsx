@@ -2,7 +2,7 @@ import React, { createContext, useReducer, useContext } from 'react';
 import axios from 'axios';
 
 const API_URL = "/api/auth";
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 // Create the Auth Context
 const AuthContext = createContext();
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
   // Check authentication function
   const checkAuth = async () => {
     try {
-      const response = await axios.get(`${API_URL}/genggeng`);
+      const response = await axios.get(`${API_URL}/check-auth`);
       console.log("checkAuth: ",response);
 
       if(!response.data.success){

@@ -25,7 +25,7 @@ export default function ModalCreateUser({isOpen, onClose}) {
         setFetchIsLoading(true); // Show loading state while fetching
         try {
             // Send POST request to create user
-            const response = await axios.post('http://localhost:9220/api/admin/create-user', formdata);
+            const response = await axios.post('/api/admin/create-user', formdata);
             
             // If successful, clear the form and any errors
             console.log("User created:", response.data);

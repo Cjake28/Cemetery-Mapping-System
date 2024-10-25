@@ -16,7 +16,7 @@ export default function ManageUsers() {
     }
 
     const handelcheckAuth = async() =>{
-        const response = await axios.get('/api/auth/genggeng', { withCredentials: true })
+        const response = await axios.get('/api/auth/check-auth', { withCredentials: true })
         console.log('checkAuthCLiked: ',response);
     }
     // const [searchQuery, setSearchQuery] = useState('');

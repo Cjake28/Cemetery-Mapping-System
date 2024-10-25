@@ -18,7 +18,7 @@ export default function BurialSearch() {
     const { data: persons, isLoading, error } = useQuery({
     queryKey: ['persons'],
     queryFn: async () => {
-      const response = await axios.get('http://localhost:9220/api/get-all-person');
+      const response = await axios.get('/api/get-all-person');
       console.log("tae");
       return response.data.persons; // Assuming the data is under `data`
     }

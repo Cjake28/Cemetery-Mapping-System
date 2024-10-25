@@ -23,7 +23,7 @@ export default function UpdatePasswordModal({ isOpen, onClose, name, userID }) {
 
         try {
             setLoading(true); // Start loading
-            await axios.patch('http://localhost:9220/api/admin/update-password', { 
+            await axios.patch('/api/admin/update-password', { 
                 userID, 
                 newPassword 
             });

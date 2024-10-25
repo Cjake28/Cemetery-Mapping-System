@@ -11,7 +11,7 @@ export default function EnableUserModal({ isOpen, onClose, name, userID }) {
         setErrorMessage(''); // Reset error message
 
         try {
-            await axios.patch('http://localhost:9220/api/admin/reverify-user', { userID });
+            await axios.patch('/api/admin/reverify-user', { userID });
             onClose();
         } catch (error) {
             console.error('Error re-verifying user:', error);
