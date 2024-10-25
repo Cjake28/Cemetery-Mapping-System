@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { FiAlignJustify } from "react-icons/fi";
 import { useAuth } from '../../../Context/authContext.jsx';
-import './userNavbar.css';
+import './UserNavbar.css';
 import { useState } from 'react';
 
 export default function UserNavbar() {
