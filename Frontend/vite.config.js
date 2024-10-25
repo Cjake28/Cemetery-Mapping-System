@@ -6,7 +6,6 @@ export default defineConfig({
   server:{
     proxy:{
       '/api': 'https://cemetery-mapping-system.onrender.com',
-      changeOrigin: true,
     }
   },
   plugins: [react()],

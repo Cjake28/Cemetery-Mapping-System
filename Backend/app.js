@@ -12,7 +12,7 @@ dotenv.config();
 export const app = express();
 
 app.use(cors({
-    origin: 'https://cemetery-mapping-system.vercel.app/', // your frontend origin
+    origin: 'https://cemetery-mapping-system.vercel.app', // your frontend origin
     credentials: true // This allows cookies to be sent
   }));
   
