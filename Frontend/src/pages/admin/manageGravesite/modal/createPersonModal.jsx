@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './createPersonModal.css';
+import './createPersonmodal.css';
 
 export default function CreatePersonModal({ onClose, onCreatePerson }) {
   const [formData, setFormData] = useState({
