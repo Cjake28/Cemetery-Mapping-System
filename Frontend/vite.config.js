@@ -8,7 +8,6 @@ export default defineConfig({
       '/api': {
         target: 'https://cemetery-mapping-system.onrender.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

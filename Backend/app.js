@@ -11,11 +11,17 @@ dotenv.config();
 
 export const app = express();
 
+const allowedOrigins = ['https://himalayan.onrender.com', 'https://cemetery-mapping-system.vercel.app'];
 app.use(cors({
-    origin: 'https://himalayan.onrender.com', // your frontend origin
-    credentials: true // This allows cookies to be sent
-  }));
-  
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(cookieParser());
