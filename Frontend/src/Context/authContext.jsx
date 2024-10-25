@@ -78,6 +78,7 @@ export const AuthProvider = ({ children }) => {
         type: 'LOGIN_FAILURE',
         payload: error.response?.data?.message || 'Error logging in'
       });
+      console.log(error);
       throw error;
     }
   };
