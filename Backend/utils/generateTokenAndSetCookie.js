@@ -10,7 +10,7 @@ export const generateTokenAndSetCookie = (res, userPayload) => {
     res.cookie("HimlayanToken", token, {
         httpOnly: false,
         secure:true,
-        strict:'None',
+        strict:'none',
         // domain: '4de5-136-158-61-27.ngrok-free.app', 
     });
 
