@@ -8,10 +8,10 @@ export const generateTokenAndSetCookie = (res, userPayload) => {
     );
 
     res.cookie("HimlayanToken", token, {
-        httpOnly: false,
+        httpOnly: true,
         secure:true,
         strict:'none',
-        // domain: '4de5-136-158-61-27.ngrok-free.app', 
+        domain: 'cemetery-mapping-system.onrender.com', 
     });
 
     return token;
