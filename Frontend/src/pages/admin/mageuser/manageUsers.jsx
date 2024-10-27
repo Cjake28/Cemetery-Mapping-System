@@ -6,7 +6,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import ModalCreateUser from './modal/createUserModal.jsx'; // Import the modal component
 import { useAuth } from '../../../Context/authContext.jsx';
-    const API_URL = import.meta.env.VITE_BACKEND_URL;
+
+    // const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function ManageUsers() {
     const { checkAuth, isCheckingAuth } = useAuth();

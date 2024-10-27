@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import axios from 'axios';
 
-// const API_URL = import.meta.env.VITE_BACKEND_URL;
+const API_URL = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.withCredentials = true;
 
 // Create the Auth Context
