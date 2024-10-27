@@ -11,6 +11,7 @@ export const generateTokenAndSetCookie = (res, userPayload) => {
         httpOnly: true,
         secure:true,
         strict:'none',
+        sameSite: "none",
         domain: 'cemetery-mapping-system.onrender.com', 
     });
 
