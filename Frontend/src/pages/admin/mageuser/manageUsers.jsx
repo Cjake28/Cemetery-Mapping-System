@@ -6,17 +6,18 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import ModalCreateUser from './modal/createUserModal.jsx'; // Import the modal component
 import { useAuth } from '../../../Context/authContext.jsx';
+    const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function ManageUsers() {
     const { checkAuth, isCheckingAuth } = useAuth();
     const handlerequest = async() =>{
-        await axios.get('https://cemetery-mapping-system.onrender.com/api/checkcookies', { withCredentials: true })
+        await axios.get(`${API_URL}/api/checkcookies`, { withCredentials: true })
 
         console.log('clicked');
     }
 
     const handelcheckAuth = async() =>{
-        const response = await axios.get('https://cemetery-mapping-system.onrender.com/api/auth/check-auth', { withCredentials: true })
+        const response = await axios.get(`${API_URL}/api/auth/check-auth`, { withCredentials: true })
         console.log('checkAuthCLiked: ',response);
     }
     // const [searchQuery, setSearchQuery] = useState('');
