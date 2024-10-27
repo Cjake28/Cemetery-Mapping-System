@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function DeletePersonModal({ isOpen, onClose, name, personID }) {
     const [errorMessage, setErrorMessage] = useState(''); // State to track error messages
     const [isLoading, setIsLoading] = useState(false); // State to show loading during the request
@@ -9,7 +11,7 @@ export default function DeletePersonModal({ isOpen, onClose, name, personID }) {
         setIsLoading(true); // Set loading to true when request starts
         setErrorMessage(''); // Reset any previous error message
         try {
-            await axios.delete(`/api/admin/delete-person/${personID}` );
+            await axios.delete(`${API_URL}/api/admin/delete-person/${personID}` );
             setTimeout(function() {
                 onClose();
             }, 80)

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './deletelotmodal.css';
+
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function DeleteVacantLotModal({ isOpen, onClose, location, lotID }) {
     const [errorMessage, setErrorMessage] = useState(''); // State to track error messages
     const [isLoading, setIsLoading] = useState(false); // State to show loading during the request
@@ -9,7 +12,7 @@ export default function DeleteVacantLotModal({ isOpen, onClose, location, lotID 
         setIsLoading(true); // Set loading to true when request starts
         setErrorMessage(''); // Reset any previous error message
         try {
-            await axios.delete(`/api/vacantlots/${lotID}`);
+            await axios.delete(`${API_URL}/api/vacantlots/${lotID}`);
             setTimeout(() => {
                 onClose(); // Close the modal after successful delete
             }, 80);

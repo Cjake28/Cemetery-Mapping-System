@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function BurialSearch() {
   const {requestLocationPermission} = GeolocationContext();
 
@@ -18,7 +20,7 @@ export default function BurialSearch() {
     const { data: persons, isLoading, error } = useQuery({
     queryKey: ['persons'],
     queryFn: async () => {
-      const response = await axios.get('/api/get-all-person');
+      const response = await axios.get(`${API_URL}/api/get-all-person`);
       console.log("tae");
       return response.data.persons; // Assuming the data is under `data`
     }

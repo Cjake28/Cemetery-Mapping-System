@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './enableUserModal.css';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function EnableUserModal({ isOpen, onClose, name, userID }) {
     const [errorMessage, setErrorMessage] = useState(''); // State for error messages
     const [isLoading, setIsLoading] = useState(false); // State for loading
@@ -11,7 +13,7 @@ export default function EnableUserModal({ isOpen, onClose, name, userID }) {
         setErrorMessage(''); // Reset error message
 
         try {
-            await axios.patch('/api/admin/reverify-user', { userID });
+            await axios.patch(`${API_URL}/api/admin/reverify-user`, { userID });
             onClose();
         } catch (error) {
             console.error('Error re-verifying user:', error);

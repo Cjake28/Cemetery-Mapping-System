@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './updatePasswordModal.css';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function UpdatePasswordModal({ isOpen, onClose, name, userID }) {
     const [newPassword, setNewPassword] = useState('');
     const [error, setError] = useState(''); // Error state for input validation
@@ -23,7 +25,7 @@ export default function UpdatePasswordModal({ isOpen, onClose, name, userID }) {
 
         try {
             setLoading(true); // Start loading
-            await axios.patch('/api/admin/update-password', { 
+            await axios.patch(`${API_URL}/api/admin/update-password`, { 
                 userID, 
                 newPassword 
             });

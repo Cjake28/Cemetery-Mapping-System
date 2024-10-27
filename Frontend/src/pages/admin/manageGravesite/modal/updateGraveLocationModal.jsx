@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import './updatePersonLatLng.css';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function UpdateGraveLocationModal({ isOpen, onClose, person, onUpdateSuccess }) {
     const [latLng, setLatLng] = useState({
         lat_lng_point_one: person?.lat_lng_point_one || '',
@@ -64,7 +66,7 @@ export default function UpdateGraveLocationModal({ isOpen, onClose, person, onUp
 
         try {
             // Make the API request to update the lat/lng points if validation passes
-            await axios.put(`/api/admin/update-lat-lng/${person.id}`, latLng);
+            await axios.put(`${API_URL}/api/admin/update-lat-lng/${person.id}`, latLng);
             onUpdateSuccess();  // Refetch the persons list or update the UI
             onClose();  // Close the modal after successful update
         } catch (err) {

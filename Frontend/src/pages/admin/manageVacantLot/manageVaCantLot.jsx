@@ -5,6 +5,8 @@ import axios from 'axios';
 import VacantLOtTable from './table/vacantLotTable.jsx';
 import CreateVacantLotModal from './modal/createVacantLotModal.jsx';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function ManageVacantLot() {
     const [searchQuery, setSearchQuery] = useState('');
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -16,7 +18,7 @@ export default function ManageVacantLot() {
         queryKey: ['vacantLots'],
         queryFn: async () => {
             try {
-                const response = await axios.get('/api/vacantlots');
+                const response = await axios.get(`${API_URL}/api/vacantlots`);
                 return response.data.data; // Assuming 'vacantLots' is the correct field in your response
             } catch (err) {
                 throw new Error(err.response?.data?.message || 'Failed to fetch vacant lots.');

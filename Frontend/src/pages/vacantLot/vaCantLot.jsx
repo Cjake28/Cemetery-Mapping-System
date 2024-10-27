@@ -3,6 +3,8 @@ import { GoogleMap, useJsApiLoader, Polygon } from '@react-google-maps/api';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 const containerStyle = {
   width: '100vw',
   height: '100vh',
@@ -43,7 +45,7 @@ const VacantLot = () => {
   const { data: vacantLots, isLoading, error, refetch } = useQuery({
     queryKey: ['vacantLots'],
     queryFn: async () => {
-      const response = await axios.get('/api/vacantlots');
+      const response = await axios.get(`${API_URL}/api/vacantlots`);
       return response.data.data;
     },
     refetchOnMount: true,  // Fetch fresh data on every mount

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import './createvacantModal.css';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess }) {
     const [vacantLotData, setVacantLotData] = useState({
         location: '',
@@ -53,7 +55,7 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
         }
 
         try {
-            await axios.post('/api/vacantlots', { vacantLotData });
+            await axios.post(`${API_URL}/api/vacantlots`, { vacantLotData });
             onCreateSuccess();  // Refetch the vacant lots or update the UI
             onClose();  // Close the modal after successful creation
         } catch (err) {

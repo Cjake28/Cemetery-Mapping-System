@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './disableUserModal.css';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function DisableUserModal({ isOpen, onClose, name, userID }) {
     const [errorMessage, setErrorMessage] = useState(''); // State to track error messages
     const [isLoading, setIsLoading] = useState(false); // State to show loading during the request
@@ -10,7 +12,7 @@ export default function DisableUserModal({ isOpen, onClose, name, userID }) {
         setIsLoading(true); // Set loading to true when request starts
         setErrorMessage(''); // Reset any previous error message
         try {
-            await axios.patch('/api/admin/disable-user', { userID });
+            await axios.patch(`${API_URL}/api/admin/disable-user`, { userID });
             onClose(); // Close the modal after submission
         } catch (error) {
             console.error('Error disabling user:', error);

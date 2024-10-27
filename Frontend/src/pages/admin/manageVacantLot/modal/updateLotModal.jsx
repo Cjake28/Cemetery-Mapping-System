@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import './updatelotmodal.css';
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function UpdateVacantLotModal({ isOpen, onClose, lot, onUpdateSuccess }) {
     const [latLng, setLatLng] = useState({
         location: lot?.location || '',
@@ -71,7 +73,7 @@ export default function UpdateVacantLotModal({ isOpen, onClose, lot, onUpdateSuc
         }
 
         try {
-            const response = await axios.put(`/api/vacantlots/${lot.id}`, latLng);
+            const response = await axios.put(`${API_URL}/api/vacantlots/${lot.id}`, latLng);
             onUpdateSuccess();  // Trigger the success callback
             onClose();  // Close the modal
             console.log('Update successful:', response.data);

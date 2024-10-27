@@ -3,6 +3,8 @@ import './modal.css';
 import axios from 'axios';
 import { Loader } from "lucide-react";
 
+const API_URL = import.meta.env.VITE_BACKEND_URL;
+
 export default function ModalCreateUser({isOpen, onClose}) {
     const [formData, setFormData] = useState({ name: '', username: '', password: ''});
     const [errors, setErrors] = useState({});
@@ -25,7 +27,7 @@ export default function ModalCreateUser({isOpen, onClose}) {
         setFetchIsLoading(true); // Show loading state while fetching
         try {
             // Send POST request to create user
-            const response = await axios.post('/api/admin/create-user', formdata);
+            const response = await axios.post(`${API_URL}/api/admin/create-user`, formdata);
             
             // If successful, clear the form and any errors
             console.log("User created:", response.data);
