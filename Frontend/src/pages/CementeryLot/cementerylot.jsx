@@ -1,5 +1,4 @@
 import {useEffect,useState} from 'react';
-import { FaMapMarkerAlt } from 'react-icons/fa';
 import { GoogleMap, useJsApiLoader, Polygon, Marker, Rectangle } from '@react-google-maps/api';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
@@ -30,18 +29,22 @@ const currentPosition = {
 
 // Define polygon coordinates
 const polygonPath = [
-  { lat: 14.888419, lng: 120.779195 },
-  { lat: 14.888506, lng: 120.779484 },
-  { lat: 14.888511, lng: 120.779491 },
-  { lat: 14.888521, lng: 120.779501 },
-  { lat: 14.888558, lng: 120.779509 },
-  { lat: 14.888750, lng: 120.779469 },
-  { lat: 14.888907, lng: 120.779440 },
-  { lat: 14.889165, lng: 120.779383 },
-  { lat: 14.889235, lng: 120.779327 },
-  { lat: 14.889100, lng: 120.779037 },
-  { lat: 14.888964, lng: 120.779094 },
-  { lat: 14.888490, lng: 120.779125 },
+  { lat: 14.904080524364822, lng: 120.788730885781 },
+  { lat: 14.904033633321532, lng: 120.78930734470765 },
+  { lat: 14.90356284667923, lng: 120.78913654206295 },
+  { lat: 14.90375603813445, lng: 120.78858919722349 },
+  // { lat: 14.888419, lng: 120.779195 },
+  // { lat: 14.888506, lng: 120.779484 },
+  // { lat: 14.888511, lng: 120.779491 },
+  // { lat: 14.888521, lng: 120.779501 },
+  // { lat: 14.888558, lng: 120.779509 },
+  // { lat: 14.888750, lng: 120.779469 },
+  // { lat: 14.888907, lng: 120.779440 },
+  // { lat: 14.889165, lng: 120.779383 },
+  // { lat: 14.889235, lng: 120.779327 },
+  // { lat: 14.889100, lng: 120.779037 },
+  // { lat: 14.888964, lng: 120.779094 },
+  // { lat: 14.888490, lng: 120.779125 },
 ];
 
 const point = {
