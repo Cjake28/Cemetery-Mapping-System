@@ -26,7 +26,7 @@ export default function ManageGraveSite() {
     const handleCreatePerson = async (personData) => {
         try {
             await axios.post(`${API_URL}/api/admin/create-person`, personData);
-        // Optionally refetch the persons data after successful creation
+            //refetch the persons data after successful creation
             queryClient.invalidateQueries(['persons']);
         } catch (err) {
             console.error('Error creating person:', err);

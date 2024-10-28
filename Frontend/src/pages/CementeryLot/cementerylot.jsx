@@ -29,22 +29,20 @@ const currentPosition = {
 
 // Define polygon coordinates
 const polygonPath = [
-  { lat: 14.904080524364822, lng: 120.788730885781 },
-  { lat: 14.904033633321532, lng: 120.78930734470765 },
-  { lat: 14.90356284667923, lng: 120.78913654206295 },
-  { lat: 14.90375603813445, lng: 120.78858919722349 },
-  // { lat: 14.888419, lng: 120.779195 },
-  // { lat: 14.888506, lng: 120.779484 },
-  // { lat: 14.888511, lng: 120.779491 },
-  // { lat: 14.888521, lng: 120.779501 },
-  // { lat: 14.888558, lng: 120.779509 },
-  // { lat: 14.888750, lng: 120.779469 },
-  // { lat: 14.888907, lng: 120.779440 },
-  // { lat: 14.889165, lng: 120.779383 },
-  // { lat: 14.889235, lng: 120.779327 },
-  // { lat: 14.889100, lng: 120.779037 },
-  // { lat: 14.888964, lng: 120.779094 },
-  // { lat: 14.888490, lng: 120.779125 },
+  //for testing
+  // { lat: 14.904080524364822, lng: 120.788730885781 },
+  // { lat: 14.904033633321532, lng: 120.78930734470765 },
+  // { lat: 14.90356284667923, lng: 120.78913654206295 },
+  // { lat: 14.90375603813445, lng: 120.78858919722349 },
+
+  // for prduction
+  { lat: 14.8888116371095, lng: 120.77787947308613 },
+  { lat: 14.890034439165516, lng: 120.78035776034305 },
+  { lat: 14.88959357246283, lng: 120.78062391085757 },
+  { lat: 14.888521304435601, lng: 120.78041934311165 },
+  { lat: 14.887797921005744, lng: 120.77949338482969 },
+  { lat: 14.888037909958108, lng: 120.77858975718522 },
+
 ];
 
 const point = {
@@ -67,33 +65,15 @@ const polygonOptions = {
   fillOpacity: 0.5,
 };
 
-
-// Define rectangle bounds
-// const rectangleBounds = {
-//   north: 14.888954,
-//   south: 14.888919,
-//   east: 120.779395,
-//   west: 120.779360,
-// };
-
-// Define rectangle options
-// const rectangleOptions = {
-//   strokeColor: '#FF0000',
-//   strokeOpacity: 0.1,
-//   strokeWeight: 1,
-//   fillColor: '#FF0000',
-//   fillOpacity: 0.15,
-// };
-
 const options = {
   mapId:'31df144c8f9b66d4',
   disableDefaultUI: true,  // Disable default UI controls
   mapTypeControl: false,   // Hide map type controls
   mapTypeId: "satellite",  // Satellite view
-  // restriction: {
-  //   latLngBounds: mapBounds,
-  //   strictBounds: true, // Enforce the restriction
-  // }
+  restriction: {
+    latLngBounds: mapBounds,
+    strictBounds: true, // Enforce the restriction
+  }
 };
 
 const Cementerylot = () => {
@@ -131,7 +111,7 @@ const Cementerylot = () => {
   }
 
     const customMarkerIcon = {
-    url: markerSvg, // This is the imported SVG file
+    url: markerSvg, 
     scaledSize: new window.google.maps.Size(25, 25),
   };
 
@@ -152,8 +132,6 @@ const Cementerylot = () => {
           position={{ lat: location.latitude, lng: location.longitude }}
           icon={customMarkerIcon}
         />}
-        {/* Rectangle Component */}
-        {/* <Rectangle bounds={rectangleBounds} options={rectangleOptions} /> */}
       </GoogleMap>
     </div>
   );

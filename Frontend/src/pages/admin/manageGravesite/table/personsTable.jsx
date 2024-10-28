@@ -2,8 +2,10 @@ import { BsFillTrashFill, BsExclamationCircle, BsGeoAltFill } from 'react-icons/
 import { useState } from 'react';
 import DeletePersonModal from '../modal/deletePersonModal.jsx';
 import UpdateGraveLocationModal from '../modal/updateGraveLocationModal.jsx';  // Import the new modal
+import {useQueryClient } from '@tanstack/react-query';
 
 export default function PersonsTable({ filteredPersons }) {
+    const queryClient = useQueryClient()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -21,7 +23,7 @@ export default function PersonsTable({ filteredPersons }) {
 
     const handleUpdateSuccess = () => {
         setIsGeoModalOpen(false);  // Close the modal after successful update
-        // Optionally refetch data or update UI to reflect the changes
+        queryClient.invalidateQueries(['persons']);
     };
 
     return (

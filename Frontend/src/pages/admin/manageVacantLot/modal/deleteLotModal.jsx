@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './deletelotmodal.css';
+import {useQueryClient} from '@tanstack/react-query';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function DeleteVacantLotModal({ isOpen, onClose, location, lotID }) {
+    const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState(''); // State to track error messages
     const [isLoading, setIsLoading] = useState(false); // State to show loading during the request
 
@@ -13,6 +15,7 @@ export default function DeleteVacantLotModal({ isOpen, onClose, location, lotID 
         setErrorMessage(''); // Reset any previous error message
         try {
             await axios.delete(`${API_URL}/api/vacantlots/${lotID}`);
+            queryClient.invalidateQueries(['vacantLots']);
             setTimeout(() => {
                 onClose(); // Close the modal after successful delete
             }, 80);

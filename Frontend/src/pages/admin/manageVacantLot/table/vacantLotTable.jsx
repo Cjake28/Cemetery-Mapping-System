@@ -3,10 +3,12 @@ import { useState } from 'react';
 import UpdateVacantLotModal from '../modal/updateLotModal.jsx';
 import DeleteVacantLotModal from '../modal/deleteLotModal.jsx'
 import './vacantlottbale.css';
+import {useQueryClient } from '@tanstack/react-query';
 // import DeleteVacantLotModal from '../modal/DeleteVacantLotModal.jsx';  // Assume you have a delete modal as well
 
 
 export default function VacantLotTable({ filteredLots }) {
+    const queryClient = useQueryClient();
     const [selectedLot, setSelectedLot] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isGeoModalOpen, setIsGeoModalOpen] = useState(false);
@@ -23,7 +25,8 @@ export default function VacantLotTable({ filteredLots }) {
 
     const handleUpdateSuccess = () => {
         setIsGeoModalOpen(false);  // Close the modal after successful update
-        // Optionally refetch data or update UI to reflect the changes
+        //refetch data or update UI to reflect the changes
+        queryClient.invalidateQueries(['vacantLots']);
     };
 
     const handelupdatemodalClose = () => {
