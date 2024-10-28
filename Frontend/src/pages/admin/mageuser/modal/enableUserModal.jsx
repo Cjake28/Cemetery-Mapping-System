@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './enableUserModal.css';
 import axios from 'axios';
+import {useQueryClient } from '@tanstack/react-query';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-export default function EnableUserModal({ isOpen, onClose, name, userID }) {
+export default function EnableUserModal({ isOpen, onClose, name, userID }){
+    const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState(''); // State for error messages
     const [isLoading, setIsLoading] = useState(false); // State for loading
 
@@ -14,6 +16,8 @@ export default function EnableUserModal({ isOpen, onClose, name, userID }) {
 
         try {
             await axios.patch(`${API_URL}/api/admin/reverify-user`, { userID });
+            queryClient.invalidateQueries(['verifiedUser']);
+            queryClient.invalidateQueries(['UnVerifiedUser']);
             onClose();
         } catch (error) {
             console.error('Error re-verifying user:', error);

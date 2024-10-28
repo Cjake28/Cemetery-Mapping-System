@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import './disableUserModal.css';
 import axios from 'axios';
+import {useQueryClient } from '@tanstack/react-query';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function DisableUserModal({ isOpen, onClose, name, userID }) {
+    const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState(''); // State to track error messages
     const [isLoading, setIsLoading] = useState(false); // State to show loading during the request
+
 
     const handleDisable = async () => {
         setIsLoading(true); // Set loading to true when request starts
         setErrorMessage(''); // Reset any previous error message
         try {
             await axios.patch(`${API_URL}/api/admin/disable-user`, { userID });
+            queryClient.invalidateQueries(['verifiedUser']);
+            queryClient.invalidateQueries(['UnVerifiedUser']);
             onClose(); // Close the modal after submission
         } catch (error) {
             console.error('Error disabling user:', error);

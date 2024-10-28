@@ -47,6 +47,10 @@ export default function ManageUsers() {
         }
     });
 
+    const resetQueries = () => {
+        queryClient.invalidateQueries(['verifiedUser']);
+    };
+
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
     };
@@ -108,6 +112,7 @@ export default function ManageUsers() {
             <ModalCreateUser 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)}
+                resetQueries={resetQueries}
             />
         </div>
     );
