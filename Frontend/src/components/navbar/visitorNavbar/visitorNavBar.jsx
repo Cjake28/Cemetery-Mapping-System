@@ -15,6 +15,12 @@ export default function VisitorNavbar() {
   const handleNavigateToLogin = () => {
     navigate('/auth/signin');
   };
+  
+  const handelnavbarNav = (page) => {
+    navigate(page);
+    toggleMenu();
+  }
+  
 
   return (
     <nav className='visitor-navbar-container'>
@@ -36,10 +42,10 @@ export default function VisitorNavbar() {
       {/* Mobile menu */}
       {isOpen && (
         <div className="visitor-mobile-menu">
-          <div className={`a-visitor-navbar ${location.pathname === '/visitor' ? 'active' : ''}`} onClick={() => (navigate('/visitor'), setIsOpen(false))}>
+          <div className={`a-visitor-navbar ${location.pathname === '/visitor' ? 'active' : ''}`} onClick={() => handelnavbarNav('/visitor')}>
             <p>Virtual Tour</p>
           </div>
-          <div className={`a-visitor-navbar ${location.pathname === '/visitor/vacant-lot' ? 'active' : ''}`} onClick={() => ( navigate('/visitor/vacant-lot'), setIsOpen(false))}>
+          <div className={`a-visitor-navbar ${location.pathname === '/visitor/vacant-lot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/visitor/vacant-lot')}>
             <p>Vacant Lot</p>
           </div>
           <button className='visitor-navbar-loginButton' onClick={handleNavigateToLogin}>Login</button>

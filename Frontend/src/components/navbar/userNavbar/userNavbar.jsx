@@ -10,9 +10,15 @@ export default function UserNavbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
+ 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+  
+  const handelnavbarNav = (page) => {
+    navigate(page);
+    toggleMenu();
+  }
 
   return (
     <nav className='user-navbar-container'>
@@ -37,13 +43,13 @@ export default function UserNavbar() {
       {/* Mobile menu */}
       {isOpen && (
         <div className="user-mobile-menu">
-          <div className={`a-user-navbar ${location.pathname === '/user' ? 'active' : ''}`} onClick={() => navigate('/user')}>
+          <div className={`a-user-navbar ${location.pathname === '/user' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user')}>
             <p>Burial Search</p>
           </div>
-          <div className={`a-user-navbar ${location.pathname === '/user/cemeterylot' ? 'active' : ''}`} onClick={() => navigate('/user/cemeterylot')}>
+          <div className={`a-user-navbar ${location.pathname === '/user/cemeterylot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user/cemeterylot')}>
             <p>Cemetery Lot</p>
           </div>
-          <div className={`a-user-navbar ${location.pathname === '/user/VirtualTour' ? 'active' : ''}`} onClick={() => navigate('/user/VirtualTour')}>
+          <div className={`a-user-navbar ${location.pathname === '/user/VirtualTour' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user/VirtualTour')}>
             <p>Virtual Tour</p>
           </div>
           <button className='user-navbar-signoutButton' onClick={signout}>Sign out</button>
