@@ -7,6 +7,7 @@ import axios from 'axios';
 import ModalCreateUser from './modal/createUserModal.jsx'; // Import the modal component
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
+axios.defaults.withCredentials = true;
 
 export default function ManageUsers() {
     const [searchQuery, setSearchQuery] = useState('');

@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken'
 
 export const generateTokenAndSetCookie = (res, userPayload) => {
     const token = jwt.sign(userPayload, process.env.JWT_SECRET,
-        // {
-        //     expiresIn:"30d"
-        // } 
+        {
+            expiresIn:"30d"
+        } 
     );
 
     res.cookie("HimlayanToken", token, {

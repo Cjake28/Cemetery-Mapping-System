@@ -40,7 +40,6 @@ export const signin = async (req, res) =>{
 
         generateTokenAndSetCookie(res,userPayload);
         res.status(200).json({success:true, message: "signed in successfully", user:userPayload})
-        console.log('Signed-in');
     }catch(err){
         console.log(err);
         throw new Error(err);
