@@ -115,7 +115,7 @@ const Cementerylot = () => {
     scaledSize: new window.google.maps.Size(25, 25),
   };
 
-  return (
+  return(
     <div style={{ height: '100vh', width: '100vw' }}>
       <GoogleMap
         zoom={24} // Adjusted zoom to better see the shapes
@@ -126,7 +126,7 @@ const Cementerylot = () => {
         {/* Polygon Component */}
         {locationContext && <Polygon path={locationContext} options={polygonOptions} />}
 
-        <Polygon path={polygonPath} options={polygonOptions}/>
+        {/* <Polygon path={polygonPath} options={polygonOptions}/> */}
         
         {insideCemetery && location && <Marker
           position={{ lat: location.latitude, lng: location.longitude }}
