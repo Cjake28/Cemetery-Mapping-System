@@ -90,10 +90,10 @@ export async function deletePerson(req, res) {
 
 export async function updateLatLngPoints(req, res) {
     const { id } = req.params;  // Get the gravesite ID from the request params
-    const { lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four } = req.body;  // Get the new lat/long points from the request body
+    const { center_lat_lng} = req.body;  // Get the new lat/long points from the request body
 
     // Validate the input
-    if (!lat_lng_point_one || !lat_lng_point_two || !lat_lng_point_three || !lat_lng_point_four) {
+    if (!center_lat_lng) {
         return res.status(400).json({
             success: false,
             message: 'Please provide all four lat/lng points',
@@ -102,7 +102,7 @@ export async function updateLatLngPoints(req, res) {
 
     try {
         // Update the lat/lng points in the database
-        const updateSuccess = await updateLatLngPointsInDB(id, lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four);
+        const updateSuccess = await updateLatLngPointsInDB(id, center_lat_lng);
 
         if (!updateSuccess) {
             return res.status(404).json({

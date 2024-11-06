@@ -7,19 +7,11 @@ const API_URL = import.meta.env.VITE_BACKEND_URL;
 export default function UpdateVacantLotModal({ isOpen, onClose, lot, onUpdateSuccess }) {
     const [latLng, setLatLng] = useState({
         location: lot?.location || '',
-        lat_lng_point_one: lot?.lat_lng_point_one || '',
-        lat_lng_point_two: lot?.lat_lng_point_two || '',
-        lat_lng_point_three: lot?.lat_lng_point_three || '',
-        lat_lng_point_four: lot?.lat_lng_point_four || '',
         lat_lng_point_center: lot?.lat_lng_point_center || ''
     });
 
     const [errors, setErrors] = useState({
         location: '',
-        lat_lng_point_one: '',
-        lat_lng_point_two: '',
-        lat_lng_point_three: '',
-        lat_lng_point_four: '',
         lat_lng_point_center: ''
     });
 
@@ -43,24 +35,12 @@ export default function UpdateVacantLotModal({ isOpen, onClose, lot, onUpdateSuc
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { location, lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four, lat_lng_point_center } = latLng;
+        const { location, lat_lng_point_center } = latLng;
         const newErrors = {};
 
         // Validate fields
         if (!location) {
             newErrors.location = 'Location is required';
-        }
-        if (!isValidLatLng(lat_lng_point_one)) {
-            newErrors.lat_lng_point_one = 'Invalid Latitude/Longitude for Point 1';
-        }
-        if (!isValidLatLng(lat_lng_point_two)) {
-            newErrors.lat_lng_point_two = 'Invalid Latitude/Longitude for Point 2';
-        }
-        if (!isValidLatLng(lat_lng_point_three)) {
-            newErrors.lat_lng_point_three = 'Invalid Latitude/Longitude for Point 3';
-        }
-        if (!isValidLatLng(lat_lng_point_four)) {
-            newErrors.lat_lng_point_four = 'Invalid Latitude/Longitude for Point 4';
         }
         if (!isValidLatLng(lat_lng_point_center)) {
             newErrors.lat_lng_point_center = 'Invalid Latitude/Longitude for Center Point';
@@ -85,10 +65,6 @@ export default function UpdateVacantLotModal({ isOpen, onClose, lot, onUpdateSuc
     const handleCancel = () => {
         setErrors({
             location: '',
-            lat_lng_point_one: '',
-            lat_lng_point_two: '',
-            lat_lng_point_three: '',
-            lat_lng_point_four: '',
             lat_lng_point_center: ''
         });
         onClose();
@@ -112,47 +88,6 @@ export default function UpdateVacantLotModal({ isOpen, onClose, lot, onUpdateSuc
                         />
                     </label>
                     <label>
-                        Latitude/Longitude Point 1:
-                        {errors.lat_lng_point_one && <p className="error-text">{errors.lat_lng_point_one}</p>}
-                        <input
-                            type="text"
-                            name="lat_lng_point_one"
-                            value={latLng.lat_lng_point_one}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label>
-                        Latitude/Longitude Point 2:
-                        {errors.lat_lng_point_two && <p className="error-text">{errors.lat_lng_point_two}</p>}
-                        <input
-                            type="text"
-                            name="lat_lng_point_two"
-                            value={latLng.lat_lng_point_two}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label>
-                        Latitude/Longitude Point 3:
-                        {errors.lat_lng_point_three && <p className="error-text">{errors.lat_lng_point_three}</p>}
-                        <input
-                            type="text"
-                            name="lat_lng_point_three"
-                            value={latLng.lat_lng_point_three}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label>
-                        Latitude/Longitude Point 4:
-                        {errors.lat_lng_point_four && <p className="error-text">{errors.lat_lng_point_four}</p>}
-                        <input
-                            type="text"
-                            name="lat_lng_point_four"
-                            value={latLng.lat_lng_point_four}
-                            onChange={handleInputChange}
-
-                        />
-                    </label>
-                    <label>
                         Center Point:
                         {errors.lat_lng_point_center && <p className="error-text">{errors.lat_lng_point_center}</p>}
                         <input
@@ -160,7 +95,6 @@ export default function UpdateVacantLotModal({ isOpen, onClose, lot, onUpdateSuc
                             name="lat_lng_point_center"
                             value={latLng.lat_lng_point_center}
                             onChange={handleInputChange}
-
                         />
                     </label>
                     <div className="modal-actions">

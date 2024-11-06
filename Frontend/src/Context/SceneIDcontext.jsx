@@ -5,14 +5,15 @@ const LocationContext = createContext();
 export function LocationContextPRovider({ children }) {
   const [locationContext, setLocationCon] = useState(null);
 
-  const handleLatlngObjConvertion = (array) => {
-    const latLngObjects = array.map(coordinate => {
-        const [lat, lng] = coordinate.split(',').map(Number); 
-        return { lat, lng };  
-    });
+  const handleLatlngObjConvertion = (coordinate) => {
+    // Split the coordinate and map it to lat/lng
+  const [lat, lng] = coordinate.split(',').map(Number); 
+  const latLngObject = { lat, lng };
     
-    console.log("Converted lat/lng objects: ", latLngObjects);
-    setLocationCon(latLngObjects);
+  console.log("Converted lat/lng object: ", latLngObject);
+
+  // Update the context with the new lat/lng object
+  setLocationCon(latLngObject);
 }
 
 

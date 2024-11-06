@@ -62,19 +62,15 @@ export async function findPersonInDB(name, surname, date_of_birth, date_of_death
     }
 }
 
-
 // Add to your model file
-export async function updateLatLngPointsInDB(id, lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four) {
+export async function updateLatLngPointsInDB(id, center_lat_lng ) {
     try {
         const [result] = await db.query(`
             UPDATE gravesites
             SET 
-                lat_lng_point_one = ?, 
-                lat_lng_point_two = ?, 
-                lat_lng_point_three = ?, 
-                lat_lng_point_four = ?
+                center_lat_lng = ? 
             WHERE id = ?
-        `, [lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four, id]);
+        `, [ center_lat_lng, id]);
 
         return result.affectedRows > 0; // Return true if a row was updated
     } catch (error) {

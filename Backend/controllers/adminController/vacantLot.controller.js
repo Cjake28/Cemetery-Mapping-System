@@ -22,31 +22,28 @@ export const getVacantLotsController = async (req, res) => {
 // Controller to create a vacant lot
 export const createVacantLotController = async (req, res) => {
   const { vacantLotData } = req.body;
-  const userId = req.userId;  // User ID still needed for creation
-  const {location, lat_lng_point_one, lat_lng_point_two, lat_lng_point_three, lat_lng_point_four, lat_lng_point_center} = vacantLotData;
-  console.log(req.body);
+  const userId = req.userId;
+  const { location, lat_lng_point_center } = vacantLotData;
+
+  if (!location || !lat_lng_point_center) {
+    return res.status(400).json({ success: false, message: 'All fields are required' });
+  }
+
   try {
-    if(!location || !lat_lng_point_one || !lat_lng_point_two || !lat_lng_point_three || !lat_lng_point_four || !lat_lng_point_center){
-      return res.status(400).json({success: false, message:'All fields are required'});
-    }
-    // Step 1: Check if the location already exists
-    const existingLot = await getVacantLotByLocation(vacantLotData.location);
+    const existingLot = await getVacantLotByLocation(location);
     
     if (existingLot) {
-      // Step 2: If location exists, send a conflict error response
       return res.status(409).json({
         success: false,
         message: 'Location already exists. Please choose a different location.',
       });
     }
 
-    // Step 3: Create the vacant lot with userId
     const insertId = await createVacantLot(vacantLotData, userId);
-
     res.status(201).json({
       success: true,
       message: 'Vacant lot created successfully',
-      insertId: insertId,
+      insertId,
     });
   } catch (error) {
     console.error("Error creating vacant lot in controller:", error);
@@ -60,10 +57,16 @@ export const createVacantLotController = async (req, res) => {
 
 // Controller to update a vacant lot
 export const updateVacantLotController = async (req, res) => {
-  const { id } = req.params;  // assuming the ID of the lot to update is in the URL parameters
-  const updatedData = req.body;  // assuming updated data is sent in the request body
-  console.log(updatedData);
-  console.log(req.body);
+  const { id } = req.params;
+  const updatedData = req.body;
+
+  if (!updatedData.location || !updatedData.lat_lng_point_center) {
+    return res.status(400).json({
+      success: false,
+      message: 'Location and center point are required fields.',
+    });
+  }
+
   try {
     const affectedRows = await updateVacantLot(id, updatedData);
     if (affectedRows > 0) {
@@ -89,7 +92,7 @@ export const updateVacantLotController = async (req, res) => {
 
 // Controller to delete a vacant lot
 export const deleteVacantLotController = async (req, res) => {
-  const { id } = req.params;  // assuming the ID of the lot to delete is in the URL parameters
+  const { id } = req.params;
 
   try {
     const affectedRows = await deleteVacantLot(id);

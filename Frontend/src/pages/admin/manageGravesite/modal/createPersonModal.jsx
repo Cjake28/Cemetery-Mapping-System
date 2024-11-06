@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './createPersonmodal.css';
 
-export default function CreatePersonModal({ onClose, onCreatePerson }) {
+export default function CreatePersonModal({ onClose, onCreatePerson }){
   const [formData, setFormData] = useState({
     name: '',
     middle_name: '',

@@ -41,15 +41,14 @@ export default function BurialSearch() {
   const handlePersonClick =(person) =>{
     //todo right now the scene is set to all of person data need to update to specific data later
     // setSceneID(person);
-    // console.log("Scene ID set to: ", person.id);
-    // console.log(typeof(person?.lat_lng_point_one));
-    handleLatlngObjConvertion([
-      person?.lat_lng_point_one, 
-      person?.lat_lng_point_two, 
-      person?.lat_lng_point_three, 
-      person?.lat_lng_point_four
-  ]);
-    navigate("cementerylot");
+
+    if (!person.center_lat_lng) {
+      console.error("Missing lat/lng data for person:", person);
+      return;
+    }
+    
+    handleLatlngObjConvertion(person?.center_lat_lng);
+    navigate("cemeterylot");
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -61,13 +60,13 @@ export default function BurialSearch() {
         {/* Pass the search query state and the setter function to SearchBar */}
         <SearchBar setSearchQuery={setSearchQuery} className='Search-Bar-component'/>
         <ul id="search-person-container" >
-            {
-                searchQuery.length > 0 &&
-                filteredPersons?.map((person) => (
-                <li className="person-list-container" key={person.id} onClick={() => handlePersonClick(person)}>
-                {person.fullname} - {person.location}
-                </li>
-                ))
+          {
+            searchQuery.length > 0 &&
+            filteredPersons?.map((person) => (
+            <li className="person-list-container" key={person.id} onClick={() => handlePersonClick(person)}>
+            {person.fullname} - {person.location}
+            </li>
+            ))
           }
         </ul>
       </div>

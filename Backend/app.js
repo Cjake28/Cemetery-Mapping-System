@@ -11,7 +11,7 @@ dotenv.config();
 
 export const app = express();
 
-const allowedOrigins = ['https://himalayan.onrender.com', 'https://himlayan.vercel.app', 'https://checkbackend-b9li.onrender.com','http://localhost:5173'];
+const allowedOrigins = ['https://himalayan.onrender.com', 'https://himlayan.vercel.app', 'https://checkbackend-b9li.onrender.com','http://localhost:5173', 'http://localhost:5174'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {

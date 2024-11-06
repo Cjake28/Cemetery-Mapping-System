@@ -7,20 +7,11 @@ const API_URL = import.meta.env.VITE_BACKEND_URL;
 export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess }) {
     const [vacantLotData, setVacantLotData] = useState({
         location: '',
-        lat_lng_point_one: '',
-        lat_lng_point_two: '',
-        lat_lng_point_three: '',
-        lat_lng_point_four: '',
         lat_lng_point_center: '',
     });
     const [createError, setCreateError] = useState(null);
-
     const [errors, setErrors] = useState({
         location: '',
-        lat_lng_point_one: '',
-        lat_lng_point_two: '',
-        lat_lng_point_three: '',
-        lat_lng_point_four: '',
         lat_lng_point_center: '',
     });
 
@@ -32,32 +23,26 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
         }));
         setErrors(prev => ({
             ...prev,
-            [name]: '',  // Clear any previous error when the user starts typing
+            [name]: '',
         }));
-        setCreateError(null); // Clear general error message on input change
+        setCreateError(null);
     };
-    const isValidInput = (value) => value.trim() !== '';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Validate each input field
         const newErrors = {};
-        Object.keys(vacantLotData).forEach((field) => {
-            if (!isValidInput(vacantLotData[field])) {
-                newErrors[field] = 'This field cannot be empty.';
-            }
-        });
+        if (!vacantLotData.location.trim()) newErrors.location = 'This field cannot be empty.';
+        if (!vacantLotData.lat_lng_point_center.trim()) newErrors.lat_lng_point_center = 'This field cannot be empty.';
 
         if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);  // Display errors and prevent submission
+            setErrors(newErrors);
             return;
         }
 
         try {
             await axios.post(`${API_URL}/api/vacantlots`, { vacantLotData });
-            onCreateSuccess();  // Refetch the vacant lots or update the UI
-            onClose();  // Close the modal after successful creation
+            onCreateSuccess();
+            onClose();
         } catch (err) {
             setCreateError(err.response?.data?.message || 'Failed to create vacant lot');
             console.error('Error creating vacant lot:', err);
@@ -65,19 +50,12 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
     };
 
     const handleCancel = () => {
-        setErrors({
-            location: '',
-            lat_lng_point_one: '',
-            lat_lng_point_two: '',
-            lat_lng_point_three: '',
-            lat_lng_point_four: '',
-            lat_lng_point_center: '',
-        });
+        setErrors({ location: '', lat_lng_point_center: '' });
         onClose();
-        setCreateError(null); 
+        setCreateError(null);
     };
 
-    if (!isOpen) return null; // Don't render the modal if it's not open
+    if (!isOpen) return null;
 
     return (
         <div className="modal-overlay">
@@ -91,46 +69,6 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
                             type="text"
                             name="location"
                             value={vacantLotData.location}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label>
-                        Latitude/Longitude Point 1:
-                        {errors.lat_lng_point_one && <p className="error-text">{errors.lat_lng_point_one}</p>}
-                        <input
-                            type="text"
-                            name="lat_lng_point_one"
-                            value={vacantLotData.lat_lng_point_one}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label>
-                        Latitude/Longitude Point 2:
-                        {errors.lat_lng_point_two && <p className="error-text">{errors.lat_lng_point_two}</p>}
-                        <input
-                            type="text"
-                            name="lat_lng_point_two"
-                            value={vacantLotData.lat_lng_point_two}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label>
-                        Latitude/Longitude Point 3:
-                        {errors.lat_lng_point_three && <p className="error-text">{errors.lat_lng_point_three}</p>}
-                        <input
-                            type="text"
-                            name="lat_lng_point_three"
-                            value={vacantLotData.lat_lng_point_three}
-                            onChange={handleInputChange}
-                        />
-                    </label>
-                    <label>
-                        Latitude/Longitude Point 4:
-                        {errors.lat_lng_point_four && <p className="error-text">{errors.lat_lng_point_four}</p>}
-                        <input
-                            type="text"
-                            name="lat_lng_point_four"
-                            value={vacantLotData.lat_lng_point_four}
                             onChange={handleInputChange}
                         />
                     </label>
