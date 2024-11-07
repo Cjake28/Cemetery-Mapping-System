@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
-const target = { lat: 14.888649680123114, lng: 120.77962852912253 };
+
 const containerStyle = {
   width: '100vw',
   height: '100vh',
