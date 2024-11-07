@@ -168,9 +168,9 @@ const VacantLot = () => {
     }
   }, [isLoaded, vacantLots]);
 
-  useEffect(()=>{
-    console.log("polygonData: ", polygonData);
-  },[polygonData])
+  // useEffect(()=>{
+  //   console.log("polygonData: ", polygonData);
+  // },[polygonData])
 
   const parseLatLng = (point) => {
     const [lat, lng] = point.split(',').map(Number);
@@ -198,59 +198,50 @@ const VacantLot = () => {
     for (let lat = bounds.getSouthWest().lat(); lat <= bounds.getNorthEast().lat(); lat += gridHeight) {
       for (let lng = bounds.getSouthWest().lng(); lng <= bounds.getNorthEast().lng(); lng += gridWidth) {
 
-        const topLeft = rotatePoint(lat, lng);
-        const topRight = rotatePoint(lat, lng + gridWidth);
-        const bottomRight = rotatePoint(lat + gridHeight, lng + gridWidth);
-        const bottomLeft = rotatePoint(lat + gridHeight, lng);
-
-        const cellCoords = [topLeft, topRight, bottomRight, bottomLeft];
+        const cellCoords = [
+          rotatePoint(lat, lng),
+          rotatePoint(lat, lng + gridWidth),
+          rotatePoint(lat + gridHeight, lng + gridWidth),
+          rotatePoint(lat + gridHeight, lng),
+        ];
 
         const cellCenter = new window.google.maps.LatLng(
-          (topLeft.lat + bottomRight.lat) / 2,
-          (topLeft.lng + bottomRight.lng) / 2
+          (cellCoords[0].lat + cellCoords[2].lat) / 2,
+          (cellCoords[0].lng + cellCoords[2].lng) / 2
         );
 
         // Check if the cell center is within the polygon and if it matches the target point
-        if(
-          window.google.maps.geometry.poly.containsLocation(
-            cellCenter,
-            new window.google.maps.Polygon({ paths: polygonCoords })
-          )
-        ){
+        const isInsidePolygon = window.google.maps.geometry.poly.containsLocation(
+          cellCenter,
+          new window.google.maps.Polygon({ paths: polygonCoords })
+        );
 
+        if (isInsidePolygon) {
           const isTargetCell = polygonData.some(target =>
             Math.abs(cellCenter.lat() - target?.coords?.lat) < gridHeight / 2 &&
             Math.abs(cellCenter.lng() - target?.coords?.lng) < gridWidth / 2
           );
 
-          new window.google.maps.Polygon( isTargetCell ? {
+          // Create grid cell polygons with conditional styling
+          new window.google.maps.Polygon({
             paths: cellCoords,
-            strokeColor: '#00FF00',
-            strokeOpacity: 0.5,
-            strokeWeight: 1,
-            fillColor: '#00FF00',
-            fillOpacity: 0.4,
+            strokeColor: isTargetCell ? '#00FF00' : '#FF0000',
+            strokeOpacity: isTargetCell ? 0.5 : 0.3,
+            strokeWeight: isTargetCell ? 1 : 0.8,
+            fillColor: isTargetCell ? '#00FF00' : '#FF0000',
+            fillOpacity: isTargetCell ? 0.4 : 0.2,
             map: map,
-          }:
-          {
-            paths: cellCoords,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.3,
-            strokeWeight: 0.8,
-            // fillColor: '#FF0000',
-            // fillOpacity: 0.4,
-            map: map,
-          }
-        );
+          });
         }
       }
     }
   }, [polygonData]);
 
   const onLoad = useCallback((map) => {
+    console.log("onload");
     createGridCells(map, polygonCoords1, -25); // Grid for first area
     createGridCells(map, polygonCoords2, -8); // Grid for second area
-  }, [createGridCells]);
+  }, [createGridCells,polygonData]);
 
   if (!isLoaded || isLoading) {
     return <div>Loading...</div>;
