@@ -10,12 +10,6 @@ const containerStyle = {
   height: '100vh',
 };
 
-const targets = [
-  { lat: 14.888649680123114, lng: 120.77962852912253 },
-  { lat: 14.888585490170847, lng: 120.77931569982587 }, // Example of another target
-  // Add more targets as needed
-];
-
 const center = { lat: 14.88886531493886, lng: 120.77947973952769 };
 
 const mapBounds = {
@@ -175,7 +169,7 @@ const VacantLot = () => {
   }, [isLoaded, vacantLots]);
 
   useEffect(()=>{
-    console.log("polygonData: ", polygonData)
+    console.log("polygonData: ", polygonData);
   },[polygonData])
 
   const parseLatLng = (point) => {
@@ -225,8 +219,8 @@ const VacantLot = () => {
         ){
 
           const isTargetCell = polygonData.some(target =>
-            Math.abs(cellCenter.lat() - target.lat) < gridHeight / 2 &&
-            Math.abs(cellCenter.lng() - target.lng) < gridWidth / 2
+            Math.abs(cellCenter.lat() - target?.coords.lat) < gridHeight / 2 &&
+            Math.abs(cellCenter.lng() - target?.coords.lng) < gridWidth / 2
           );
 
           new window.google.maps.Polygon( isTargetCell ? {
@@ -249,10 +243,9 @@ const VacantLot = () => {
           }
         );
         }
-
       }
     }
-  }, []);
+  }, [polygonData]);
 
   const onLoad = useCallback((map) => {
     createGridCells(map, polygonCoords1, -25); // Grid for first area
