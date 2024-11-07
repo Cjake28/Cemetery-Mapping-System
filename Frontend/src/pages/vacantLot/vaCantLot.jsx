@@ -217,20 +217,18 @@ const VacantLot = () => {
         );
 
         // Check if the cell center is within the polygon and if it matches the target point
-
-        if (
+        if(
           window.google.maps.geometry.poly.containsLocation(
             cellCenter,
             new window.google.maps.Polygon({ paths: polygonCoords })
           )
-        ) {
+        ){
 
           const isTargetCell = polygonData.some(target =>
             Math.abs(cellCenter.lat() - target.lat) < gridHeight / 2 &&
             Math.abs(cellCenter.lng() - target.lng) < gridWidth / 2
           );
 
-          
           new window.google.maps.Polygon( isTargetCell ? {
             paths: cellCoords,
             strokeColor: '#00FF00',
@@ -259,24 +257,6 @@ const VacantLot = () => {
   const onLoad = useCallback((map) => {
     createGridCells(map, polygonCoords1, -25); // Grid for first area
     createGridCells(map, polygonCoords2, -8); // Grid for second area
-    // new window.google.maps.Polygon({
-    //   paths: polygonCoords1,
-    //   strokeColor: "#00FF00",
-    //   strokeOpacity: 1,
-    //   strokeWeight: 0.8,
-    //   fillColor: "#00FF00",
-    //   fillOpacity: 0.2,
-    //   map: map,
-    // });
-    // new window.google.maps.Polygon({
-    //   paths: polygonCoords2,
-    //   strokeColor: "#00FF00",
-    //   strokeOpacity: 1,
-    //   strokeWeight: 0.8,
-    //   fillColor: "#00FF00",
-    //   fillOpacity: 0.2,
-    //   map: map,
-    // });
   }, [createGridCells]);
 
   if (!isLoaded || isLoading) {

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const checkAuth_VerifyToken = (req, res, next) => {    
-    const token = req.cookies.HimlayanToken || req.headers['authorization']?.split(" ")[1];
+    const token = req.cookies.HimlayanToken;
     console.log("Token to verify:", token);
 
     if (!token) {

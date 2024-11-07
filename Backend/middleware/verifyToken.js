@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const verifyToken = (req, res, next) => {
-	const token = req.cookies.HimlayanToken || req.headers['authorization'];
+	const token = req.cookies.HimlayanToken;
 	 
 	if (!token){
 		return res.status(401).json({ success: false, message: "Unauthorized - no token provided" });
