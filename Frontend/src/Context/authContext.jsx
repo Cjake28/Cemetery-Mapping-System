@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }) => {
 
   const signout = async () => {
     try{
-      const response = await axios.post(`${API_URL}/api/auth/signout`);
+      const response = await axios.post(`${API_URL}/api/auth/signout`, { withCredentials: true });
        dispatch({ type: 'CHECK_AUTH_FAILURE' });
       console.log(response);
     }catch(error){
