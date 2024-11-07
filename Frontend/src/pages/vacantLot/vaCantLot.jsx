@@ -217,6 +217,10 @@ const VacantLot = () => {
         );
 
         if (isInsidePolygon) {
+          if(polygonData){
+            console.log("polydata: ", target?.coords?.lat);
+            console.log("polydata: ", target?.coords?.lng);
+          }
           const isTargetCell = polygonData.some(target =>
             Math.abs(cellCenter.lat() - target?.coords?.lat) < gridHeight / 2 &&
             Math.abs(cellCenter.lng() - target?.coords?.lng) < gridWidth / 2
