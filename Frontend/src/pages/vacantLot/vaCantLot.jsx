@@ -219,8 +219,8 @@ const VacantLot = () => {
         ){
 
           const isTargetCell = polygonData.some(target =>
-            Math.abs(cellCenter.lat() - target?.coords.lat) < gridHeight / 2 &&
-            Math.abs(cellCenter.lng() - target?.coords.lng) < gridWidth / 2
+            Math.abs(cellCenter.lat() - target?.coords?.lat) < gridHeight / 2 &&
+            Math.abs(cellCenter.lng() - target?.coords?.lng) < gridWidth / 2
           );
 
           new window.google.maps.Polygon( isTargetCell ? {
