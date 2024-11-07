@@ -10,6 +10,12 @@ const containerStyle = {
   height: '100vh',
 };
 
+const targets = [
+  { lat: 14.888649680123114, lng: 120.77962852912253 },
+  { lat: 14.888585490170847, lng: 120.77931569982587 }, // Example of another target
+  // Add more targets as needed
+];
+
 const center = { lat: 14.88886531493886, lng: 120.77947973952769 };
 
 const mapBounds = {
@@ -211,13 +217,6 @@ const VacantLot = () => {
         );
 
         // Check if the cell center is within the polygon and if it matches the target point
-        
-        polygonData.map( polydata => {
-          console.log("asss");
-          const isTargetCell = polydata
-          ? Math.abs(cellCenter.lat() - polydata.coords.lat) < gridHeight / 2 &&
-            Math.abs(cellCenter.lng() - polydata.coords.lng) < gridWidth / 2
-          : null;
 
         if (
           window.google.maps.geometry.poly.containsLocation(
@@ -225,6 +224,13 @@ const VacantLot = () => {
             new window.google.maps.Polygon({ paths: polygonCoords })
           )
         ) {
+
+          const isTargetCell = polygonData.some(target =>
+            Math.abs(cellCenter.lat() - target.lat) < gridHeight / 2 &&
+            Math.abs(cellCenter.lng() - target.lng) < gridWidth / 2
+          );
+
+          
           new window.google.maps.Polygon( isTargetCell ? {
             paths: cellCoords,
             strokeColor: '#00FF00',
@@ -246,10 +252,6 @@ const VacantLot = () => {
         );
         }
 
-      })
-          
-        
-        
       }
     }
   }, []);
