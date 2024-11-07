@@ -1,33 +1,63 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Mail, Lock, Loader } from "lucide-react";
 import './Login.css';
-import { useAuth } from '../../Context/authContext.jsx'; // Correct hook
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useAuth } from '../../Context/authContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false); // For showing loader or feedback on login attempt
-    const { login, error } = useAuth(); // Use `useAuth` instead of `useAuthStore`
-    const navigate = useNavigate(); // Initialize navigate
+    const [loading, setLoading] = useState(false);
+    const [attempts, setAttempts] = useState(0);
+    const [cooldown, setCooldown] = useState(false);
+    const [cooldownTimer, setCooldownTimer] = useState(30); // Start with a 30-second timer
+    const { login, error } = useAuth();
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setLoading(true);
 
+        if (cooldown) return; // Prevent login if in cooldown period
+
+        setLoading(true);
         try {
             await login(username, password);
             setLoading(false);
-            // Handle successful login, e.g., redirect to a dashboard
-
+            setAttempts(0); // Reset attempts on successful login
         } catch (err) {
             console.log(err);
             setLoading(false);
+            setAttempts((prev) => prev + 1);
         }
     };
 
+    useEffect(() => {
+        // If attempts reach 3, activate cooldown
+        if (attempts >= 3) {
+            setCooldown(true);
+            setCooldownTimer(30); // Reset cooldown timer to 30 seconds
+            setAttempts(0); // Reset attempts after triggering cooldown
+        }
+    }, [attempts]);
+
+    useEffect(() => {
+        let timer;
+        if (cooldown) {
+            // Start countdown if cooldown is active
+            timer = setInterval(() => {
+                setCooldownTimer((prev) => prev - 1);
+            }, 1000);
+        }
+        // Clear timer and end cooldown when time runs out
+        if (cooldownTimer === 0) {
+            clearInterval(timer);
+            setCooldown(false);
+        }
+        return () => clearInterval(timer); // Cleanup timer on component unmount
+    }, [cooldown, cooldownTimer]);
+
     const handleContinueWithoutLogin = () => {
-        navigate('/visitor'); // Navigate to /visitor when the button is clicked
+        navigate('/visitor');
     };
 
     return (
@@ -65,18 +95,20 @@ export default function LoginPage() {
 
                             {error && <p className="error-text-login">{error}</p>}
 
-                            <button className="login-button" type="submit" disabled={loading}>
+                            <button className="login-button" type="submit" disabled={loading || cooldown}>
                                 {loading ? <Loader /> : 'Login'}
                             </button>
                         </form>
 
+                        {cooldown && (
+                            // <p className="lockout-message">
+                            //     Too many failed attempts.
+                            // </p>,
+                            <p className="lockout-message">
+                                Please wait <span className="lockout-countdown">{cooldownTimer}</span> seconds before trying again.
+                            </p>
+                        )}
 
-                        {/* Continue without login button */}
-                        {/* <button className="continue-button" onClick={handleContinueWithoutLogin}>
-                            Continue Without Login
-                        </button> */}
-                        
-                        {/* Alternatively, you can use a text link */}
                         <p className="continue-text" onClick={handleContinueWithoutLogin}>
                             Continue Without Login
                         </p>
