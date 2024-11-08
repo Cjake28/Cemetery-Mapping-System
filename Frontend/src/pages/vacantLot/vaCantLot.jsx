@@ -216,13 +216,11 @@ const VacantLot = () => {
           new window.google.maps.Polygon({ paths: polygonCoords })
         );
 
-        if (isInsidePolygon) {
-          if(polygonData){
-            polygonData.map(target =>{
-            console.log("polydata: ", target?.coords?.lat);
-            console.log("polydata: ", target?.coords?.lng);
-          });
-          }
+        if(polygonData){
+          console.log("polygonload");
+        }
+
+        if (isInsidePolygon) { 
           const isTargetCell = polygonData.some(target =>
             Math.abs(cellCenter.lat() - target?.coords?.lat) < gridHeight / 2 &&
             Math.abs(cellCenter.lng() - target?.coords?.lng) < gridWidth / 2
@@ -247,7 +245,7 @@ const VacantLot = () => {
     console.log("onload");
     createGridCells(map, polygonCoords1, -25); // Grid for first area
     createGridCells(map, polygonCoords2, -8); // Grid for second area
-  }, [createGridCells,polygonData]);
+  }, [createGridCells]);
 
   if (!isLoaded || isLoading) {
     return <div>Loading...</div>;
