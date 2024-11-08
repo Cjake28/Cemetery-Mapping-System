@@ -192,15 +192,25 @@ const VacantLot = () => {
           );
 
           // Create grid cell polygons with conditional styling
-          new window.google.maps.Polygon({
+          new window.google.maps.Polygon( isTargetCell ? {
             paths: cellCoords,
-            strokeColor: isTargetCell ? '#00FF00' : '#FF0000',
-            strokeOpacity: isTargetCell ? 0.5 : 0.3,
-            strokeWeight: isTargetCell ? 1 : 0.8,
-            fillColor: isTargetCell ? '#00FF00' : '#FF0000',
-            fillOpacity: isTargetCell ? 0.4 : 0.2,
+            strokeColor: '#00FF00',
+            strokeOpacity: 0.5,
+            strokeWeight: 1,
+            fillColor: '#00FF00',
+            fillOpacity: 0.4,
             map: map,
-          });
+          }:
+          {
+            paths: cellCoords,
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.3,
+            strokeWeight: 0.8,
+            // fillColor: '#FF0000',
+            // fillOpacity: 0.4,
+            map: map,
+          }
+        );
         }
       }
     }
@@ -209,7 +219,7 @@ const VacantLot = () => {
   const onLoad = useCallback((map) => {
     console.log("onload");
     createGridCells(map, polygonCoords1, -25); // Grid for first area
-    createGridCells(map, polygonCoords2, -8); // Grid for second area
+    createGridCells(map, polygonCoords2, -10); // Grid for second area
   }, [createGridCells, polygonData]);
 
   if (!isLoaded) {
