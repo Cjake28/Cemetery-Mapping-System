@@ -1,12 +1,6 @@
 import { useState, useEffect, useCallback  } from 'react';
 import { GoogleMap, useJsApiLoader, Polygon } from '@react-google-maps/api';
 import { useVacantLots } from '../../Context/vancantlotsContext.jsx'
-const API_URL = import.meta.env.VITE_BACKEND_URL;
-
-const containerStyle = {
-  width: '100vw',
-  height: '100vh',
-};
 
 const center = { lat: 14.88886531493886, lng: 120.77947973952769 };
 
@@ -117,13 +111,6 @@ const polygonCoords2 =[
   { lat: 14.88831788349401, lng: 120.77933348612372 },
 ];
 
-const polygonOptions = {
-  strokeColor: '#00FF00',
-  strokeOpacity: 0.8,
-  strokeWeight: 1.5,
-  fillOpacity: 0.1,
-};
-
 const options = {
   mapId: '31df144c8f9b66d4',
   disableDefaultUI: true,
@@ -148,7 +135,11 @@ const VacantLot = () => {
     const gridHeight = 0.00001;
     const bounds = new window.google.maps.LatLngBounds();
     polygonCoords.forEach((coord) => bounds.extend(coord));
-
+  
+    const roundCoordinate = (coordinate, decimals = 6) => {
+      return Math.round(coordinate * Math.pow(10, decimals)) / Math.pow(10, decimals);
+    };
+  
     const rotatePoint = (lat, lng) => {
       const x = lat - center.lat;
       const y = lng - center.lng;
@@ -159,40 +150,36 @@ const VacantLot = () => {
         lng: rotatedY + center.lng,
       };
     };
-
+  
     for (let lat = bounds.getSouthWest().lat(); lat <= bounds.getNorthEast().lat(); lat += gridHeight) {
       for (let lng = bounds.getSouthWest().lng(); lng <= bounds.getNorthEast().lng(); lng += gridWidth) {
-
+  
         const cellCoords = [
           rotatePoint(lat, lng),
           rotatePoint(lat, lng + gridWidth),
           rotatePoint(lat + gridHeight, lng + gridWidth),
           rotatePoint(lat + gridHeight, lng),
         ];
-
+  
         const cellCenter = new window.google.maps.LatLng(
-          (cellCoords[0].lat + cellCoords[2].lat) / 2,
-          (cellCoords[0].lng + cellCoords[2].lng) / 2
+          roundCoordinate((cellCoords[0].lat + cellCoords[2].lat) / 2),
+          roundCoordinate((cellCoords[0].lng + cellCoords[2].lng) / 2)
         );
-
+  
         // Check if the cell center is within the polygon and if it matches the target point
         const isInsidePolygon = window.google.maps.geometry.poly.containsLocation(
           cellCenter,
           new window.google.maps.Polygon({ paths: polygonCoords })
         );
-
-        // if(polygonData){
-        //   console.log("polygonload: ", polygonData);
-        // }
-
-        if (isInsidePolygon){
+  
+        if (isInsidePolygon) {
           const isTargetCell = polygonData.some(target =>
             Math.abs(cellCenter.lat() - target?.coords?.lat) < gridHeight / 2 &&
             Math.abs(cellCenter.lng() - target?.coords?.lng) < gridWidth / 2
           );
-
+  
           // Create grid cell polygons with conditional styling
-          new window.google.maps.Polygon( isTargetCell ? {
+          new window.google.maps.Polygon(isTargetCell ? {
             paths: cellCoords,
             strokeColor: '#00FF00',
             strokeOpacity: 0.5,
@@ -200,17 +187,13 @@ const VacantLot = () => {
             fillColor: '#00FF00',
             fillOpacity: 0.4,
             map: map,
-          }:
-          {
+          } : {
             paths: cellCoords,
             strokeColor: '#FF0000',
             strokeOpacity: 0.3,
             strokeWeight: 0.8,
-            // fillColor: '#FF0000',
-            // fillOpacity: 0.4,
             map: map,
-          }
-        );
+          });
         }
       }
     }
@@ -239,9 +222,6 @@ const VacantLot = () => {
         options={options}
         onLoad={onLoad}
       >
-        {/* {polygonData.map((lot) => (
-          <Polygon key={lot.id} path={lot.path} options={polygonOptions} />
-        ))} */}
       </GoogleMap>
     </div>
   );
