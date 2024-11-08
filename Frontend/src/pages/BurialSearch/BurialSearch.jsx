@@ -8,12 +8,15 @@ import { useLocationContext } from '../../Context/SceneIDcontext.jsx';
 import { GeolocationContext } from '../../Context/geolocationContext.jsx';
 import PrivacyModal from './modal/PrivacyModal.jsx';
 
+// Image URL or import directly
+import ExampleImage from '../../assets/himlayanSearchText.png';
+
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function BurialSearch() {
   const { requestLocationPermission } = GeolocationContext();
   const { handleLatlngObjConvertion } = useLocationContext();
-  const [isModalOpen, setIsModalOpen] = useState(true); // Control modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -30,7 +33,6 @@ export default function BurialSearch() {
 
   const navigate = useNavigate();
 
-  // Filter data based on the search query
   const filteredPersons = persons?.filter((person) =>
     person?.fullname.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -42,7 +44,6 @@ export default function BurialSearch() {
     }
 
     handleLatlngObjConvertion(person?.center_lat_lng);
-    // navigate("cemeterylot");
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -51,7 +52,12 @@ export default function BurialSearch() {
   return (
     <div className="Burial_Search_Container">
       {isModalOpen && <PrivacyModal onClose={() => setIsModalOpen(false)} />}
-      
+
+      {/* Adding the image here */}
+      <div className="image-container">
+        <img src={ExampleImage} alt="Descriptive Text" className="example-image" />
+      </div>
+
       <div className='Search-Bar-container'>
         <SearchBar setSearchQuery={setSearchQuery} className='Search-Bar-component'/>
         <ul id="search-person-container">
