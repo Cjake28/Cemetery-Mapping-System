@@ -260,16 +260,16 @@ const Cementerylot = () => {
           new window.google.maps.Polygon( isTargetCell ? {
             paths: cellCoords,
             strokeColor: '#00FF00',
-            strokeOpacity: 0.5,
+            strokeOpacity: 0.7,
             strokeWeight: 1,
             fillColor: '#00FF00',
-            fillOpacity: 0.4,
+            fillOpacity: 0.8,
             map: map,
           }:
           {
             paths: cellCoords,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.3,
+            strokeColor: '#FFFFFF',
+            strokeOpacity: 0.5,
             strokeWeight: 0.8,
             // fillColor: '#FF0000',
             // fillOpacity: 0.4,
