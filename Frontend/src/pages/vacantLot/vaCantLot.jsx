@@ -242,10 +242,12 @@ const VacantLot = () => {
   }, [polygonData]);
 
   const onLoad = useCallback((map) => {
+    if (polygonData.length > 0) {
     console.log("onload");
     createGridCells(map, polygonCoords1, -25); // Grid for first area
     createGridCells(map, polygonCoords2, -8); // Grid for second area
-  }, [createGridCells]);
+    }
+  }, [createGridCells, polygonData]);
 
   if (!isLoaded || isLoading) {
     return <div>Loading...</div>;
