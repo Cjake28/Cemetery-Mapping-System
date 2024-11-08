@@ -176,10 +176,6 @@ const VacantLot = () => {
     const [lat, lng] = point.split(',').map(Number);
     return { lat, lng };
   };
-  
-  if (!isLoaded || isLoading) {
-    return <div>Loading...</div>;
-  }
 
   const createGridCells = useCallback((map, polygonCoords, RDeg) => {
     const rotationAngle = (RDeg * Math.PI) / 180;
@@ -250,6 +246,10 @@ const VacantLot = () => {
     createGridCells(map, polygonCoords1, -25); // Grid for first area
     createGridCells(map, polygonCoords2, -8); // Grid for second area
   }, [createGridCells]);
+
+  if (!isLoaded || isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (error) {
     return <div>Error fetching vacant lots: {error.message}</div>;
