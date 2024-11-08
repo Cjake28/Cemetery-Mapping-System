@@ -6,7 +6,8 @@ import {
     unverified_a_user, 
     Get_all_userInDB, 
     Get_unverified_users_fromDB, 
-    verify_a_user 
+    verify_a_user,
+    delete_user 
 } from '../../models/admin/adminCUD.model.js';
 
 export async function createUser(req, res) {
@@ -128,4 +129,27 @@ export async function reverifyUser(req, res) {
     }
 }
 
+export async function deleteUser(req, res) {
+    const { userID } = req.body;
+
+    try {
+        // Check if userID is provided
+        if (!userID) {
+            return res.status(400).json({ success: false, message: "User ID is required" });
+        }
+
+        // Attempt to delete the user
+        const deleted = await delete_user(userID);
+
+        // Check if the user was successfully deleted
+        if (deleted) {
+            return res.status(200).json({ success: true, message: "User deleted successfully" });
+        } else {
+            return res.status(404).json({ success: false, message: "User not found or already deleted" });
+        }
+    } catch (error) {
+        console.log("Error deleting user:", error);
+        return res.status(500).json({ success: false, message: "An error occurred while deleting the user" });
+    }
+}
 

@@ -118,3 +118,17 @@ export async function verify_a_user(userId) {
         throw new Error("Database error occurred while verify_a_user");
     }
 }
+
+export async function delete_user(userId) {
+    try {
+        const [result] = await db.query(`
+            DELETE FROM users
+            WHERE id = ?
+        `, [userId]);
+
+        return result.affectedRows > 0; // Return true if a row was deleted, false otherwise
+    } catch (error) {
+        console.error(`Error deleting user with ID ${userId}: `, error);
+        throw new Error("Database error occurred while deleting a user");
+    }
+}

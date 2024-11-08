@@ -1,15 +1,22 @@
-import { BsFillPencilFill } from 'react-icons/bs';
+import { BsFillPencilFill, BsFillTrashFill } from 'react-icons/bs';
 import './verifiedusertable.css';
 import { useState } from 'react';
-import EnableUserModal from '../modal/enableUserModal.jsx'; // Assuming you created this modal already
+import EnableUserModal from '../modal/enableUserModal.jsx';
+import DeleteUserModal from '../modal/deleteUserModal.jsx'; // Import DeleteUserModal
 
 export default function UnVerifieduserTable({ filteredPersons }) {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isReverifyModalOpen, setIsReverifyModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
     const handleReverifyClick = (user) => {
         setSelectedUser(user);
-        setIsModalOpen(true);
+        setIsReverifyModalOpen(true);
+    };
+
+    const handleDeleteClick = (user) => {
+        setSelectedUser(user);
+        setIsDeleteModalOpen(true);
     };
 
     return (
@@ -35,6 +42,10 @@ export default function UnVerifieduserTable({ filteredPersons }) {
                                         className="edit-icon" 
                                         onClick={() => handleReverifyClick(user)} 
                                     />
+                                    <BsFillTrashFill 
+                                        className="delete-icon"
+                                        onClick={() => handleDeleteClick(user)} // Open delete modal on click
+                                    />
                                 </span>
                             </td>
                         </tr>
@@ -42,13 +53,23 @@ export default function UnVerifieduserTable({ filteredPersons }) {
                 </tbody>
             </table>
 
-            {/* Enable User Modal */}
+            {/* Reverify User Modal */}
             {selectedUser && (
                 <EnableUserModal
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
+                    isOpen={isReverifyModalOpen}
+                    onClose={() => setIsReverifyModalOpen(false)}
                     name={selectedUser.name}
                     userID={selectedUser.id}
+                />
+            )}
+
+            {/* Delete User Modal */}
+            {selectedUser && (
+                <DeleteUserModal
+                    isOpen={isDeleteModalOpen}
+                    onClose={() => setIsDeleteModalOpen(false)}
+                    name={selectedUser.name}
+                    UserId={selectedUser.id} // Pass the user ID to DeleteUserModal
                 />
             )}
         </div>

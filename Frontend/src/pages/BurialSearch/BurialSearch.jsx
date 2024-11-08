@@ -42,7 +42,7 @@ export default function BurialSearch() {
     }
 
     handleLatlngObjConvertion(person?.center_lat_lng);
-    navigate("cemeterylot");
+    // navigate("cemeterylot");
   };
 
   if (isLoading) return <div>Loading...</div>;

@@ -6,7 +6,8 @@ import { createUser,
         disable_user, 
         Get_all_user,
         reverifyUser,
-        getUnverifiedUsers
+        getUnverifiedUsers,
+        deleteUser
     } from '../controllers/adminController/adminCUD.controller.js'; // Import the admin controller functions
 
 const adminUserRouter = express.Router();
@@ -28,5 +29,7 @@ adminUserRouter.patch("/reverify-user", verifyToken, adminRoleValidate, reverify
 
 // Route for getting all unverify users (admin only, requires token and admin role)
 adminUserRouter.get("/all-unverify-users", verifyToken, adminRoleValidate, getUnverifiedUsers);
+
+adminUserRouter.delete("/delete-user", verifyToken, adminRoleValidate, deleteUser);
 
 export default adminUserRouter;

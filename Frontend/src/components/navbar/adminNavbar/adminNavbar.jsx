@@ -27,7 +27,7 @@ export default function AdminNavbar() {
           <p>user</p>
         </div>
         <div className={`a-admin-navbar ${location.pathname === '/admin/manage-vacant-lot' ? 'active' : ''}`} onClick={() => navigate('/admin/manage-vacant-lot')}>
-          <p>Cemetery Lot</p>
+          <p>Vacant Lot</p>
         </div>
         <div className={`a-admin-navbar ${location.pathname === '/admin/manage-gravesite' ? 'active' : ''}`} onClick={() => navigate('/admin/manage-gravesite')}>
           <p>Gravesite</p>

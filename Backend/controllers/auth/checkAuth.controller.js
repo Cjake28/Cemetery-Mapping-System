@@ -1,7 +1,7 @@
 import { get_id_name_role_ByID } from '../../models/auth/checkAuth.model.js';
 
 export const checkAuth = async (req, res) => {
-	console.log('repete');
+
 	try {
 		const userId = req.userId;
 
