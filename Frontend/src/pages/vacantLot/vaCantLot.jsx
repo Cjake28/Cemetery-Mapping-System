@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback  } from 'react';
 import { GoogleMap, useJsApiLoader, Polygon } from '@react-google-maps/api';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-
+import { useVacantLots } from '../../Context/vancantlotsContext.jsx'
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
 const containerStyle = {
@@ -138,44 +136,11 @@ const options = {
 };
 
 const VacantLot = () => {
+  const {polygonData, error} = useVacantLots()
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ["geometry"],
   });
-
-  const { data: vacantLots, isLoading, error, refetch } = useQuery({
-    queryKey: ['vacantLots'],
-    queryFn: async () => {
-      const response = await axios.get(`${API_URL}/api/vacantlots`);
-      console.log(response);
-      return response.data.data;
-    },
-    refetchOnMount: true,  // Fetch fresh data on every mount
-    refetchOnWindowFocus: false,
-  });
-
-  const [polygonData, setPolygonData] = useState([]);
-
-  useEffect(() => {
-    // Only update polygonData when both map is loaded and lots data is available
-    if (isLoaded && vacantLots) {
-      const parsedLots = vacantLots.map((lot) => ({
-        id: lot.id,
-        coords: parseLatLng(lot.lat_lng_point_center),
-      }));
-      setPolygonData(parsedLots);
-      console.log("vacantlots: ",parsedLots);
-    }
-  }, [isLoaded, vacantLots]);
-
-  // useEffect(()=>{
-  //   console.log("polygonData: ", polygonData);
-  // },[polygonData])
-
-  const parseLatLng = (point) => {
-    const [lat, lng] = point.split(',').map(Number);
-    return { lat, lng };
-  };
 
   const createGridCells = useCallback((map, polygonCoords, RDeg) => {
     const rotationAngle = (RDeg * Math.PI) / 180;
@@ -216,11 +181,11 @@ const VacantLot = () => {
           new window.google.maps.Polygon({ paths: polygonCoords })
         );
 
-        if(polygonData){
-          console.log("polygonload");
-        }
+        // if(polygonData){
+        //   console.log("polygonload: ", polygonData);
+        // }
 
-        if (isInsidePolygon) { 
+        if (isInsidePolygon){
           const isTargetCell = polygonData.some(target =>
             Math.abs(cellCenter.lat() - target?.coords?.lat) < gridHeight / 2 &&
             Math.abs(cellCenter.lng() - target?.coords?.lng) < gridWidth / 2
@@ -247,7 +212,7 @@ const VacantLot = () => {
     createGridCells(map, polygonCoords2, -8); // Grid for second area
   }, [createGridCells, polygonData]);
 
-  if (!isLoaded || isLoading) {
+  if (!isLoaded) {
     return <div>Loading...</div>;
   }
 
