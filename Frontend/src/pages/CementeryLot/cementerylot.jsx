@@ -184,10 +184,10 @@ const options = {
   disableDefaultUI: true,  // Disable default UI controls
   mapTypeControl: false,   // Hide map type controls
   mapTypeId: "satellite",  // Satellite view
-  // restriction: {
-  //   latLngBounds: mapBounds
-  //   strictBounds: true, // Enforce the restriction
-  // }
+  restriction: {
+    latLngBounds: mapBounds,
+    strictBounds: true // Enforce the restriction
+  }
 };
 
 const Cementerylot = () => {

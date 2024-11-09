@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 const LocationContext = createContext();
 
 export function LocationContextPRovider({ children }) {
+  const [scene, setScene] = useState(false);
   const [locationContext, setLocationCon] = useState(null);
 
   const handleLatlngObjConvertion = (coordinate) => {
@@ -16,9 +17,8 @@ export function LocationContextPRovider({ children }) {
   setLocationCon(latLngObject);
 }
 
-
   return (
-    <LocationContext.Provider value={{ locationContext, setLocationCon, handleLatlngObjConvertion }}>
+    <LocationContext.Provider value={{ scene, setScene, locationContext, setLocationCon, handleLatlngObjConvertion }}>
       {children}
     </LocationContext.Provider>
   );

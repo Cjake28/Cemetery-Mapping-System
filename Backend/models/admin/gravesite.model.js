@@ -14,6 +14,7 @@ export async function Get_all_personInDB() {
                 location,
                 owner_name,
                 isVerified,
+                center_lat_lng,
                 user_id
             FROM gravesites
             WHERE isVerified = true
