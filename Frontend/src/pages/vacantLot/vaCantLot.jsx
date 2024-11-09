@@ -181,16 +181,16 @@ const VacantLot = () => {
           // Create grid cell polygons with conditional styling
           new window.google.maps.Polygon( isTargetCell ? {
             paths: cellCoords,
-            strokeColor: '#00FF00',
+            strokeColor: '#0000FF',
             strokeOpacity: 0.7,
             strokeWeight: 1,
-            fillColor: '#00FF00',
+            fillColor: '#0000FF',
             fillOpacity: 0.8,
             map: map,
           }:
           {
             paths: cellCoords,
-            strokeColor: '#FFFFFF',
+            strokeColor: '#FFFF00',
             strokeOpacity: 0.5,
             strokeWeight: 0.8,
             // fillColor: '#FF0000',

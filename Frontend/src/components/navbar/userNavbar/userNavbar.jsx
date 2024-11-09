@@ -47,7 +47,7 @@ export default function UserNavbar() {
             <p>Burial Search</p>
           </div>
           <div className={`a-user-navbar ${location.pathname === '/user/cemeterylot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user/cemeterylot')}>
-            <p>Cemetery Lot</p>
+            <p>Vacant Lot</p>
           </div>
           <div className={`a-user-navbar ${location.pathname === '/user/VirtualTour' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user/VirtualTour')}>
             <p>Virtual Tour</p>
