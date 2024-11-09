@@ -3,7 +3,18 @@ import db from '../../db/db.connect.js';
 export async function Get_all_personInDB() {
     try {
         const [result] = await db.query(`
-            SELECT *
+            SELECT 
+                id,
+                name,
+                middle_name,
+                surname,
+                DATE_FORMAT(date_of_birth, '%Y-%m-%d') AS date_of_birth,
+                DATE_FORMAT(date_of_death, '%Y-%m-%d') AS date_of_death,
+                DATE_FORMAT(burial_date, '%Y-%m-%d') AS burial_date,
+                location,
+                owner_name,
+                isVerified,
+                user_id
             FROM gravesites
             WHERE isVerified = true
         `);
@@ -14,6 +25,7 @@ export async function Get_all_personInDB() {
         throw new Error("Database error occurred while getting all persons");
     }
 }
+
 
 export async function createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, userId) {
     try {
@@ -49,7 +61,7 @@ export async function findPersonInDB(name, surname, date_of_birth, date_of_death
             SELECT * 
             FROM gravesites 
             WHERE LOWER(name) = LOWER(?)
-              AND LOWER(surname) = LOWER(?) 
+              AND LOWER(surname) = LOWER(?)
               AND date_of_birth = ? 
               AND date_of_death = ?
         `, [name, surname, date_of_birth, date_of_death]);

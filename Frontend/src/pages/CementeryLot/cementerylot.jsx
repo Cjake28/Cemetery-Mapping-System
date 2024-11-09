@@ -26,18 +26,18 @@ const mapBounds = {
 
 const polygonPath = [
   //for testing
-  // { lat: 14.904080524364822, lng: 120.788730885781 },
-  // { lat: 14.904033633321532, lng: 120.78930734470765 },
-  // { lat: 14.90356284667923, lng: 120.78913654206295 },
-  // { lat: 14.90375603813445, lng: 120.78858919722349 },
+  { lat: 14.904080524364822, lng: 120.788730885781 },
+  { lat: 14.904033633321532, lng: 120.78930734470765 },
+  { lat: 14.90356284667923, lng: 120.78913654206295 },
+  { lat: 14.90375603813445, lng: 120.78858919722349 },
 
   // for prduction
-  { lat: 14.8888116371095, lng: 120.77787947308613 },
-  { lat: 14.890034439165516, lng: 120.78035776034305 },
-  { lat: 14.88959357246283, lng: 120.78062391085757 },
-  { lat: 14.888521304435601, lng: 120.78041934311165 },
-  { lat: 14.887797921005744, lng: 120.77949338482969 },
-  { lat: 14.888037909958108, lng: 120.77858975718522 },
+  // { lat: 14.8888116371095, lng: 120.77787947308613 },
+  // { lat: 14.890034439165516, lng: 120.78035776034305 },
+  // { lat: 14.88959357246283, lng: 120.78062391085757 },
+  // { lat: 14.888521304435601, lng: 120.78041934311165 },
+  // { lat: 14.887797921005744, lng: 120.77949338482969 },
+  // { lat: 14.888037909958108, lng: 120.77858975718522 },
 
 ];
 
@@ -179,23 +179,15 @@ const polygonCoords5 =[
 //   {lat:14.888954, lng:120.779382},
 // ]
 
-// Define polygon options
-const polygonOptions = {
-  strokeColor: '#00FF00',
-  strokeOpacity: 0.8,
-  strokeWeight: 1.5,
-  fillOpacity: 0.5,
-};
-
 const options = {
   mapId:'31df144c8f9b66d4',
   disableDefaultUI: true,  // Disable default UI controls
   mapTypeControl: false,   // Hide map type controls
   mapTypeId: "satellite",  // Satellite view
-  restriction: {
-    latLngBounds: mapBounds,
-    strictBounds: true, // Enforce the restriction
-  }
+  // restriction: {
+  //   latLngBounds: mapBounds
+  //   strictBounds: true, // Enforce the restriction
+  // }
 };
 
 const Cementerylot = () => {
@@ -306,7 +298,7 @@ const Cementerylot = () => {
     createGridCells(map, polygonCoords2, -8, 0.0000258,0.00001); // Grid for second area
     createGridCells(map, polygonCoords3, -25.3, 0.0000258,0.00001); 
     createGridCells(map, polygonCoords4, -27.5, 0.000039,0.00007); 
-    createGridCells(map, polygonCoords5, -23.5, 0.000035, 0.00005); 
+    createGridCells(map, polygonCoords5, -23, 0.000035, 0.00005); 
 
   }, [createGridCells]);
   

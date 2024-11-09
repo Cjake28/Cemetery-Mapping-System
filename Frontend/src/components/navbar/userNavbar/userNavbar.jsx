@@ -26,8 +26,8 @@ export default function UserNavbar() {
         <div className={`a-user-navbar ${location.pathname === '/user' ? 'active' : ''}`} onClick={() => navigate('/user')}>
           <p>Burial Search</p>
         </div>
-        <div className={`a-user-navbar ${location.pathname === '/user/cemeterylot' ? 'active' : ''}`} onClick={() => navigate('/user/cemeterylot')}>
-          <p>Cemetery Lot</p>
+        <div className={`a-user-navbar ${location.pathname === '/user/vacant-lot' ? 'active' : ''}`} onClick={() => navigate('/user/vacant-lot')}>
+          <p>Vacant Lot</p>
         </div>
         <div className={`a-user-navbar ${location.pathname === '/user/VirtualTour' ? 'active' : ''}`} onClick={() => navigate('/user/VirtualTour')}>
           <p>Virtual Tour</p>
@@ -46,7 +46,7 @@ export default function UserNavbar() {
           <div className={`a-user-navbar ${location.pathname === '/user' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user')}>
             <p>Burial Search</p>
           </div>
-          <div className={`a-user-navbar ${location.pathname === '/user/cemeterylot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user/cemeterylot')}>
+          <div className={`a-user-navbar ${location.pathname === '/user/vacant-lot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user/vacant-lot')}>
             <p>Vacant Lot</p>
           </div>
           <div className={`a-user-navbar ${location.pathname === '/user/VirtualTour' ? 'active' : ''}`} onClick={() => handelnavbarNav('/user/VirtualTour')}>

@@ -57,7 +57,7 @@ const router = createBrowserRouter([
                 element: <BurialSearch />,
               },
               {
-                path: 'cemeterylot',  // Maps to '/user/cementerylot'
+                path: 'vacant-lot',  // Maps to '/user/cementerylot'
                 element: <Cementerylot />,
               },
               {
