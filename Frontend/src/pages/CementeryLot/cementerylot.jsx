@@ -1,86 +1,29 @@
 import {useEffect,useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader, Polygon, Marker, Rectangle } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Polygon, Marker, DirectionsRenderer  } from '@react-google-maps/api';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
 import markerSvg from '../../assets/uncle-svgrepo-com.svg';
-import {polygonCoords1, polygonCoords2, polygonCoords3, polygonCoords4, polygonCoords5 }  from '../../utils/mapgridCoords.js'
-// import './cemeteryLot.css';
-
-const containerStyle = {
-  width: '100vw',
-  height: '100vh',
-};
-
-const center = {
-  lat: 14.888821,
-  lng: 120.779467,
-};
-
-const mapBounds = {
-  north: center.lat + 0.0018,  // A bit north of the center
-  south: center.lat - 0.001,  // A bit south of the center
-  east: center.lng + 0.0018,   // A bit east of the center
-  west: center.lng - 0.0018    // A bit west of the center
-};
-
-const polygonPath = [
-  //for testing
-  // { lat: 14.904080524364822, lng: 120.788730885781 },
-  // { lat: 14.904033633321532, lng: 120.78930734470765 },
-  // { lat: 14.90356284667923, lng: 120.78913654206295 },
-  // { lat: 14.90375603813445, lng: 120.78858919722349 },
-
-  // for prduction
-  { lat: 14.8888116371095, lng: 120.77787947308613 },
-  { lat: 14.890034439165516, lng: 120.78035776034305 },
-  { lat: 14.88959357246283, lng: 120.78062391085757 },
-  { lat: 14.888521304435601, lng: 120.78041934311165 },
-  { lat: 14.887797921005744, lng: 120.77949338482969 },
-  { lat: 14.888037909958108, lng: 120.77858975718522 },
-
-];
+import {polygonCoords1, polygonCoords2, polygonCoords3, polygonCoords4, polygonCoords5, center }  from '../../utils/mapgridCoords.js'
+import './cemeteryLot.css';
 
 const options = {
-  mapId:'31df144c8f9b66d4',
   disableDefaultUI: true,  // Disable default UI controls
   mapTypeControl: false,   // Hide map type controls
   mapTypeId: "satellite",  // Satellite view
-  restriction: {
-    latLngBounds: mapBounds,
-    strictBounds: true // Enforce the restriction
-  }
 };
 
-const Cementerylot = () => {
+export default function Cementerylot (){
   const {locationContext} = useLocationContext();
   const {location, startWatchingLocation, getCurrentLocation } = GeolocationContext();
   const [insideCemetery, setInsideCemetery] = useState(false);
+  const [directions, setDirections] = useState(null);
+  const [map, setMap] = useState(null);
   console.log("location context: " + locationContext);
   
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ['geometry']
   });
-
-  useEffect(() => {
-    if (window.google && window.google.maps.geometry) {
-      getCurrentLocation()
-        .then(({ latitude, longitude }) => {
-          const polygon = new window.google.maps.Polygon({ paths: polygonPath });
-          const currentLocation = new window.google.maps.LatLng(latitude, longitude);
-  
-          const inside = window.google.maps.geometry.poly.containsLocation(currentLocation, polygon);
-          if (inside) {
-            startWatchingLocation(); // Now starts watching without affecting state
-            setInsideCemetery(true);
-          }
-        })
-        .catch((error) => {
-          console.error('Error getting location:', error);
-          setInsideCemetery(false);
-        });
-    }
-  }, [isLoaded]);
 
   const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight) => {
     const rotationAngle = (RDeg * Math.PI) / 180;
@@ -154,27 +97,60 @@ const Cementerylot = () => {
     }
   }, []);
 
-  const onLoad = useCallback((map) => {
-    createGridCells(map, polygonCoords1, -25, 0.0000258,0.00001); // Grid for first area
-    createGridCells(map, polygonCoords2, -8, 0.0000258,0.00001); // Grid for second area
-    createGridCells(map, polygonCoords3, -25.3, 0.0000258,0.00001); 
-    createGridCells(map, polygonCoords4, -27.5, 0.000039,0.00007); 
-    createGridCells(map, polygonCoords5, -23, 0.000035, 0.00005); 
+  async function startDirection() {
+    try {
+      const currentLocation = await getCurrentLocation(); // Get user's current location
+  
+      const directionsService = new window.google.maps.DirectionsService();
+      directionsService.route(
+        {
+          origin: new window.google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
+          destination: "Himlayang Lahing Kayumanggi",
+          travelMode: window.google.maps.TravelMode.DRIVING,
+        },
+        (result, status) => {
+          if (status === window.google.maps.DirectionsStatus.OK) {
+            setDirections(result); // Set the directions result to render it
+          } else {
+            console.error("Error fetching directions", result);
+          }
+        }
+      );
+    } catch (error) {
+      console.error("Error getting location or fetching directions:", error);
+    }
+  }
+  
+  // Add this function in the component to update directions on location change
+  useEffect(() => {
+    if (location) {
+      startDirection();
+    }
+  }, [location]); // Depend on location updates
 
+  const onLoad = useCallback((mapInstance) => {
+    createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001); // Grid for first area
+    createGridCells(mapInstance, polygonCoords2, -8, 0.0000258,0.00001); // Grid for second area
+    createGridCells(mapInstance, polygonCoords3, -25.3, 0.0000258,0.00001); 
+    createGridCells(mapInstance, polygonCoords4, -27.5, 0.000039,0.00007); 
+    createGridCells(mapInstance, polygonCoords5, -23, 0.000035, 0.00005);
+    
+    setMap(mapInstance);
+    
   }, [createGridCells]);
   
   if (!isLoaded) {
     return <div>Loading...</div>;
   }
 
-    const customMarkerIcon = {
+  const customMarkerIcon = {
     url: markerSvg, 
     scaledSize: new window.google.maps.Size(25, 25),
   };
 
   return(
-    <>
-    <div style={{ height: '100vh', width: '100vw'}} className='cemeteryLotMap-container'>
+    <div className="cemeteryLotMap-container">
+    <div style={{ height: '100%', width: '100%'}} className='cemeteryLotMap-container'>
       <GoogleMap
         zoom={24} // Adjusted zoom to better see the shapes
         center={center}
@@ -182,19 +158,18 @@ const Cementerylot = () => {
         options={options}
         onLoad={onLoad}
       >
-        {/* Polygon Component */}
         {/* {locationContext && <Polygon path={locationContext} options={polygonOptions} />} */}
-
-        {/* <Polygon path={polygonPath} options={polygonOptions}/> */}
-        
-        {insideCemetery && location && <Marker
+        {/* {insideCemetery && location && <Marker
           position={{ lat: location.latitude, lng: location.longitude }}
           icon={customMarkerIcon}
-        />}
+        />} */}
+        {directions && <DirectionsRenderer directions={directions} />}
       </GoogleMap>
     </div>
-    </>
+    <div className="cemeteryLot-buttons-container">
+      <button onClick ={() => map.panTo(center)} className="center-btn">center</button>
+      <button onClick={startDirection} className="center-btn">DRT</button>
+      </div>
+    </div>
   );
 };
-
-export default Cementerylot;

@@ -123,4 +123,53 @@ export const polygonCoords5 =[
     { lat: 14.88922320472585, lng: 120.78011637165059 },
     { lat: 14.889145834454531, lng: 120.78022732959417 },
     
-  ]
+]
+
+export const center = {
+  lat: 14.888821,
+  lng: 120.779467,
+};
+
+export const polygonPath = [
+    //for testing
+    // { lat: 14.904080524364822, lng: 120.788730885781 },
+    // { lat: 14.904033633321532, lng: 120.78930734470765 },
+    // { lat: 14.90356284667923, lng: 120.78913654206295 },
+    // { lat: 14.90375603813445, lng: 120.78858919722349 },
+  
+    // for prduction
+    { lat: 14.8888116371095, lng: 120.77787947308613 },
+    { lat: 14.890034439165516, lng: 120.78035776034305 },
+    { lat: 14.88959357246283, lng: 120.78062391085757 },
+    { lat: 14.888521304435601, lng: 120.78041934311165 },
+    { lat: 14.887797921005744, lng: 120.77949338482969 },
+    { lat: 14.888037909958108, lng: 120.77858975718522 },
+  
+  ];
+
+export const mapBounds = {
+    north: center.lat + 0.0018,  // A bit north of the center
+    south: center.lat - 0.001,  // A bit south of the center
+    east: center.lng + 0.0018,   // A bit east of the center
+    west: center.lng - 0.0018    // A bit west of the center
+  };
+
+// useEffect(() => {
+//     if (window.google && window.google.maps.geometry) {
+//       getCurrentLocation()
+//         .then(({ latitude, longitude }) => {
+//           const polygon = new window.google.maps.Polygon({ paths: polygonPath });
+//           const currentLocation = new window.google.maps.LatLng(latitude, longitude);
+  
+//           const inside = window.google.maps.geometry.poly.containsLocation(currentLocation, polygon);
+//           if (inside) {
+//             startWatchingLocation(); // Now starts watching without affecting state
+//             setInsideCemetery(true);
+//           }
+//         })
+//         .catch((error) => {
+//           console.error('Error getting location:', error);
+//           setInsideCemetery(false);
+//         });
+//     }
+//   }, [isLoaded]);

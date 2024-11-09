@@ -1,5 +1,25 @@
-/* style={{ height: '100vh', width: '100vw', z-index:-1 }} */
+.cemeteryLotMap-container {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    z-index: 0; /* Ensures the map stays below the buttons */
+  }
+  
+  .cemeteryLot-buttons-container {
+    position: absolute;
+    bottom: 40px;
+    right:40px;
+    z-index: 10; /* Place buttons above the map */
 
-.cemeteryLotMap-container{
-    z-index:-1
-}
+  }
+  
+  .center-btn {
+    height:50px;
+    width:50px;  
+    z-index: 10; /* Ensures the button is clickable */
+    border-radius: 50%;
+    background-color:white;
+    border:none;
+
+  }
+  
