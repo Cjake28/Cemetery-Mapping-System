@@ -10,6 +10,7 @@ const options = {
   disableDefaultUI: true,  // Disable default UI controls
   mapTypeControl: false,   // Hide map type controls
   mapTypeId: "satellite",  // Satellite view
+  gestureHandling: "greedy"
 };
 
 export default function Cementerylot (){
@@ -22,7 +23,7 @@ export default function Cementerylot (){
   
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: ['geometry']
+    libraries: ['geometry', 'places', 'directions'],
   });
 
   const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight) => {
@@ -102,6 +103,7 @@ export default function Cementerylot (){
       const currentLocation = await getCurrentLocation(); // Get user's current location
   
       const directionsService = new window.google.maps.DirectionsService();
+
       directionsService.route(
         {
           origin: new window.google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),

@@ -1,7 +1,7 @@
 .cemeteryLotMap-container {
     position: relative;
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
     z-index: 0; /* Ensures the map stays below the buttons */
   }
   
