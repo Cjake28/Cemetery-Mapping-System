@@ -189,7 +189,6 @@ export default function VacantLot(){
         map.setZoom(20);
       }} className="center-btn"><FiTarget style={{height:'100%', width:'100%' }}/></button>
       <button onClick={()=> startDirection()} className="direction-btn"><FiMapPin style={{height:'60%', width:'60%'}} /></button>
-      <button onClick={()=> setScene(false)} className="cemeteryLot-back-btn"><FiDelete  style={{height:'60%', width:'60%'}}/></button>
       <button onClick={()=> {
         map.panTo({ lat: location.latitude, lng: location.longitude });
         map.setZoom(20);
