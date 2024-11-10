@@ -101,22 +101,44 @@ export default function Cementerylot (){
   async function startDirection() {
     try {
       const currentLocation = await getCurrentLocation(); // Get user's current location
-  
+      
       // Clear the previous directions before setting new ones
       setDirections(null);
   
       const directionsService = new window.google.maps.DirectionsService();
-      console.log("directionService: ", directionsService);
       directionsService.route(
         {
           origin: new window.google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
-          destination: "Himlayang Lahing Kayumanggi",
+          destination: new window.google.maps.LatLng(locationContext.lat, locationContext.lng),
           travelMode: window.google.maps.TravelMode.DRIVING,
         },
         (result, status) => {
           if (status === window.google.maps.DirectionsStatus.OK) {
             setDirections(result); // Set the directions result to render it
-            console.log("result: ", result);
+            
+            // Get the last latitude and longitude from the route
+            const lastLeg = result.routes[0].legs[result.routes[0].legs.length - 1];
+            const lastLatLng = lastLeg.end_location;
+            
+            // Create a dashed line from the last location to locationContext
+            const dashedLine = new window.google.maps.Polyline({
+              path: [
+                { lat: lastLatLng.lat(), lng: lastLatLng.lng() },
+                { lat: locationContext.lat, lng: locationContext.lng }
+              ],
+              strokeColor: "#0000FF", // Set color for dashed line
+              strokeOpacity: 0, // Set to 0 to use only the dash pattern
+              icons: [
+                {
+                  icon: { path: "M 0,-1 0,1", strokeOpacity: 1, scale: 4 },
+                  offset: "0",
+                  repeat: "20px"
+                }
+              ],
+              map: map, // Attach to the map instance
+            });
+            
+            console.log("Dashed line drawn from last point to locationContext.");
           } else {
             console.error("Error fetching directions", result);
           }
@@ -126,6 +148,8 @@ export default function Cementerylot (){
       console.error("Error getting location or fetching directions:", error);
     }
   }
+  
+  
   
   useEffect(()=>{
     startWatchingLocation();

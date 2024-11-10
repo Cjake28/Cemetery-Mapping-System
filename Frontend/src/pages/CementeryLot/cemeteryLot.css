@@ -70,7 +70,7 @@
 @media (max-width: 768px){
     .center-btn {
         position: absolute;
-        bottom: 80px;
+        bottom: 40px;
         right:35px;
         z-index: 10;
         height:40px;
@@ -79,7 +79,7 @@
     
       .direction-btn {
         position: absolute;
-        bottom: 80px;
+        bottom: 40px;
         right:90px;
         z-index: 10;
         height:40px;
@@ -97,7 +97,7 @@
     
     .focus-direction-btn{
         position: absolute;
-        bottom: 120px;
+        bottom: 80px;
         right: 35px;
         z-index: 10;
         height:40px;
