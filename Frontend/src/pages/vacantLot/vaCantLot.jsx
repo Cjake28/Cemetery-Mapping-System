@@ -102,7 +102,7 @@ export default function VacantLot(){
 
   async function startDirection() {
     try {
-      const currentLocation = await getCurrentLocation(); // Get user's current location
+      const currentLocation = await getCurrentLocation(); 
   
       // Clear the previous directions before setting new ones
       setDirections(null);
