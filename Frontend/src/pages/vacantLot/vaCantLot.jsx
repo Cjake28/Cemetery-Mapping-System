@@ -5,6 +5,7 @@ import {GeolocationContext} from '../../Context/geolocationContext.jsx';
 import markerSvg from '../../assets/personLoc.svg';
 import plotpos from '../../assets/position.svg'
 import { FiDelete , FiTarget, FiMapPin, FiDisc } from "react-icons/fi";
+import ShowRouteModal from './showRouteModal.jsx';  // Import the modal
 import {polygonCoords1, 
         polygonCoords2, 
         polygonCoords3, 
@@ -25,6 +26,8 @@ export default function VacantLot(){
   const {location, startWatchingLocation, getCurrentLocation } = GeolocationContext();
   const [directions, setDirections] = useState(null);
   const [map, setMap] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [targetLocation, setTargetLocation] = useState(null);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -80,44 +83,63 @@ export default function VacantLot(){
           );
   
           // Create grid cell polygons with conditional styling
-          new window.google.maps.Polygon( isTargetCell ? {
+          const polygon = new window.google.maps.Polygon({
             paths: cellCoords,
-            strokeColor: '#0000FF',
-            strokeOpacity: 0.7,
-            strokeWeight: 1,
-            fillColor: '#0000FF',
-            fillOpacity: 0.8,
-            map: map,
-          }:
-          {
-            paths: cellCoords,
-            strokeColor: '#FFFF00',
-            strokeOpacity: 0.5,
+            strokeColor: isTargetCell ? '#0000FF' : '#FFFF00',
+            strokeOpacity: isTargetCell ? 0.7 : 0.5,
+            strokeWeight: isTargetCell ? 1 : 0.8,
+            fillColor: isTargetCell ? '#0000FF' : undefined,
+            fillOpacity: isTargetCell ? 0.8 : 0,
             map: map,
           });
+  
+          // Add click event only if isTargetCell is true
+          if (isTargetCell) {
+            polygon.addListener('click', () => {
+              setTargetLocation({ lat: cellCenter.lat(), lng: cellCenter.lng() });
+              setShowModal(true); // Show modal on cell click
+            });
+          }
         }
       }
     }
   }, [polygonData]);
 
-  async function startDirection() {
+  async function startDirection(loc){
     try {
-      const currentLocation = await getCurrentLocation(); 
-  
+      const currentLocation = await getCurrentLocation(); // Get user's current location
+      
       // Clear the previous directions before setting new ones
       setDirections(null);
   
       const directionsService = new window.google.maps.DirectionsService();
-  
       directionsService.route(
         {
           origin: new window.google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
-          destination: "Himlayang Lahing Kayumanggi",
+          destination: loc || "Himlayang Lahing Kayumanggi",
           travelMode: window.google.maps.TravelMode.DRIVING,
         },
         (result, status) => {
           if (status === window.google.maps.DirectionsStatus.OK) {
             setDirections(result); // Set the directions result to render it
+            
+            // Get the last latitude and longitude from the route
+            const lastLeg = result.routes[0].legs[result.routes[0].legs.length - 1];
+            const lastLatLng = lastLeg.end_location;
+            
+            // Create a solid line from the last location to locationContext
+            const solidLine = new window.google.maps.Polyline({
+              path: [
+                { lat: lastLatLng.lat(), lng: lastLatLng.lng() },
+                loc
+              ],
+              strokeColor: "#4285F4", // Set to match route color, typically Google blue
+              strokeOpacity: 1, // Fully opaque for solid line
+              strokeWeight: 4, // Adjust thickness to match the main route
+              map: map, // Attach to the map instance
+            });
+            
+            console.log("Solid line drawn from last point to locationContext.");
           } else {
             console.error("Error fetching directions", result);
           }
@@ -172,10 +194,6 @@ export default function VacantLot(){
         onLoad={onLoad}
       >
         
-        {/* <Marker
-          position={locationContext}
-          icon={plotPositon}
-        /> */}
         {location && <Marker
           position={{ lat: location.latitude, lng: location.longitude }}
           icon={customMarkerIcon}
@@ -183,6 +201,12 @@ export default function VacantLot(){
         {directions && <DirectionsRenderer directions={directions} />}
       </GoogleMap>
     </div>
+
+    <ShowRouteModal 
+        show={showModal} 
+        onClose={() => setShowModal(false)} 
+        onConfirm={() => { startDirection(targetLocation); setShowModal(false); }} 
+      />
     
       <button onClick ={() => {
         map.panTo(center);
@@ -196,5 +220,3 @@ export default function VacantLot(){
     </div>
   );
 };
-
-;

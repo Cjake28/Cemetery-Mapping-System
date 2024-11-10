@@ -1,0 +1,66 @@
+.showRouteModal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .showRouteModal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+    max-width: 90%;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .showRouteModal-content h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .showRouteModal-content button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .showRouteModal-see-btn {
+    background-color: #28a745;
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .showRouteModal-see-btn:hover {
+    background-color: #218838;
+  }
+  
+  .showRouteModal-close-btn {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .showRouteModal-close-btn:hover {
+    background-color: #c82333;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  button:active {
+    transform: scale(0.98);
+  }
+  
