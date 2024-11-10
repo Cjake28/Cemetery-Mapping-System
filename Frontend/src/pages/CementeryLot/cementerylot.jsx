@@ -2,9 +2,11 @@ import {useEffect,useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, Polygon, Marker, DirectionsRenderer  } from '@react-google-maps/api';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
-import markerSvg from '../../assets/uncle-svgrepo-com.svg';
+import markerSvg from '../../assets/personLoc.svg';
+import plotpos from '../../assets/position.svg'
 import {polygonCoords1, polygonCoords2, polygonCoords3, polygonCoords4, polygonCoords5, center }  from '../../utils/mapgridCoords.js'
 import './cemeteryLot.css';
+import { FiDelete , FiTarget, FiMapPin, FiDisc } from "react-icons/fi";
 
 const options = {
   disableDefaultUI: true,  // Disable default UI controls
@@ -14,12 +16,10 @@ const options = {
 };
 
 export default function Cementerylot (){
-  const {locationContext} = useLocationContext();
+  const {locationContext, setScene} = useLocationContext();
   const {location, startWatchingLocation, getCurrentLocation } = GeolocationContext();
-  const [insideCemetery, setInsideCemetery] = useState(false);
   const [directions, setDirections] = useState(null);
   const [map, setMap] = useState(null);
-  console.log("location context: " + locationContext);
   
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -102,8 +102,11 @@ export default function Cementerylot (){
     try {
       const currentLocation = await getCurrentLocation(); // Get user's current location
   
+      // Clear the previous directions before setting new ones
+      setDirections(null);
+  
       const directionsService = new window.google.maps.DirectionsService();
-
+  
       directionsService.route(
         {
           origin: new window.google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
@@ -123,12 +126,16 @@ export default function Cementerylot (){
     }
   }
   
+  useEffect(()=>{
+    startWatchingLocation();
+  },[])
+  
   // Add this function in the component to update directions on location change
-  useEffect(() => {
-    if (location) {
-      startDirection();
-    }
-  }, [location]); // Depend on location updates
+  // useEffect(() => {
+  //   if (location) {
+  //     startDirection();
+  //   }
+  // }, [location]); // Depend on location updates
 
   const onLoad = useCallback((mapInstance) => {
     createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001); // Grid for first area
@@ -150,6 +157,11 @@ export default function Cementerylot (){
     scaledSize: new window.google.maps.Size(25, 25),
   };
 
+  const plotPositon = {
+    url: plotpos, 
+    scaledSize: new window.google.maps.Size(40, 40),
+  };
+
   return(
     <div className="cemeteryLotMap-container">
     <div style={{ height: '100%', width: '100%'}} className='cemeteryLotMap-container'>
@@ -161,17 +173,28 @@ export default function Cementerylot (){
         onLoad={onLoad}
       >
         {/* {locationContext && <Polygon path={locationContext} options={polygonOptions} />} */}
-        {/* {insideCemetery && location && <Marker
+        <Marker
+          position={locationContext}
+          icon={plotPositon}
+        />
+        {location && <Marker
           position={{ lat: location.latitude, lng: location.longitude }}
           icon={customMarkerIcon}
-        />} */}
+        />}
         {directions && <DirectionsRenderer directions={directions} />}
       </GoogleMap>
     </div>
-    <div className="cemeteryLot-buttons-container">
-      <button onClick ={() => map.panTo(center)} className="center-btn">center</button>
-      <button onClick={startDirection} className="center-btn">DRT</button>
-      </div>
+    
+      <button onClick ={() => {
+        map.panTo(center);
+        map.setZoom(20);
+      }} className="center-btn"><FiTarget style={{height:'100%', width:'100%' }}/></button>
+      <button onClick={()=> startDirection()} className="direction-btn"><FiMapPin style={{height:'60%', width:'60%'}} /></button>
+      <button onClick={()=> setScene(false)} className="cemeteryLot-back-btn"><FiDelete  style={{height:'60%', width:'60%'}}/></button>
+      <button onClick={()=> {
+        map.panTo({ lat: location.latitude, lng: location.longitude });
+        map.setZoom(20);
+      }} className="focus-direction-btn"><FiDisc style={{height:'100%', width:'100%'}}/></button>
     </div>
   );
 };

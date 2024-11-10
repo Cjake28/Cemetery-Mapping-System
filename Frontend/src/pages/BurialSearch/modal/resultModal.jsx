@@ -5,8 +5,6 @@ import './resultmodal.css';
 export default function ResultModal({ isOpen, onClose, searchResults, openMap }) {
   if (!isOpen) return null;
 
-
-
   return (
     <div className="resultmodal-modal-overlay">
       <div className="resultmodal-modal-content">

@@ -9,17 +9,98 @@
     position: absolute;
     bottom: 40px;
     right:40px;
-    z-index: 10; /* Place buttons above the map */
-
+    z-index: 10; 
   }
   
   .center-btn {
+    position: absolute;
+    bottom: 40px;
+    right:40px;
+    z-index: 10;
     height:50px;
     width:50px;  
     z-index: 10; /* Ensures the button is clickable */
-    border-radius: 50%;
+    border-radius: 100%;
     background-color:white;
     border:none;
-
   }
-  
+
+  .direction-btn {
+    position: absolute;
+    bottom: 40px;
+    right:100px;
+    z-index: 10;
+    height:50px;
+    width:50px;  
+    z-index: 10; /* Ensures the button is clickable */
+    border-radius: 100%;
+    background-color:white;
+    border:none;
+}
+
+.cemeteryLot-back-btn{
+    position: absolute;
+    top: 30px;
+    left:50px;
+    z-index: 10;
+    height:45px;
+    width:45px;  
+    z-index: 10; /* Ensures the button is clickable */
+    border-radius: 100%;
+    background-color:white;
+    border:none;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.focus-direction-btn{
+    position: absolute;
+    bottom: 100px;
+    right:40px;
+    z-index: 10;
+    height:50px;
+    width:50px;  
+    z-index: 10; /* Ensures the button is clickable */
+    border-radius: 100%;
+    background-color:white;
+    border:none;
+}
+
+@media (max-width: 768px){
+    .center-btn {
+        position: absolute;
+        bottom: 35px;
+        right:35px;
+        z-index: 10;
+        height:40px;
+        width:40px; 
+      }
+    
+      .direction-btn {
+        position: absolute;
+        bottom: 35px;
+        right:90px;
+        z-index: 10;
+        height:40px;
+        width:40px;  
+    }
+    
+    .cemeteryLot-back-btn{
+        position: absolute;
+        top: 25px;
+        left:45px;
+        z-index: 10;
+        height:40px;
+        width:40px;  
+    }
+    
+    .focus-direction-btn{
+        position: absolute;
+        bottom: 90px;
+        right: 35px;
+        z-index: 10;
+        height:40px;
+        width:40px; 
+    }
+}

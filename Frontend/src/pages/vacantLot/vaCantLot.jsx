@@ -153,7 +153,7 @@ const VacantLot = () => {
   const {polygonData, error} = useVacantLots()
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: ["geometry"],
+    libraries: ["geometry", "places", "directions"] 
   });
 
   const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight) => {
@@ -257,7 +257,7 @@ const VacantLot = () => {
   }
 
   return (
-    <div style={{ height: '100vh', width: '100vw' }}>
+    <div style={{ height: '100dvh', width: '100dvw' }}>
       <GoogleMap
         zoom={24}
         center={center}

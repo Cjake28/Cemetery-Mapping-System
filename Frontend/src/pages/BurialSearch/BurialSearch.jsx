@@ -1,4 +1,3 @@
-// BurialSearch.jsx
 import './BurialSearch.css';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -37,18 +36,13 @@ export default function BurialSearch() {
   });
 
   const handleSearch = () => {
-    
     const filteredPersons = persons?.filter((person) =>
-      person.name === name &&
-      person.middle_name === middleName &&
-      person.surname === surname &&
+      person.name.toLowerCase().trim() === name.toLowerCase().trim() &&
+      person.middle_name.toLowerCase().trim() === middleName.toLowerCase().trim() &&
+      person.surname.toLowerCase().trim() === surname.toLowerCase().trim() &&
       new Date(person.date_of_birth).toISOString().slice(0, 10) === dateOfBirth &&
       new Date(person.date_of_death).toISOString().slice(0, 10) === dateOfDeath
-      
     );
-    console.log("dateOfBirth: ", dateOfBirth);
-    console.log(new Date(persons[0].date_of_birth).toISOString().slice(0, 10));
-    console.log(persons[0]);
     setSearchResults(filteredPersons);
     setIsResultModalOpen(true);
   };
@@ -59,53 +53,56 @@ export default function BurialSearch() {
     handleLatlngObjConvertion(searchResults[0].center_lat_lng);
     handleCloseResultModal();
     setScene(true);
-  }
-
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="Burial_Search_Container">
+    <div className="burial-search-container">
       {isModalOpen && <PrivacyModal onClose={() => setIsModalOpen(false)} />}
 
       <div className="image-container">
         <img src={ExampleImage} alt="Descriptive Text" className="example-image" />
       </div>
 
-      <div className="Search-Bar-container">
+      <div className="search-bar-container">
         <input
           type="text"
+          className="search-input"
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
         <input
           type="text"
+          className="search-input"
           placeholder="Middle Name"
           value={middleName}
           onChange={(e) => setMiddleName(e.target.value)}
         />
         <input
           type="text"
+          className="search-input"
           placeholder="Surname"
           value={surname}
           onChange={(e) => setSurname(e.target.value)}
         />
         <input
           type="date"
+          className="search-input"
           placeholder="Date of Birth"
           value={dateOfBirth}
           onChange={(e) => setDateOfBirth(e.target.value)}
         />
         <input
           type="date"
+          className="search-input"
           placeholder="Date of Death"
           value={dateOfDeath}
           onChange={(e) => setDateOfDeath(e.target.value)}
         />
-        
-        <button onClick={handleSearch}>Search</button>
+        <button className="search-button" onClick={handleSearch}>Search</button>
       </div>
 
       <ResultModal
