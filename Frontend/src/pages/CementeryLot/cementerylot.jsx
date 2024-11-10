@@ -4,9 +4,23 @@ import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
 import markerSvg from '../../assets/personLoc.svg';
 import plotpos from '../../assets/position.svg'
-import {polygonCoords1, polygonCoords2, polygonCoords3, polygonCoords4, polygonCoords5, center }  from '../../utils/mapgridCoords.js'
 import './cemeteryLot.css';
 import { FiDelete , FiTarget, FiMapPin, FiDisc } from "react-icons/fi";
+import {polygonCoords1, 
+  polygonCoords2, 
+  polygonCoords3, 
+  polygonCoords4, 
+  polygonCoords5,
+  polygonCoords6,
+  polygonCoords7,
+  polygonCoords8,
+  polygonCoords9,
+  polygonCoords10,
+  polygonCoords11,
+  polygonCoords12,
+  polygonCoords13,
+  center 
+}  from '../../utils/mapgridCoords.js'
 
 const options = {
   disableDefaultUI: true,  // Disable default UI controls
@@ -26,20 +40,20 @@ export default function Cementerylot (){
     libraries: ['geometry', 'places', 'directions'],
   });
 
-  const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight) => {
+  const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight, grCenter) => {
     const rotationAngle = (RDeg * Math.PI) / 180;
 
     const bounds = new window.google.maps.LatLngBounds();
     polygonCoords.forEach((coord) => bounds.extend(coord));
 
     const rotatePoint = (lat, lng) => {
-      const x = lat - center.lat;
-      const y = lng - center.lng;
+      const x = lat - grCenter.lat;
+      const y = lng - grCenter.lng;
       const rotatedX = x * Math.cos(rotationAngle) - y * Math.sin(rotationAngle);
       const rotatedY = x * Math.sin(rotationAngle) + y * Math.cos(rotationAngle);
       return {
-        lat: rotatedX + center.lat,
-        lng: rotatedY + center.lng,
+        lat: rotatedX + grCenter.lat,
+        lng: rotatedY + grCenter.lng,
       };
     };
 
@@ -97,7 +111,7 @@ export default function Cementerylot (){
       }
     }
   }, []);
-  
+
 
   async function startDirection() {
     try {
@@ -158,11 +172,19 @@ export default function Cementerylot (){
   // }, [location]); // Depend on location updates
 
   const onLoad = useCallback((mapInstance) => {
-    createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001); // Grid for first area
-    createGridCells(mapInstance, polygonCoords2, -8, 0.0000258,0.00001); // Grid for second area
-    createGridCells(mapInstance, polygonCoords3, -25.3, 0.0000258,0.00001); 
-    createGridCells(mapInstance, polygonCoords4, -27.5, 0.000039,0.00007); 
-    createGridCells(mapInstance, polygonCoords5, -23, 0.000035, 0.00005);
+    createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001, center); // Grid for first area
+    createGridCells(mapInstance, polygonCoords2, -27, 0.0000258,0.00001, {lat:14.888659105509653, lng: 120.77973902161986}); // Grid for second area
+    createGridCells(mapInstance, polygonCoords3, -25.3, 0.0000258,0.00001, center);
+    createGridCells(mapInstance, polygonCoords4, -27.5, 0.000039,0.00007, center);
+    createGridCells(mapInstance, polygonCoords5, -25, 0.000035, 0.00005, {lat:14.889092682267146, lng: 120.77996924487826});
+    createGridCells(mapInstance, polygonCoords6, -28, 0.00002,0.00005, {lat:14.88965032489237, lng: 120.78015063987819});
+    createGridCells(mapInstance, polygonCoords7, -28, 0.00003,0.000065, {lat:14.889597502861827, lng: 120.78019569116832});
+    createGridCells(mapInstance, polygonCoords8, -28, 0.00003 ,0.000072, {lat:14.889492002990655, lng: 120.78016942582872});
+    createGridCells(mapInstance, polygonCoords9, -28, 0.00003 ,0.00003, {lat:14.889363361634262, lng: 120.7802421405942});
+    createGridCells(mapInstance, polygonCoords10, -28, 0.00003 ,0.000028, {lat:14.889295171070868, lng: 120.7802410014054});
+    createGridCells(mapInstance, polygonCoords11, -25, 0.00001,0.0000228, {lat:14.889236891676887, lng: 120.78029130432026});
+    createGridCells(mapInstance, polygonCoords12, -28, 0.00003,0.000072, {lat:14.889609273030171, lng: 120.78035698519585});
+    createGridCells(mapInstance, polygonCoords13, -25, 0.000015,0.0000348, {lat:14.88955837003466, lng: 120.78039142723911});
     
     setMap(mapInstance);
     
