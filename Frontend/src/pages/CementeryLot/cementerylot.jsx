@@ -97,6 +97,7 @@ export default function Cementerylot (){
       }
     }
   }, []);
+  
 
   async function startDirection() {
     try {
@@ -120,25 +121,19 @@ export default function Cementerylot (){
             const lastLeg = result.routes[0].legs[result.routes[0].legs.length - 1];
             const lastLatLng = lastLeg.end_location;
             
-            // Create a dashed line from the last location to locationContext
-            const dashedLine = new window.google.maps.Polyline({
+            // Create a solid line from the last location to locationContext
+            const solidLine = new window.google.maps.Polyline({
               path: [
                 { lat: lastLatLng.lat(), lng: lastLatLng.lng() },
                 { lat: locationContext.lat, lng: locationContext.lng }
               ],
-              strokeColor: "#0000FF", // Set color for dashed line
-              strokeOpacity: 0, // Set to 0 to use only the dash pattern
-              icons: [
-                {
-                  icon: { path: "M 0,-1 0,1", strokeOpacity: 1, scale: 4 },
-                  offset: "0",
-                  repeat: "20px"
-                }
-              ],
+              strokeColor: "#4285F4", // Set to match route color, typically Google blue
+              strokeOpacity: 1, // Fully opaque for solid line
+              strokeWeight: 4, // Adjust thickness to match the main route
               map: map, // Attach to the map instance
             });
             
-            console.log("Dashed line drawn from last point to locationContext.");
+            console.log("Solid line drawn from last point to locationContext.");
           } else {
             console.error("Error fetching directions", result);
           }
