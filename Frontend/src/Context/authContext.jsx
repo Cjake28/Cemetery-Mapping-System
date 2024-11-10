@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`${API_URL}/api/auth/signin`, { username: username, password: password });
       dispatch({ type: 'LOGIN_SUCCESS', payload: response.data.user });
     } catch(error){
-      console.log("login error: ", error.response?.data?.message );
+      // console.log("login error: ", error.response?.data?.message );
       dispatch({
         type: 'LOGIN_FAILURE',
         payload: error.response?.data?.message || 'Error logging in'
@@ -87,14 +87,14 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/auth/check-auth`);
-      console.log("checkAuth: ",response);
+      // console.log("checkAuth: ",response);
 
       if(!response.data.success){
         dispatch({ type: 'CHECK_AUTH_FAILURE' });
-        console.log("checkAuth user false");
+        // console.log("checkAuth user false");
         return
       }
-      console.log("cehckAUth response: ",response)
+      // console.log("cehckAUth response: ",response)
       dispatch({ type: 'CHECK_AUTH_SUCCESS', payload: response.data.user });
 
     } catch (error) {
