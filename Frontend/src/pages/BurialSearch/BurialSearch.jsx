@@ -10,6 +10,7 @@ import ResultModal from './modal/resultModal.jsx';
 import ExampleImage from '../../assets/himlayanSearchText.png';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
+axios.defaults.withCredentials = true;
 
 export default function BurialSearch() {
   const { requestLocationPermission } = GeolocationContext();

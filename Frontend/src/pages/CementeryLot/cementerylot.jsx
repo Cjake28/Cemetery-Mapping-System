@@ -106,7 +106,7 @@ export default function Cementerylot (){
       setDirections(null);
   
       const directionsService = new window.google.maps.DirectionsService();
-  
+      console.log("directionService: ", directionsService);
       directionsService.route(
         {
           origin: new window.google.maps.LatLng(currentLocation.latitude, currentLocation.longitude),
@@ -116,6 +116,7 @@ export default function Cementerylot (){
         (result, status) => {
           if (status === window.google.maps.DirectionsStatus.OK) {
             setDirections(result); // Set the directions result to render it
+            console.log("result: ", result);
           } else {
             console.error("Error fetching directions", result);
           }
