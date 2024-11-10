@@ -1,4 +1,4 @@
-import { Get_all_personInDB, createPersonInDB, delete_personInDB, findPersonInDB, updateLatLngPointsInDB } from '../../models/admin/gravesite.model.js';
+import { Get_all_personInDB, createPersonInDB, delete_personInDB, findPersonInDB, updateLatLngPointsInDB, updatePersonInDB } from '../../models/admin/gravesite.model.js';
 
 // Controller for getting all verified persons from the database
 export async function getAllPersons(req, res) {
@@ -120,6 +120,43 @@ export async function updateLatLngPoints(req, res) {
         res.status(500).json({
             success: false,
             message: 'Error updating lat/lng points in the database',
+        });
+    }
+}
+
+// In your controller file
+export async function updatePerson(req, res) {
+    const { id } = req.params; // Get the gravesite ID from the request parameters
+    const { name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name } = req.body;
+
+    // Validate the input fields
+    if (!name || !middle_name || !surname || !date_of_birth || !date_of_death || !location || !burial_date || !owner_name) {
+        return res.status(400).json({
+            success: false,
+            message: 'Please provide all required fields',
+        });
+    }
+
+    try {
+        // Update the person in the database
+        const updateSuccess = await updatePersonInDB(id, name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name);
+
+        if (!updateSuccess) {
+            return res.status(404).json({
+                success: false,
+                message: 'Person not found or no changes were made',
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Person updated successfully',
+        });
+    } catch (error) {
+        console.error("Error in updatePerson:", error);
+        res.status(500).json({
+            success: false,
+            message: 'Error updating person in the database',
         });
     }
 }

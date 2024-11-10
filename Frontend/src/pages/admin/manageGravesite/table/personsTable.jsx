@@ -1,8 +1,9 @@
-import { BsFillTrashFill, BsExclamationCircle, BsGeoAltFill } from 'react-icons/bs';
+import { BsFillTrashFill, BsFillPencilFill, BsGeoAltFill } from 'react-icons/bs';
 import { useState } from 'react';
 import DeletePersonModal from '../modal/deletePersonModal.jsx';
 import UpdateGraveLocationModal from '../modal/updateGraveLocationModal.jsx';  // Import the new modal
 import {useQueryClient } from '@tanstack/react-query';
+import UpdatePersonModal from '../modal/updatePersonModal.jsx'; 
 
 export default function PersonsTable({ filteredPersons }) {
     const queryClient = useQueryClient()
@@ -10,6 +11,7 @@ export default function PersonsTable({ filteredPersons }) {
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isGeoModalOpen, setIsGeoModalOpen] = useState(false);  // For updating location modal
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
 
     const handleDeleteClick = (person) => {
         setSelectedPerson(person);
@@ -24,6 +26,11 @@ export default function PersonsTable({ filteredPersons }) {
     const handleUpdateSuccess = () => {
         setIsGeoModalOpen(false);  // Close the modal after successful update
         queryClient.invalidateQueries(['persons']);
+    };
+
+    const handleEditClick = (person) => {
+        setSelectedPerson(person);
+        setIsUpdateModalOpen(true);
     };
 
     return (
@@ -46,14 +53,18 @@ export default function PersonsTable({ filteredPersons }) {
                                 <td className="user-table-cell">{person.owner_name || 'N/A'}</td>
                                 <td className="user-table-cell">
                                     <span className="user-actions">
-                                        <BsExclamationCircle className="edit-icon" />
-                                        <BsFillTrashFill 
-                                            className="delete-icon" 
-                                            onClick={() => handleDeleteClick(person)} 
+                                        <BsFillPencilFill 
+                                            className="edit-icon" 
+                                            onClick={() => handleEditClick(person)} 
                                         />
+                                        
                                         <BsGeoAltFill 
                                             className="geo-icon" 
                                             onClick={() => handleGeoClick(person)}  // Handle click to open location modal
+                                        />
+                                        <BsFillTrashFill 
+                                            className="delete-icon" 
+                                            onClick={() => handleDeleteClick(person)} 
                                         />
                                     </span>
                                 </td>
@@ -82,6 +93,15 @@ export default function PersonsTable({ filteredPersons }) {
                 <UpdateGraveLocationModal
                     isOpen={isGeoModalOpen}
                     onClose={() => setIsGeoModalOpen(false)}
+                    person={selectedPerson}
+                    onUpdateSuccess={handleUpdateSuccess}
+                />
+            )}
+
+            {selectedPerson && (
+                <UpdatePersonModal
+                    isOpen={isUpdateModalOpen}
+                    onClose={() => setIsUpdateModalOpen(false)}
                     person={selectedPerson}
                     onUpdateSuccess={handleUpdateSuccess}
                 />

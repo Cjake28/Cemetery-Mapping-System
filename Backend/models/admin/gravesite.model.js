@@ -91,3 +91,27 @@ export async function updateLatLngPointsInDB(id, center_lat_lng ) {
         throw new Error("Database error occurred while updating lat/long points");
     }
 }
+
+// In your model file
+export async function updatePersonInDB(id, name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name) {
+    try {
+        const [result] = await db.query(`
+            UPDATE gravesites
+            SET 
+                name = ?, 
+                middle_name = ?, 
+                surname = ?, 
+                date_of_birth = ?, 
+                date_of_death = ?, 
+                location = ?, 
+                burial_date = ?, 
+                owner_name = ?
+            WHERE id = ?
+        `, [name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, id]);
+
+        return result.affectedRows > 0; // Return true if a row was updated
+    } catch (error) {
+        console.error("Error in updatePersonInDB:", error);
+        throw new Error("Database error occurred while updating person");
+    }
+}

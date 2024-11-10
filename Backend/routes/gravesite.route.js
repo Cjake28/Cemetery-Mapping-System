@@ -1,7 +1,7 @@
 import express from 'express';
 import { verifyToken } from '../middleware/verifyToken.js';
 import { adminRoleValidate } from '../middleware/adminRoleValidate.js';
-import { getAllPersons, createPerson, deletePerson, updateLatLngPoints } from '../controllers/adminController/gravesite.controller.js';  // Assuming your controller is named gravesiteController.js
+import { getAllPersons, createPerson, deletePerson, updateLatLngPoints, updatePerson } from '../controllers/adminController/gravesite.controller.js';  // Assuming your controller is named gravesiteController.js
 
 const gravesiteRoute = express.Router();
 
@@ -16,5 +16,7 @@ gravesiteRoute.delete("/admin/delete-person/:id", verifyToken, adminRoleValidate
 
 // Route for updating lat/lng points of a gravesite (admin only, requires token and admin role)
 gravesiteRoute.put("/admin/update-lat-lng/:id", verifyToken, adminRoleValidate, updateLatLngPoints);
+
+gravesiteRoute.put('/admin/gravesites/:id', verifyToken, adminRoleValidate, updatePerson);
 
 export default gravesiteRoute;
