@@ -64,7 +64,7 @@ export default function BurialSearch() {
       {isModalOpen && <PrivacyModal onClose={() => setIsModalOpen(false)} />}
 
       <div className="image-container">
-        <img src={ExampleImage} alt="Descriptive Text" className="example-image" />
+        <h1 className="burial-search-h1-text-style" >HIMLAYANG LAHING KAYUMANGGI <br /> MEMORIAL PARK</h1>
       </div>
 
       <div className="search-bar-container">

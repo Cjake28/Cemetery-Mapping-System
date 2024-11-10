@@ -34,7 +34,7 @@ export default function VacantLot(){
     libraries: ["geometry", "places", "directions"]
   });
 
-  const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight) => {
+  const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight, grCenter) => {
     const rotationAngle = (RDeg * Math.PI) / 180;
 
     const bounds = new window.google.maps.LatLngBounds();
@@ -45,13 +45,13 @@ export default function VacantLot(){
     };
   
     const rotatePoint = (lat, lng) => {
-      const x = lat - center.lat;
-      const y = lng - center.lng;
+      const x = lat - grCenter.lat;
+      const y = lng - grCenter.lng;
       const rotatedX = x * Math.cos(rotationAngle) - y * Math.sin(rotationAngle);
       const rotatedY = x * Math.sin(rotationAngle) + y * Math.cos(rotationAngle);
       return {
-        lat: rotatedX + center.lat,
-        lng: rotatedY + center.lng,
+        lat: rotatedX + grCenter.lat,
+        lng: rotatedY + grCenter.lng,
       };
     };
   
@@ -153,13 +153,13 @@ export default function VacantLot(){
   useEffect(()=>{
     startWatchingLocation();
   },[])
-
+  
   const onLoad = useCallback((mapInstance) => {
-    createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001); // Grid for first area
-    createGridCells(mapInstance, polygonCoords2, -8, 0.0000258,0.00001); // Grid for second area
-    createGridCells(mapInstance, polygonCoords3, -25.3, 0.0000258,0.00001); 
-    createGridCells(mapInstance, polygonCoords4, -27.5, 0.000039,0.00007); 
-    createGridCells(mapInstance, polygonCoords5, -23, 0.000035, 0.00005);
+    createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001, center); // Grid for first area
+    createGridCells(mapInstance, polygonCoords2, -27, 0.0000258,0.00001, {lat:14.888659105509653, lng: 120.77973902161986}); // Grid for second area
+    createGridCells(mapInstance, polygonCoords3, -25.3, 0.0000258,0.00001, center);
+    createGridCells(mapInstance, polygonCoords4, -27.5, 0.000039,0.00007, center); 
+    createGridCells(mapInstance, polygonCoords5, -25, 0.000035, 0.00005, {lat:14.889092682267146, lng: 120.77996924487826});
     
     setMap(mapInstance);
     

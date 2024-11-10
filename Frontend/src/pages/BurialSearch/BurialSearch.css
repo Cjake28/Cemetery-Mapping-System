@@ -100,6 +100,12 @@
     height: auto;
 }
 
+.burial-search-h1-text-style{
+    color: rgb(254, 255, 216);
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .search-bar-container {
@@ -116,5 +122,10 @@
         width: 80%;
         max-width: 500px;
         height: auto;
+    }
+    .burial-search-h1-text-style{
+        color: rgb(254, 255, 216);
+        font-weight: bold;
+        font-size: 1.4rem;
     }
 }
