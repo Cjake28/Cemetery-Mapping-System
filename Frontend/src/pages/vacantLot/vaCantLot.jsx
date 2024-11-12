@@ -28,6 +28,7 @@ const options = {
   mapTypeId: "satellite",
   gestureHandling: "greedy"
 };
+const googleMap_libraries =  ["geometry", "places", "directions"]
 
 export default function VacantLot(){
   const {polygonData, error} = useVacantLots();
@@ -39,7 +40,7 @@ export default function VacantLot(){
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: ["geometry", "places", "directions"]
+    libraries: googleMap_libraries,
   });
 
   const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight, grCenter) => {
@@ -94,7 +95,7 @@ export default function VacantLot(){
           const polygon = new window.google.maps.Polygon({
             paths: cellCoords,
             strokeColor: isTargetCell ? '#0000FF' : '#FFFF00',
-            strokeOpacity: isTargetCell ? 0.7 : 0.6,
+            strokeOpacity: isTargetCell ? 0.7 : 0.5,
             strokeWeight: isTargetCell ? 1 : 0.8,
             fillColor: isTargetCell ? '#0000FF' : undefined,
             fillOpacity: isTargetCell ? 0.8 : 0,
@@ -104,7 +105,7 @@ export default function VacantLot(){
           // Add click event only if isTargetCell is true
           if (isTargetCell) {
             polygon.addListener('click', () => {
-              setTargetLocation({ lat: cellCenter.lat(), lng: cellCenter.lng() });
+              setTargetLocation({lat: cellCenter.lat(), lng: cellCenter.lng()});
               setShowModal(true); // Show modal on cell click
             });
           }
@@ -228,7 +229,7 @@ export default function VacantLot(){
         map.panTo(center);
         map.setZoom(20);
       }} className="center-btn"><FiTarget style={{height:'100%', width:'100%' }}/></button>
-      <button onClick={()=> startDirection()} className="direction-btn"><FiMapPin style={{height:'60%', width:'60%'}} /></button>
+
       <button onClick={()=> {
         map.panTo({ lat: location.latitude, lng: location.longitude });
         map.setZoom(20);

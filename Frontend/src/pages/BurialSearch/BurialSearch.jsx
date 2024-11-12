@@ -89,6 +89,7 @@ export default function BurialSearch() {
           value={surname}
           onChange={(e) => setSurname(e.target.value)}
         />
+        <label className='burialSearch-datesLabel'>Date of Birth</label>
         <input
           type="date"
           className="search-input"
@@ -96,6 +97,7 @@ export default function BurialSearch() {
           value={dateOfBirth}
           onChange={(e) => setDateOfBirth(e.target.value)}
         />
+        <label className='burialSearch-datesLabel'>Date of Death</label>
         <input
           type="date"
           className="search-input"

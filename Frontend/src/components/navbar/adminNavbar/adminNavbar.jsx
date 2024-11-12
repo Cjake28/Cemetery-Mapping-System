@@ -32,6 +32,9 @@ export default function AdminNavbar() {
         <div className={`a-admin-navbar ${location.pathname === '/admin/manage-gravesite' ? 'active' : ''}`} onClick={() => navigate('/admin/manage-gravesite')}>
           <p>Gravesite</p>
         </div>
+        <div className={`a-admin-navbar ${location.pathname === '/admin/cemetery-lot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin/cemetery-lot')}>
+          <p>Cemetery Lot</p>
+        </div>
         
         {/* Desktop-only Signout button */}
         <button className='admin-navbar-signoutButton desktop-signout' onClick={signout}>Sign out</button>
@@ -51,6 +54,9 @@ export default function AdminNavbar() {
           </div>
           <div className={`a-admin-navbar ${location.pathname === '/admin/manage-gravesite' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin/manage-gravesite')}>
             <p>Gravesite</p>
+          </div>
+          <div className={`a-admin-navbar ${location.pathname === '/admin/cemetery-lot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin/cemetery-lot')}>
+            <p>Cemetery Lot</p>
           </div>
           <button className='admin-navbar-signoutButton' onClick={signout}>Sign out</button>
         </div>

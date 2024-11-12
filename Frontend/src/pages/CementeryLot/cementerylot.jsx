@@ -78,10 +78,6 @@ export default function Cementerylot (){
             Math.abs(cellCenter.lng() - locationContext.lng) < gridWidth / 2
           : null;
 
-        if(isTargetCell){
-          console.log("isTargetCell: ", locationContext);
-        }
-
         if (
           window.google.maps.geometry.poly.containsLocation(
             cellCenter,

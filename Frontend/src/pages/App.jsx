@@ -15,6 +15,7 @@ import ManageGraveSite from './admin/manageGravesite/manaGraveSite.jsx'
 import ManageVacantLot from './admin/manageVacantLot/manageVaCantLot.jsx'
 import RoleBasedRedirect from '../components/protectedRoute/rolebasedRedirect.jsx'
 import VacantLot from '../pages/vacantLot/vaCantLot.jsx'
+import CemeteryGrid from '../pages/admin/cemeterygrid/cemeteryGrid.jsx'
 import './App.css';
 import VisitorProtectedRoute from '../components/protectedRoute/visitorProtectedRoute.jsx'
 
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
               {
                 path:'manage-vacant-lot',
                 element: <ManageVacantLot/>
+              },
+              {
+                path:'cemetery-lot',
+                element: <CemeteryGrid/>
               }
             ],
           },
