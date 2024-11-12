@@ -16,8 +16,10 @@ export default function AdminNavbar() {
 
   const handelnavbarNav = (page) => {
     navigate(page);
-    toggleMenu();
-  }
+    if (isOpen) {
+      toggleMenu(); // Only toggle the menu if it's open (i.e., on mobile)
+    }
+  };
 
   return (
     <nav className='admin-navbar-container'>
@@ -46,11 +48,11 @@ export default function AdminNavbar() {
       {/* Mobile menu */}
       {isOpen && (
         <div className="admin-mobile-menu">
-          <div className={`a-admin-navbar ${location.pathname === '/admin' ? 'active' : ''}`} onClick={() => navigate('/admin')}>
+          <div className={`a-admin-navbar ${location.pathname === '/admin' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin')}>
             <p>user</p>
           </div>
           <div className={`a-admin-navbar ${location.pathname === '/admin/manage-vacant-lot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin/manage-vacant-lot')}>
-            <p>Cemetery Lot</p>
+            <p>Vacant Lot</p>
           </div>
           <div className={`a-admin-navbar ${location.pathname === '/admin/manage-gravesite' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin/manage-gravesite')}>
             <p>Gravesite</p>

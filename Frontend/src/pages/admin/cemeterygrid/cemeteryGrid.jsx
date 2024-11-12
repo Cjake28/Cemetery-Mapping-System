@@ -23,6 +23,10 @@ const options = {
   mapTypeControl: false,
   mapTypeId: "satellite",
   gestureHandling: "greedy",
+  restriction: {
+    latLngBounds: mapBounds,
+    strictBounds: true, 
+  },
   
 };
 
