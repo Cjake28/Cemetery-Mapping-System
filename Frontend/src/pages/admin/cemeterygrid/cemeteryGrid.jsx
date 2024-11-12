@@ -30,7 +30,7 @@ const options = {
   
 };
 
-const libraries= ["geometry", "places", "directions"]
+const googleMap_libraries= ["geometry", "places", "directions"]
 
 export default function CemeteryGrid(){
     const polygonRefs = useRef([]);
@@ -40,7 +40,7 @@ export default function CemeteryGrid(){
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: libraries
+    libraries: googleMap_libraries
   });
 
   const createGridCells = useCallback(
@@ -79,7 +79,7 @@ export default function CemeteryGrid(){
             cellCenter,
             new window.google.maps.Polygon({ paths: polygonCoords })
           );
-  
+        
           if (isInsidePolygon) {
             const polygon = new window.google.maps.Polygon({
               paths: cellCoords,

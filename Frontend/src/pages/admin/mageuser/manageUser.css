@@ -77,12 +77,60 @@
     background-color: #28a745;
     color: white;
     border: none;
-    padding: 8px 16px;
+    padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .create-user-btn:hover {
     background-color: #218838;
+}
+
+.delete-multp-user{
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-multp-user:hover {
+    background-color: #c02131;
+}
+
+.reverified-multp-user{
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.reverified-multp-user:hover {
+    background-color: #218838;
+}
+
+.unverified-multp-user{
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.unverified-multp-user:hover {
+    background-color: #c02131;
 }

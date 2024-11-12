@@ -4,12 +4,12 @@ import { useState } from 'react';
 import UpdatePasswordModal from '../modal/updatePasswordModal.jsx';
 import DisableUserModal from '../modal/disableUserModal.jsx';
 
-export default function VerifieduserTable({ filteredPersons }) {
+export default function VerifieduserTable({ filteredPersons, checkboxHandler, selectedID }) {
     const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
     const [isDisableModalOpen, setIsDisableModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    const handleEditClick = (user) => {
+    const handleEditClick = (user) =>{
         setSelectedUser(user);
         setIsPasswordModalOpen(true);
     };
@@ -18,6 +18,9 @@ export default function VerifieduserTable({ filteredPersons }) {
         setSelectedUser(user);
         setIsDisableModalOpen(true);
     };
+
+    const isChecked = (id) =>
+        selectedID.some((user) => user.id === id);
 
     return (
         <div className="table-wrapper">
@@ -45,6 +48,12 @@ export default function VerifieduserTable({ filteredPersons }) {
                                     <BsFillTrashFill 
                                         className="delete-icon" 
                                         onClick={() => handleDisableClick(user)} 
+                                    />
+                                    <input
+                                        type="checkbox"
+                                        checked={isChecked(user.id)} // Check if user is selected
+                                        value={JSON.stringify({ id: user.id, name: user.name })} // Pass `name` and `id` as JSON
+                                        onChange={checkboxHandler}
                                     />
                                 </span>
                             </td>

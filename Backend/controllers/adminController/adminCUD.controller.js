@@ -7,7 +7,10 @@ import {
     Get_all_userInDB, 
     Get_unverified_users_fromDB, 
     verify_a_user,
-    delete_user 
+    delete_user,
+    unverifyMultipleUsers, 
+    reverifyMultipleUsers, 
+    deleteMultipleUsers  
 } from '../../models/admin/adminCUD.model.js';
 
 export async function createUser(req, res) {
@@ -153,3 +156,53 @@ export async function deleteUser(req, res) {
     }
 }
 
+export async function unverifyUsers(req, res) {
+    const { userIds } = req.body;
+
+    try {
+        if (!Array.isArray(userIds) || userIds.length === 0) {
+            return res.status(400).json({ success: false, message: "User IDs array is required" });
+        }
+
+        const affectedRows = await unverifyMultipleUsers(userIds);
+
+        res.status(200).json({ success: true, message: `${affectedRows} users unverifed successfully` });
+    } catch (error) {
+        console.error("Error unverifying users:", error);
+        res.status(500).json({ success: false, message: "An error occurred while unverifying users" });
+    }
+}
+
+export async function reverifyUsers(req, res) {
+    const { userIds } = req.body;
+
+    try {
+        if (!Array.isArray(userIds) || userIds.length === 0) {
+            return res.status(400).json({ success: false, message: "User IDs array is required" });
+        }
+
+        const affectedRows = await reverifyMultipleUsers(userIds);
+
+        res.status(200).json({ success: true, message: `${affectedRows} users reverified successfully` });
+    } catch (error) {
+        console.error("Error reverifying users:", error);
+        res.status(500).json({ success: false, message: "An error occurred while reverifying users" });
+    }
+}
+
+export async function deleteUsers(req, res) {
+    const { userIds } = req.body;
+
+    try {
+        if (!Array.isArray(userIds) || userIds.length === 0) {
+            return res.status(400).json({ success: false, message: "User IDs array is required" });
+        }
+
+        const affectedRows = await deleteMultipleUsers(userIds);
+
+        res.status(200).json({ success: true, message: `${affectedRows} users deleted successfully` });
+    } catch (error) {
+        console.error("Error deleting users:", error);
+        res.status(500).json({ success: false, message: "An error occurred while deleting users" });
+    }
+}

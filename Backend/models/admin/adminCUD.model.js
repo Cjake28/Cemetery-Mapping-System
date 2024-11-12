@@ -132,3 +132,47 @@ export async function delete_user(userId) {
         throw new Error("Database error occurred while deleting a user");
     }
 }
+
+export async function unverifyMultipleUsers(userIds) {
+    try {
+        const [result] = await db.query(`
+            UPDATE users 
+            SET isVerified = false 
+            WHERE id IN (?)
+        `, [userIds]);
+
+        return result.affectedRows; // Number of users updated
+    } catch (error) {
+        console.error("Error unverifying multiple users: ", error);
+        throw new Error("Database error occurred while unverifying users");
+    }
+}
+
+export async function reverifyMultipleUsers(userIds) {
+    try {
+        const [result] = await db.query(`
+            UPDATE users 
+            SET isVerified = true 
+            WHERE id IN (?)
+        `, [userIds]);
+
+        return result.affectedRows; // Number of users updated
+    } catch (error) {
+        console.error("Error reverifying multiple users: ", error);
+        throw new Error("Database error occurred while reverifying users");
+    }
+}
+
+export async function deleteMultipleUsers(userIds) {
+    try {
+        const [result] = await db.query(`
+            DELETE FROM users
+            WHERE id IN (?)
+        `, [userIds]);
+
+        return result.affectedRows; // Number of users deleted
+    } catch (error) {
+        console.error("Error deleting multiple users: ", error);
+        throw new Error("Database error occurred while deleting users");
+    }
+}

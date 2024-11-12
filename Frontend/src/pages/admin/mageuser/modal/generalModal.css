@@ -1,0 +1,87 @@
+/* Modal Overlay */
+.general-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal Container */
+.general-modal-container {
+    background: #fff;
+    border-radius: 8px;
+    width: 400px;
+    max-height: 70%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Title Section */
+.general-modal-title {
+    padding: 16px;
+    background: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Scrollable Content */
+.general-modal-content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.general-modal-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.general-modal-item:last-child {
+    border-bottom: none;
+}
+
+/* Buttons Section */
+.general-modal-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-top: 1px solid #ddd;
+    background: #f9f9f9;
+}
+
+.general-modal-confirm-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.general-modal-close-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.general-modal-confirm-btn:hover {
+    background-color: #45a049;
+}
+
+.general-modal-close-btn:hover {
+    background-color: #d32f2f;
+}

@@ -22,6 +22,8 @@ import {polygonCoords1,
   center 
 }  from '../../utils/mapgridCoords.js'
 
+const googleMap_libraries= ["geometry", "places", "directions"];
+
 const options = {
   disableDefaultUI: true,  // Disable default UI controls
   mapTypeControl: false,   // Hide map type controls
@@ -37,7 +39,7 @@ export default function Cementerylot (){
   
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: ['geometry', 'places', 'directions'],
+    libraries: googleMap_libraries,
   });
 
   const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight, grCenter) => {

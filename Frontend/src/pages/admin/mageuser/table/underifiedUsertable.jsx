@@ -4,7 +4,7 @@ import { useState } from 'react';
 import EnableUserModal from '../modal/enableUserModal.jsx';
 import DeleteUserModal from '../modal/deleteUserModal.jsx'; // Import DeleteUserModal
 
-export default function UnVerifieduserTable({ filteredPersons }) {
+export default function UnVerifieduserTable({ filteredPersons, checkboxHandler, selectedID }) {
     const [isReverifyModalOpen, setIsReverifyModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -19,6 +19,9 @@ export default function UnVerifieduserTable({ filteredPersons }) {
         setIsDeleteModalOpen(true);
     };
 
+    const isChecked = (id) =>
+        selectedID.some((user) => user.id === id);
+    
     return (
         <div className="table-wrapper">
             <table className="user-table">
@@ -45,6 +48,12 @@ export default function UnVerifieduserTable({ filteredPersons }) {
                                     <BsFillTrashFill 
                                         className="delete-icon"
                                         onClick={() => handleDeleteClick(user)} // Open delete modal on click
+                                    />
+                                    <input
+                                        type="checkbox"
+                                        checked={isChecked(user.id)} // Check if user is selected
+                                        value={JSON.stringify({ id: user.id, name: user.name })} // Pass `name` and `id` as JSON
+                                        onChange={checkboxHandler}
                                     />
                                 </span>
                             </td>
