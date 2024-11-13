@@ -177,13 +177,13 @@ export default function ManageUsers() {
                         className={`valid-user-btn ${activeFilter === 'valid' ? 'active' : ''}`}
                         onClick={() => handleFilterToggle('valid')}
                     >
-                        Valid User
+                        Active
                     </button>
                     <button
                         className={`invalid-user-btn ${activeFilter === 'invalid' ? 'active' : ''}`}
                         onClick={() => handleFilterToggle('invalid')}
                     >
-                        Invalid User
+                        Inactive
                     </button>
                 </div>
                 <div className="create-user">
@@ -192,7 +192,7 @@ export default function ManageUsers() {
                             className="unverified-multp-user" 
                             onClick={()=> {setOpenModal(true); setTitle('Unverify User')}}
                         >
-                            Unverify User
+                            Disable user
                         </button>
                     ) : (
                         <>
@@ -200,13 +200,13 @@ export default function ManageUsers() {
                                 className="delete-multp-user" 
                                 onClick={()=> {setOpenModal(true); setTitle('Delete User')}}
                             >
-                                Delete User
+                                Delete user
                             </button>
                             <button 
                                 className="reverified-multp-user" 
                                 onClick={()=> {setOpenModal(true); setTitle('Reverify User')}}
                             >
-                                Reverify User
+                                Enable user
                             </button>
                         </>
                     )}
