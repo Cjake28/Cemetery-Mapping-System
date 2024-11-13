@@ -22,7 +22,7 @@ export default function GeneralModal({
                             <p key={index} className="general-modal-item">{name}</p>
                         ))
                     ) : (
-                        <p>No data available</p>
+                        <p className="general-modal-item">No data available</p>
                     )}
                 </div>
 
