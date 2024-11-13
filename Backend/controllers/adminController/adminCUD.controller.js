@@ -14,11 +14,11 @@ import {
 } from '../../models/admin/adminCUD.model.js';
 
 export async function createUser(req, res) {
-    let { name, username, password } = req.body;
+    let { name, username, password, role } = req.body;
 
     try {
         // Check if all fields are provided
-        if (!name || !username || !password) {
+        if (!name || !username || !password, !role) {
             return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
@@ -37,7 +37,7 @@ export async function createUser(req, res) {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Create the user in the database
-        const createUserResult = await createUserInDB(name, username, hashedPassword);
+        const createUserResult = await createUserInDB(name, username, hashedPassword, role);
 
         // Send success response
         res.status(200).send({ success: true, message: "User created successfully", userId: createUserResult });

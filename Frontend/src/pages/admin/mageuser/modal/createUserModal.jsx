@@ -5,10 +5,15 @@ import { Loader } from "lucide-react";
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-export default function ModalCreateUser({isOpen, onClose, resetQueries}) {
-    const [formData, setFormData] = useState({ name: '', username: '', password: ''});
+export default function ModalCreateUser({ isOpen, onClose, resetQueries }) {
+    const [formData, setFormData] = useState({
+        name: '',
+        username: '',
+        password: '',
+        role: 'user', // Default role is 'user'
+    });
     const [errors, setErrors] = useState({});
-    const [fetchIsLoading, setFetchIsLoading] = useState(false); // Updated name for consistency
+    const [fetchIsLoading, setFetchIsLoading] = useState(false);
     const [fetchError, setFetchError] = useState();
 
     if (!isOpen) return null;
@@ -17,43 +22,30 @@ export default function ModalCreateUser({isOpen, onClose, resetQueries}) {
         const { name, value } = event.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
 
-        // Clear individual field error when user types
         if (errors[name]) {
             setErrors((prevErrors) => ({ ...prevErrors, [name]: null }));
         }
     };
 
     const handleCreateUser = async (formdata) => {
-        setFetchIsLoading(true); // Show loading state while fetching
+        setFetchIsLoading(true);
         try {
-            // Send POST request to create user
             const response = await axios.post(`${API_URL}/api/admin/create-user`, formdata);
-            
-            // If successful, clear the form and any errors
-            // console.log("User created:", response.data);
             resetQueries();
-            setFormData({ name: '', username: '', password: '' }); // Reset form fields
-            setFetchError(null); // Clear any error messages
-            
-            // Close modal on success
+            setFormData({ name: '', username: '', password: '', role: 'user' }); // Reset form fields
+            setFetchError(null);
             onClose();
         } catch (error) {
             console.error("Error creating user:", error);
-    
-            // If there is a response with an error, set the error message to display
+
             if (error.response) {
-                // Handle specific API errors
                 setFetchError(error.response.data.message || "Error creating user");
             } else {
-                // Handle other errors (like network issues)
                 setFetchError("A network error occurred, please try again later.");
             }
-    
-            // Keep the modal open so the user can correct the inputs
         }
-        setFetchIsLoading(false); // End loading state
+        setFetchIsLoading(false);
     };
-    
 
     const validateForm = () => {
         const newErrors = {};
@@ -68,7 +60,6 @@ export default function ModalCreateUser({isOpen, onClose, resetQueries}) {
         const validationErrors = validateForm();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            // Set focus on the first error field
             const firstErrorField = Object.keys(validationErrors)[0];
             document.getElementById(firstErrorField).focus();
             return;
@@ -78,10 +69,10 @@ export default function ModalCreateUser({isOpen, onClose, resetQueries}) {
 
     const handleCloseModal = () => {
         setErrors({});
-        setFormData({ name: '', username: '', password: '' });
+        setFormData({ name: '', username: '', password: '', role: 'user' });
         setFetchError(null);
         onClose();
-    }
+    };
 
     return (
         <div className="modal-overlay">
@@ -124,7 +115,33 @@ export default function ModalCreateUser({isOpen, onClose, resetQueries}) {
                         autoComplete="off"
                     />
 
-                    {fetchError && <div className="error-message">{fetchError}</div>} {/* Display error */}
+                    <fieldset className="role-selection">
+                        <legend>Select Role</legend>
+                        <label htmlFor="user-role">
+                            <input
+                                type="radio"
+                                id="user-role"
+                                name="role"
+                                value="user"
+                                checked={formData.role === 'user'}
+                                onChange={handleChange}
+                            />
+                            User
+                        </label>
+                        <label htmlFor="admin-role">
+                            <input
+                                type="radio"
+                                id="admin-role"
+                                name="role"
+                                value="admin"
+                                checked={formData.role === 'admin'}
+                                onChange={handleChange}
+                            />
+                            Admin
+                        </label>
+                    </fieldset>
+
+                    {fetchError && <div className="error-message">{fetchError}</div>}
 
                     <div className="modal-actions">
                         <button type="submit" className="submit-btn" disabled={fetchIsLoading}>

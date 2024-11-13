@@ -1,12 +1,12 @@
 import db from '../../db/db.connect.js';
 
-export async function createUserInDB(name, username, password) {
+export async function createUserInDB(name, username, password, role) {
     try {
         const [result] = await db.query(`
             INSERT INTO 
-            users(name, username, password)
-            VALUES(?,?,?)
-        `, [name, username, password]);
+            users(name, username, password, role)
+            VALUES(?,?,?,?)
+        `, [name, username, password, role]);
         
         if (!result || !result.insertId) {
             console.log("Failed to create user");

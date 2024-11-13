@@ -90,6 +90,39 @@
     margin-top: 1px;
 }
 
+/* Role Selection (Radio Buttons in One Row) */
+.role-selection {
+    margin-bottom: 1.2rem;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center; /* Align radio buttons vertically */
+    gap: 20px; /* Add spacing between labels */
+}
+
+.role-selection legend {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 20px; /* Spacing between legend and options */
+    color: #333;
+}
+
+.role-selection label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.role-selection input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #007bff; /* Change color of the radio button */
+    cursor: pointer;
+}
 
 
 /* Animation for modal fade-in */
