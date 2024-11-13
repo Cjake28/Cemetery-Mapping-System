@@ -3,7 +3,7 @@ import { Mail, Lock, Loader } from "lucide-react";
 import './Login.css';
 import { useAuth } from '../../Context/authContext.jsx';
 import { useNavigate } from 'react-router-dom';
-
+import HimlayanLogo from '../../assets/HIMLAYANG_LAHIN_KAYUMANGGI.png';
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -64,12 +64,11 @@ export default function LoginPage() {
         <div className="Logincontainer">
             <div className="formcontainer">
                 <div className="left-div">
-                    <h1 className="h1-login">WELCOME</h1>
+                    <img className="login-page-himlayanImg" src={HimlayanLogo} alt="alter"/>
                 </div>
 
                 <div className="right-div">
                     <div className="logincontainer">
-                        <h2 className="himlayan-text">HIMLAYANG LAHING <br /> KAYUMANGGI</h2>
                         <h2 className='h2-login'>Login</h2>
                         <form className="login-form" onSubmit={handleLogin}>
                             <div className="login-input-container">

@@ -24,11 +24,11 @@ export async function getAllPersons(req, res) {
 
 // Controller for creating a new person entry in the database
 export async function createPerson(req, res){
-    const { name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name } = req.body;
+    const { name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, center_lat_lng} = req.body;
     const userId = req.userId; 
 
     // Simple validation
-    if (!name || !middle_name || !surname || !date_of_birth || !date_of_death || !location || !burial_date || !owner_name) {
+    if (!name || !middle_name || !surname || !date_of_birth || !date_of_death || !location || !burial_date || !owner_name || !center_lat_lng) {
         return res.status(400).json({
             success: false,
             message: 'Please provide all required fields',
@@ -47,7 +47,7 @@ export async function createPerson(req, res){
         }
 
         // If no existing person, create a new entry
-        const personId = await createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, userId);
+        const personId = await createPersonInDB(name, middle_name, surname, date_of_birth, date_of_death, location, burial_date, owner_name, center_lat_lng, userId);
 
         res.status(201).json({
             success: true,
