@@ -69,8 +69,10 @@ export default function LoginPage() {
 
                 <div className="right-div">
                     <div className="logincontainer">
+                        <h2 className="himlayan-text">HIMLAYANG LAHING <br /> KAYUMANGGI</h2>
                         <h2 className='h2-login'>Login</h2>
                         <form className="login-form" onSubmit={handleLogin}>
+                            <div className="login-input-container">
                             <input
                                 className='Input-login'
                                 icon={Mail}
@@ -92,7 +94,7 @@ export default function LoginPage() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 autoComplete="off"
                             />
-
+                            </div>
                             {error && <p className="error-text-login">{error}</p>}
 
                             <button className="login-button" type="submit" disabled={loading || cooldown}>

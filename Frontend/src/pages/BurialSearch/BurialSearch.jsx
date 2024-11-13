@@ -14,7 +14,7 @@ axios.defaults.withCredentials = true;
 
 export default function BurialSearch() {
   const { requestLocationPermission } = GeolocationContext();
-  const { handleLatlngObjConvertion, setScene } = useLocationContext();
+  const { handleLatlngObjConvertion, setScene, setPerson_name_loc} = useLocationContext();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   const [name, setName] = useState('');
@@ -51,9 +51,11 @@ export default function BurialSearch() {
   const handleCloseResultModal = () => setIsResultModalOpen(false);
 
   const handleOpenMap = () => {
+    console.log("search Result[0]: ",searchResults[0])
     handleLatlngObjConvertion(searchResults[0].center_lat_lng);
     handleCloseResultModal();
     setScene(true);
+    setPerson_name_loc({fullname: searchResults[0].fullname, location: searchResults[0].location});
   };
 
   if (isLoading) return <div>Loading...</div>;

@@ -1,5 +1,5 @@
 import {useEffect,useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader, Polygon, Marker, DirectionsRenderer  } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Polygon, Marker, DirectionsRenderer, InfoWindow   } from '@react-google-maps/api';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
 import markerSvg from '../../assets/personLoc.svg';
@@ -32,11 +32,12 @@ const options = {
 };
 
 export default function Cementerylot (){
-  const {locationContext, setScene} = useLocationContext();
+  const {locationContext, setScene,person_name_loc, setPerson_name_loc} = useLocationContext();
   const {location, startWatchingLocation, getCurrentLocation } = GeolocationContext();
   const [directions, setDirections] = useState(null);
   const [map, setMap] = useState(null);
-  
+  const [infoWindowVisible, setInfoWindowVisible] = useState(false); 
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: googleMap_libraries,
@@ -216,7 +217,20 @@ export default function Cementerylot (){
         <Marker
           position={locationContext}
           icon={plotPositon}
+          onClick={() => setInfoWindowVisible(!infoWindowVisible)}
         />
+        {infoWindowVisible && (
+            <InfoWindow
+            position={locationContext}
+            onCloseClick={() => setInfoWindowVisible(false)} // Close InfoWindow when X is clicked
+          >
+            <div className="info-window">
+              <h4>Marker Details</h4>
+              <p><strong>Name:</strong> {person_name_loc.fullname}</p>
+              <p><strong>Location:</strong> {person_name_loc.location}</p>
+            </div>
+          </InfoWindow>
+          )}
         {location && <Marker
           position={{ lat: location.latitude, lng: location.longitude }}
           icon={customMarkerIcon}
@@ -230,7 +244,7 @@ export default function Cementerylot (){
         map.setZoom(20);
       }} className="center-btn"><FiTarget style={{height:'100%', width:'100%' }}/></button>
       <button onClick={()=> startDirection()} className="direction-btn"><FiMapPin style={{height:'60%', width:'60%'}} /></button>
-      <button onClick={()=> setScene(false)} className="cemeteryLot-back-btn"><FiDelete  style={{height:'60%', width:'60%'}}/></button>
+      <button onClick={()=> {setScene(false); setPerson_name_loc(null)}} className="cemeteryLot-back-btn"><FiDelete  style={{height:'60%', width:'60%'}}/></button>
       <button onClick={()=> {
         map.panTo({ lat: location.latitude, lng: location.longitude });
         map.setZoom(20);

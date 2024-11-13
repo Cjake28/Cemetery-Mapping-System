@@ -1,7 +1,7 @@
 .Logincontainer {
     display: flex;
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
     position: relative;
     justify-content: center;
     align-items: center;
@@ -40,6 +40,13 @@
     z-index: 1;
 }
 
+.himlayan-text{
+    font-size: 1.6rem;
+    color: #535353;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
 .h1-login {
     position: relative;
     font-size: 3rem;
@@ -48,9 +55,9 @@
 }
 
 .h2-login{
-    color: #333;
+    color: #535353;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.7rem;
 }
 
 .formcontainer {
@@ -68,7 +75,7 @@
 }
 
 .formcontainer{
-    height: 80vh;
+    height: 80dvh;
     width: 75vw;
     display: flex;
     background-color: #ffffff;
@@ -80,7 +87,7 @@
 .logincontainer{
     height: 100%;
     width: 100%;
-    padding: 2rem 0 2rem 0;
+    padding: 1.5rem 0 1.4rem 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -88,20 +95,26 @@
 }
 
 .login-form{
-    height: 55%;
+    height: 50%;
     width: 95%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
     /* background-color: red; */
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
+}
+
+.login-input-container{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
 }
 
 .Input-login{
-    width: 80%;
+    width: 100%;
     padding: 0.65rem;
-    margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -122,7 +135,7 @@
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-    /* margin-top: auto; */
+    margin: auto;
     transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -231,6 +244,9 @@
     .lockout-message {
         font-size: 1rem;
         padding: 0.4rem 0.8rem;
+    }
+    .h2-login{
+        margin-bottom: 0.5rem;
     }
     /* .continue-text{
         margin-bottom:15px;

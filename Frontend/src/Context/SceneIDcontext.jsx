@@ -5,6 +5,7 @@ const LocationContext = createContext();
 export function LocationContextPRovider({ children }) {
   const [scene, setScene] = useState(false);
   const [locationContext, setLocationCon] = useState(null);
+  const [person_name_loc, setPerson_name_loc] = useState(null);
 
   const handleLatlngObjConvertion = (coordinate) => {
     // Split the coordinate and map it to lat/lng
@@ -18,7 +19,7 @@ export function LocationContextPRovider({ children }) {
 }
 
   return (
-    <LocationContext.Provider value={{ scene, setScene, locationContext, setLocationCon, handleLatlngObjConvertion }}>
+    <LocationContext.Provider value={{ person_name_loc, setPerson_name_loc, scene, setScene, locationContext, setLocationCon, handleLatlngObjConvertion }}>
       {children}
     </LocationContext.Provider>
   );
