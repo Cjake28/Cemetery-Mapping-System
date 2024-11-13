@@ -17,7 +17,7 @@ export default function ManageUsers() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [title, setTitle] = useState(null);
-
+    const[Loading, setLoading] = useState(false);
     const queryClient = useQueryClient();
 
     // Fetch verified users with error handling
@@ -58,8 +58,8 @@ export default function ManageUsers() {
 
         const ids = selectedUsers.map((user) => user.id); // Extract only IDs
         try {
+            setLoading(true);
             let response;
-
             if(title === 'Unverify User'){
                 response = await unverifyMultipleUsers(ids); // Call the unverify function
                 console.log('Users unverifed successfully:', response);
@@ -70,9 +70,12 @@ export default function ManageUsers() {
                 response = await verifyMultipleUsers(ids);
                 console.log('Users Reverify successfully:', response);
             }
-    
+            setLoading(false);
+            setTimeout(() => {
+                setOpenModal(false); // Close modal after success
+            }, 20);
+
             // Add logic to refresh the table or query data
-            setOpenModal(false); // Close modal after success
         } catch (error) {
             console.error('Failed to unverify users:', error.message);
         }
@@ -85,6 +88,7 @@ export default function ManageUsers() {
             });
             queryClient.invalidateQueries(['verifiedUser']);
             queryClient.invalidateQueries(['UnVerifiedUser']);
+            setSelectedID([])
             return response.data; // Return the API response
         } catch (error) {
             console.error('Error unverifying users:', error.response?.data?.message || error.message);
@@ -98,6 +102,7 @@ export default function ManageUsers() {
                 data: { userIds },
             });
             queryClient.invalidateQueries(['UnVerifiedUser']);
+            setSelectedID([])
             return response.data; // Return the API response
         } catch (error) {
             console.error('Error deleting users:', error.response?.data?.message || error.message);
@@ -112,6 +117,7 @@ export default function ManageUsers() {
             });
             queryClient.invalidateQueries(['verifiedUser']);
             queryClient.invalidateQueries(['UnVerifiedUser']);
+            setSelectedID([])
             return response.data; // Return the API response
         } catch (error) {
             console.error('Error verifying users:', error.response?.data?.message || error.message);
@@ -249,6 +255,7 @@ export default function ManageUsers() {
                 data={selectedID.map((user) => user.name) || []}
                 onConfirm={() => handleConfirm(selectedID,title )}
                 onClose={handleClose}
+                Loading={Loading}
             />}
         </div>
     );

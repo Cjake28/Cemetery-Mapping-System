@@ -5,7 +5,8 @@ export default function GeneralModal({
     title, 
     data, 
     onConfirm, 
-    onClose 
+    onClose,
+    Loading
 }) {
     return (
         <div className="general-modal-overlay">
@@ -29,7 +30,7 @@ export default function GeneralModal({
                 {/* Buttons */}
                 <div className="general-modal-actions">
                     <button className="general-modal-confirm-btn" onClick={onConfirm}>
-                        Confirm
+                        {Loading ? 'Loading...': 'Confirm'}
                     </button>
                     <button className="general-modal-close-btn" onClick={onClose}>
                         Close
