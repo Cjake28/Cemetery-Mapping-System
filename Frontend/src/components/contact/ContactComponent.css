@@ -1,0 +1,96 @@
+/* General Styling */
+.contact-component {
+    position: fixed;
+    bottom: 40px;
+    right: 60px;
+    z-index: 1000;
+}
+
+/* Floating Button Styling */
+.contact-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #dddddd;
+    color: rgb(211, 211, 211);
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    padding-top:5px ;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.4s ease;
+}
+
+.contact-button:hover {
+    transform: scale(1.1);
+    background-color: #ffffff;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal Overlay */
+.contact-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* Modal Container */
+.contact-modal {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Title */
+.contact-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Contact Details */
+.contact-details p {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Close Button */
+.close-button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+.close-button:hover {
+    background-color: #d32f2f;
+}
+
+@media (max-width: 768px) {
+    .contact-component {
+        position: fixed;
+        bottom: 30px;
+        right: 40px;
+        z-index: 1000;
+    }
+}

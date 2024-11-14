@@ -185,13 +185,13 @@
     cursor: pointer;
     font-weight: 400;
     margin-top: 1rem;
+    margin-bottom: none;
     transition: color 0.1s, font-size 0.3s;
 }
 
 .continue-text:hover {
     color: #64af67;
     font-size: 1.04rem;
-    
 }
 
 .lockout-message {
@@ -220,6 +220,87 @@
     font-weight: bold;
     animation: pulse 1s infinite;
     color: #b71c1c;
+}
+
+
+.continue-contact-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    gap: 10px;
+}
+.login-contact-us-text{
+    color: #447945;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 400;
+    margin: none;
+    transition: color 0.1s, font-size 0.3s;
+}
+
+.login-contact-us-text:hover {
+    color: #64af67;
+    font-size: 1.04rem;
+}
+
+/* Modal Overlay */
+.login-contact-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* Modal Container */
+.login-contact-modal {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Title */
+.login-contact-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Contact Details */
+.login-contact-details p {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Close Button */
+.login-close-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+.login-close-button:hover {
+    background-color: #388e3c;
 }
 
 

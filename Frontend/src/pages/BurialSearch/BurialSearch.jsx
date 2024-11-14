@@ -6,7 +6,7 @@ import { useLocationContext } from '../../Context/SceneIDcontext.jsx';
 import { GeolocationContext } from '../../Context/geolocationContext.jsx';
 import PrivacyModal from './modal/PrivacyModal.jsx';
 import ResultModal from './modal/resultModal.jsx';
-
+import ContactComponent from '../../components/contact/contact.jsx'
 import ExampleImage from '../../assets/himlayanSearchText.png';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
@@ -116,6 +116,7 @@ export default function BurialSearch() {
         searchResults={searchResults}
         openMap={handleOpenMap}
       />
+      <ContactComponent/>
     </div>
   );
 }

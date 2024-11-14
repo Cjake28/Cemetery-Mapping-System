@@ -4,8 +4,6 @@ import {getUserName_by_Email, get_id_name_role_Byusername} from '../../models/au
 
 export const signin = async (req, res) =>{
     const {username, password} = req.body;
-    console.log(req);
-    console.log("input: ",username, password);
     try{
         if(!username || !password){
             return res.status(400).json({ success: false, message: "All fields are required" });

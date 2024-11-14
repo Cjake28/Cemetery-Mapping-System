@@ -4,6 +4,7 @@ import './Login.css';
 import { useAuth } from '../../Context/authContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import HimlayanLogo from '../../assets/HIMLAYANG_LAHIN_KAYUMANGGI.png';
+
 export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -13,6 +14,9 @@ export default function LoginPage() {
     const [cooldownTimer, setCooldownTimer] = useState(30); // Start with a 30-second timer
     const { login, error } = useAuth();
     const navigate = useNavigate();
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const toggleModal = () => setModalOpen(!isModalOpen);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -64,7 +68,7 @@ export default function LoginPage() {
         <div className="Logincontainer">
             <div className="formcontainer">
                 <div className="left-div">
-                    <img className="login-page-himlayanImg" src={HimlayanLogo} alt="alter"/>
+                    <img className="login-page-himlayanImg" src={HimlayanLogo} alt="alter" />
                 </div>
 
                 <div className="right-div">
@@ -72,27 +76,27 @@ export default function LoginPage() {
                         <h2 className='h2-login'>Login</h2>
                         <form className="login-form" onSubmit={handleLogin}>
                             <div className="login-input-container">
-                            <input
-                                className='Input-login'
-                                icon={Mail}
-                                type='text'
-                                name='username'
-                                placeholder='Username'
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                autoComplete="off"
-                            />
+                                <input
+                                    className='Input-login'
+                                    icon={Mail}
+                                    type='text'
+                                    name='username'
+                                    placeholder='Username'
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    autoComplete="off"
+                                />
 
-                            <input
-                                className='Input-login'
-                                icon={Lock}
-                                type='password'
-                                name='password'
-                                placeholder='Password'
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                autoComplete="off"
-                            />
+                                <input
+                                    className='Input-login'
+                                    icon={Lock}
+                                    type='password'
+                                    name='password'
+                                    placeholder='Password'
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    autoComplete="off"
+                                />
                             </div>
                             {error && <p className="error-text-login">{error}</p>}
 
@@ -102,20 +106,43 @@ export default function LoginPage() {
                         </form>
 
                         {cooldown && (
-                            // <p className="lockout-message">
-                            //     Too many failed attempts.
-                            // </p>,
                             <p className="lockout-message">
                                 Please wait <span className="lockout-countdown">{cooldownTimer}</span> seconds before trying again.
                             </p>
                         )}
 
-                        <p className="continue-text" onClick={handleContinueWithoutLogin}>
-                            Continue Without Login
-                        </p>
+                        <div className="continue-contact-container">
+                            <p className="continue-text" onClick={handleContinueWithoutLogin}>
+                                Continue Without Login
+                            </p>
+                            
+                            {/* New Contact Us */}
+                            <p className="login-contact-us-text" onClick={toggleModal}>
+                                Contact Us
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Modal */}
+            {isModalOpen && (
+                <div className="login-contact-modal-overlay" onClick={toggleModal}>
+                    <div
+                        className="login-contact-modal"
+                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+                    >
+                        <h2 className="login-contact-title">Contact Us</h2>
+                        <div className="login-contact-details">
+                            <p className="login-contact-modal-text" >Jonathan Botones</p>
+                            <p className="login-contact-modal-text" >09500448152</p>
+                        </div>
+                        <button className="login-close-button" onClick={toggleModal}>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
