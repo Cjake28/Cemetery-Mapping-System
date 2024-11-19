@@ -138,7 +138,7 @@ export default function CemeteryGrid(){
   
   const onLoad = useCallback((mapInstance) => {
     createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001, center, Area1); // Grid for first area
-    createGridCells(mapInstance, polygonCoords2, -27, 0.0000258,0.00001, {lat:14.888659105509653, lng: 120.77973902161986}, Area2); // Grid for second area
+    createGridCells(mapInstance, polygonCoords2, -27, 0.0000258,0.00001, {lat:14.888463243850705, lng: 120.7796897391385}, Area2); // Grid for second area
     createGridCells(mapInstance, polygonCoords3, -25.3, 0.0000258,0.00001, center, Area3);
     createGridCells(mapInstance, polygonCoords4, -27.5, 0.000039,0.00007, center);
     createGridCells(mapInstance, polygonCoords5, -25, 0.000035, 0.00005, {lat:14.889092682267146, lng: 120.77996924487826});
@@ -152,12 +152,12 @@ export default function CemeteryGrid(){
     createGridCells(mapInstance, polygonCoords13, -25, 0.000015,0.0000348, {lat:14.88955837003466, lng: 120.78039142723911});
 
     // new window.google.maps.Polygon({
-    //   paths: block1[0].bounds,
+    //   paths: polygonCoords2,
     //   strokeColor: '#FF0000',
     //   strokeOpacity: 0.4,
     //   strokeWeight: 0.6,
     //   fillColor: '#00FF00', // Original color
-    //   fillOpacity: 1,
+    //   fillOpacity: 0.1,
     //   map: mapInstance,
     // });
 
