@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef  } from 'react';
-import { GoogleMap, useJsApiLoader, DirectionsRenderer, Marker } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 import ShowLatLng from './showlatLng.jsx'
 import {polygonCoords1, 
         polygonCoords2, 
@@ -15,7 +15,10 @@ import {polygonCoords1,
         polygonCoords12,
         polygonCoords13,
         center,
-        mapBounds 
+        mapBounds, 
+        Area1,
+        Area2,
+        Area3
       }  from '../../../utils/mapgridCoords.js'
 
 const options = {
@@ -44,7 +47,7 @@ export default function CemeteryGrid(){
   });
 
   const createGridCells = useCallback(
-    (map, polygonCoords, RDeg, gridWidth, gridHeight, grCenter) => {
+    (map, polygonCoords, RDeg, gridWidth, gridHeight, grCenter, blocks = []) => {
       const rotationAngle = (RDeg * Math.PI) / 180;
       const bounds = new window.google.maps.LatLngBounds();
       polygonCoords.forEach((coord) => bounds.extend(coord));
@@ -60,20 +63,27 @@ export default function CemeteryGrid(){
         };
       };
   
-      for (let lat = bounds.getSouthWest().lat(); lat <= bounds.getNorthEast().lat(); lat += gridHeight) {
-        for (let lng = bounds.getSouthWest().lng(); lng <= bounds.getNorthEast().lng(); lng += gridWidth) {
-           
-            const topLeft = rotatePoint(lat, lng);
-            const topRight = rotatePoint(lat, lng + gridWidth);
-            const bottomRight = rotatePoint(lat + gridHeight, lng + gridWidth);
-            const bottomLeft = rotatePoint(lat + gridHeight, lng);
-
-            const cellCoords = [topLeft, topRight, bottomRight, bottomLeft];
-
-            const cellCenter = new window.google.maps.LatLng(
-                (topLeft.lat + bottomRight.lat) / 2,
-                (topLeft.lng + bottomRight.lng) / 2
-            );
+      for (
+        let lat = bounds.getSouthWest().lat();
+        lat <= bounds.getNorthEast().lat();
+        lat += gridHeight
+      ) {
+        for (
+          let lng = bounds.getSouthWest().lng();
+          lng <= bounds.getNorthEast().lng();
+          lng += gridWidth
+        ) {
+          const topLeft = rotatePoint(lat, lng);
+          const topRight = rotatePoint(lat, lng + gridWidth);
+          const bottomRight = rotatePoint(lat + gridHeight, lng + gridWidth);
+          const bottomLeft = rotatePoint(lat + gridHeight, lng);
+  
+          const cellCoords = [topLeft, topRight, bottomRight, bottomLeft];
+  
+          const cellCenter = new window.google.maps.LatLng(
+            (topLeft.lat + bottomRight.lat) / 2,
+            (topLeft.lng + bottomRight.lng) / 2
+          );
   
           const isInsidePolygon = window.google.maps.geometry.poly.containsLocation(
             cellCenter,
@@ -83,12 +93,24 @@ export default function CemeteryGrid(){
           if (isInsidePolygon) {
             const polygon = new window.google.maps.Polygon({
               paths: cellCoords,
-              strokeColor: '#FFFF00',
+              strokeColor: '#FFFF00', // Default color
               strokeOpacity: 0.4,
               strokeWeight: 0.6,
-              fillColor: '#00FF00', // Original color
+              fillColor: '#00FF00', // Default fill color
               fillOpacity: 0,
               map: map,
+            });
+  
+            // Check if the cellCenter is within any block and apply its color
+            blocks.forEach((block) => {
+              const isInsideBlock = window.google.maps.geometry.poly.containsLocation(
+                cellCenter,
+                new window.google.maps.Polygon({ paths: block.bounds })
+              );
+  
+              if (isInsideBlock) {
+                polygon.setOptions({ strokeColor: block.color }); // Set block-specific color
+              }
             });
   
             // Store each polygon instance
@@ -102,11 +124,11 @@ export default function CemeteryGrid(){
             polygon.addListener('mouseout', () => {
               polygon.setOptions({ fillOpacity: 0 }); // Revert to original color
             });
-
+  
             polygon.addListener('click', () => {
-                setLatLng({ lat: cellCenter.lat(), lng: cellCenter.lng() });
-                setShowModal(true);
-              });
+              setLatLng({ lat: cellCenter.lat(), lng: cellCenter.lng() });
+              setShowModal(true);
+            });
           }
         }
       }
@@ -115,9 +137,9 @@ export default function CemeteryGrid(){
   );
   
   const onLoad = useCallback((mapInstance) => {
-    createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001, center); // Grid for first area
-    createGridCells(mapInstance, polygonCoords2, -27, 0.0000258,0.00001, {lat:14.888659105509653, lng: 120.77973902161986}); // Grid for second area
-    createGridCells(mapInstance, polygonCoords3, -25.3, 0.0000258,0.00001, center);
+    createGridCells(mapInstance, polygonCoords1, -25, 0.0000258,0.00001, center, Area1); // Grid for first area
+    createGridCells(mapInstance, polygonCoords2, -27, 0.0000258,0.00001, {lat:14.888659105509653, lng: 120.77973902161986}, Area2); // Grid for second area
+    createGridCells(mapInstance, polygonCoords3, -25.3, 0.0000258,0.00001, center, Area3);
     createGridCells(mapInstance, polygonCoords4, -27.5, 0.000039,0.00007, center);
     createGridCells(mapInstance, polygonCoords5, -25, 0.000035, 0.00005, {lat:14.889092682267146, lng: 120.77996924487826});
     createGridCells(mapInstance, polygonCoords6, -28, 0.00002,0.00005, {lat:14.88965032489237, lng: 120.78015063987819});
@@ -128,6 +150,16 @@ export default function CemeteryGrid(){
     createGridCells(mapInstance, polygonCoords11, -25, 0.00001,0.0000228, {lat:14.889236891676887, lng: 120.78029130432026});
     createGridCells(mapInstance, polygonCoords12, -28, 0.00003,0.000072, {lat:14.889609273030171, lng: 120.78035698519585});
     createGridCells(mapInstance, polygonCoords13, -25, 0.000015,0.0000348, {lat:14.88955837003466, lng: 120.78039142723911});
+
+    // new window.google.maps.Polygon({
+    //   paths: block1[0].bounds,
+    //   strokeColor: '#FF0000',
+    //   strokeOpacity: 0.4,
+    //   strokeWeight: 0.6,
+    //   fillColor: '#00FF00', // Original color
+    //   fillOpacity: 1,
+    //   map: mapInstance,
+    // });
 
   }, [createGridCells]);
 
