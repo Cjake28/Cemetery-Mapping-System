@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback  } from 'react';
+import { useState, useEffect, useCallback, useRef} from 'react';
 import { GoogleMap, useJsApiLoader, DirectionsRenderer, Marker } from '@react-google-maps/api';
 import { useVacantLots } from '../../Context/vancantlotsContext.jsx'
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
@@ -37,6 +37,7 @@ export default function VacantLot(){
   const [map, setMap] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [targetLocation, setTargetLocation] = useState(null);
+  const solidLineRef = useRef(null);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -137,16 +138,25 @@ export default function VacantLot(){
             const lastLatLng = lastLeg.end_location;
             
             // Create a solid line from the last location to locationContext
+            if (solidLineRef.current) {
+              solidLineRef.current.setMap(null);
+              solidLineRef.current = null;
+            }
+
+            // Create a new solid line from the last location to the target location
             const solidLine = new window.google.maps.Polyline({
               path: [
                 { lat: lastLatLng.lat(), lng: lastLatLng.lng() },
-                loc
+                loc,
               ],
-              strokeColor: "#4285F4", // Set to match route color, typically Google blue
-              strokeOpacity: 1, // Fully opaque for solid line
-              strokeWeight: 4, // Adjust thickness to match the main route
+              strokeColor: "#4285F4", // Google blue color
+              strokeOpacity: 1, // Fully opaque
+              strokeWeight: 4, // Thickness of the line
               map: map, // Attach to the map instance
             });
+
+            // Store the reference of the new solid line
+            solidLineRef.current = solidLine;
             
             console.log("Solid line drawn from last point to locationContext.");
           } else {
@@ -222,7 +232,9 @@ export default function VacantLot(){
     <ShowRouteModal 
         show={showModal} 
         onClose={() => setShowModal(false)} 
-        onConfirm={() => { startDirection(targetLocation); setShowModal(false); }} 
+        onConfirm={() => { startDirection(targetLocation);
+          setShowModal(false); 
+        }} 
       />
     
       <button onClick ={() => {

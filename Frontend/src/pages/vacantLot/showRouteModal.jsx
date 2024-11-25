@@ -5,11 +5,11 @@ const ShowRouteModal = ({ show, onClose, onConfirm }) => {
   if (!show) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <div className="showRouteModal-overlay">
+      <div className="showRouteModal-content">
         <h3>Do you want to see the route?</h3>
-        <button className="see-Ruote-btn" onClick={onConfirm}>See Route</button>
-        <button ClassName="see-Ruote-btn" onClick={onClose}>Close</button>
+        <button className="showRouteModal-see-btn " onClick={onConfirm}>See Route</button>
+        <button ClassName="showRouteModal-close-btn" onClick={onClose}>Close</button>
       </div>
     </div>
   );

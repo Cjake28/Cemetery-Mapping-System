@@ -1,4 +1,4 @@
-import {useEffect,useState, useCallback } from 'react';
+import {useEffect,useState, useCallback, useRef } from 'react';
 import { GoogleMap, useJsApiLoader, Polygon, Marker, DirectionsRenderer, InfoWindow   } from '@react-google-maps/api';
 import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
@@ -37,6 +37,7 @@ export default function Cementerylot (){
   const [directions, setDirections] = useState(null);
   const [map, setMap] = useState(null);
   const [infoWindowVisible, setInfoWindowVisible] = useState(false); 
+  const solidLineRef = useRef(null);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -134,17 +135,25 @@ export default function Cementerylot (){
             const lastLeg = result.routes[0].legs[result.routes[0].legs.length - 1];
             const lastLatLng = lastLeg.end_location;
             
-            // Create a solid line from the last location to locationContext
+            if (solidLineRef.current) {
+              solidLineRef.current.setMap(null);
+              solidLineRef.current = null;
+            }
+
+            // Create a new solid line from the last location to the target location
             const solidLine = new window.google.maps.Polyline({
               path: [
                 { lat: lastLatLng.lat(), lng: lastLatLng.lng() },
-                { lat: locationContext.lat, lng: locationContext.lng }
+                loc,
               ],
-              strokeColor: "#4285F4", // Set to match route color, typically Google blue
-              strokeOpacity: 1, // Fully opaque for solid line
-              strokeWeight: 4, // Adjust thickness to match the main route
+              strokeColor: "#4285F4", // Google blue color
+              strokeOpacity: 1, // Fully opaque
+              strokeWeight: 4, // Thickness of the line
               map: map, // Attach to the map instance
             });
+
+            // Store the reference of the new solid line
+            solidLineRef.current = solidLine;
             
             console.log("Solid line drawn from last point to locationContext.");
           } else {

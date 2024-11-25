@@ -55,6 +55,10 @@
   .showRouteModal-close-btn:hover {
     background-color: #c82333;
   }
+
+  .showroute-divsion{
+    width: 10px;
+  }
   
   button:focus {
     outline: none;
