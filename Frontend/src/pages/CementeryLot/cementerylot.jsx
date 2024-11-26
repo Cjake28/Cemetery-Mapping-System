@@ -19,8 +19,8 @@ import {polygonCoords1,
   polygonCoords11,
   polygonCoords12,
   polygonCoords13,
-  center 
-}  from '../../utils/mapgridCoords.js'
+  center
+}  from '../../utils/mapgridCoords.js';
 
 const googleMap_libraries= ["geometry", "places", "directions"];
 
@@ -44,7 +44,7 @@ export default function Cementerylot (){
     libraries: googleMap_libraries,
   });
 
-  const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight, grCenter) => {
+  const createGridCells = useCallback((map, polygonCoords, RDeg, gridWidth, gridHeight, grCenter) =>{
     const rotationAngle = (RDeg * Math.PI) / 180;
 
     const bounds = new window.google.maps.LatLngBounds();
@@ -85,7 +85,7 @@ export default function Cementerylot (){
         if (
           window.google.maps.geometry.poly.containsLocation(
             cellCenter,
-            new window.google.maps.Polygon({ paths: polygonCoords })
+            new window.google.maps.Polygon({ paths: polygonCoords})
           )
         ) {
           new window.google.maps.Polygon( isTargetCell ? {
@@ -144,7 +144,7 @@ export default function Cementerylot (){
             const solidLine = new window.google.maps.Polyline({
               path: [
                 { lat: lastLatLng.lat(), lng: lastLatLng.lng() },
-                loc,
+                {lat:locationContext.lat, lng: locationContext.lng},
               ],
               strokeColor: "#4285F4", // Google blue color
               strokeOpacity: 1, // Fully opaque
