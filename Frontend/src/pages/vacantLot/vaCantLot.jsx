@@ -4,6 +4,8 @@ import { useVacantLots } from '../../Context/vancantlotsContext.jsx'
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
 import markerSvg from '../../assets/personLoc.svg';
 import plotpos from '../../assets/position.svg'
+import centerLoc from '../../assets/centerLocation.svg';
+import userLoc from '../../assets/userLocation.svg'
 import { FiDelete , FiTarget, FiMapPin, FiDisc } from "react-icons/fi";
 import ShowRouteModal from './showRouteModal.jsx';  // Import the modal
 import {polygonCoords1, 
@@ -240,12 +242,20 @@ export default function VacantLot(){
       <button onClick ={() => {
         map.panTo(center);
         map.setZoom(20);
-      }} className="center-btn"><FiTarget style={{height:'100%', width:'100%' }}/></button>
+      }} className="center-btn"><img 
+        src={centerLoc} 
+        alt="center Location Icon" 
+        style={{ width: '50%', height: '50%' }} 
+      /></button>
 
       <button onClick={()=> {
         map.panTo({ lat: location.latitude, lng: location.longitude });
         map.setZoom(20);
-      }} className="focus-direction-btn"><FiDisc style={{height:'100%', width:'100%'}}/></button>
+      }} className="focus-direction-btn"><img 
+        src={userLoc} 
+        alt="user Location Icon" 
+        style={{ width: '50%', height: '50%' }} 
+      /></button>
     </div>
   );
 };

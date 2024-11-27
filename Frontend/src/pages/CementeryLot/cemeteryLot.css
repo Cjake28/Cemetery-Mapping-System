@@ -43,7 +43,7 @@
     top: 30px;
     left:50px;
     z-index: 10;
-    height:45px;
+    height:45px;  
     width:45px;  
     z-index: 10; /* Ensures the button is clickable */
     border-radius: 100%;
