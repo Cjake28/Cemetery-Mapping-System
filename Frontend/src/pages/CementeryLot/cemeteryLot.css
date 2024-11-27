@@ -67,6 +67,13 @@
     border:none;
 }
 
+.cemeteryLot-back-btn:hover, 
+.center-btn:hover, 
+.focus-direction-btn:hover, 
+.direction-btn:hover {
+  cursor: pointer;
+} 
+
 .info-window {
   padding: 10px;
   background-color: #ffffff;

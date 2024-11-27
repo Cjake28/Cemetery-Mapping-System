@@ -4,6 +4,7 @@ import {useLocationContext} from '../../Context/SceneIDcontext.jsx';
 import {GeolocationContext} from '../../Context/geolocationContext.jsx';
 import markerSvg from '../../assets/personLoc.svg';
 import plotpos from '../../assets/position.svg'
+import GraveLoc from '../../assets/graveLocation.svg';
 import './cemeteryLot.css';
 import { FiDelete , FiTarget, FiMapPin, FiDisc } from "react-icons/fi";
 import {polygonCoords1, 
@@ -252,7 +253,11 @@ export default function Cementerylot (){
         map.panTo(center);
         map.setZoom(20);
       }} className="center-btn"><FiTarget style={{height:'100%', width:'100%' }}/></button>
-      <button onClick={()=> startDirection()} className="direction-btn"><FiMapPin style={{height:'60%', width:'60%'}} /></button>
+      <button onClick={()=> startDirection()} className="direction-btn">  <img 
+          src={GraveLoc} 
+          alt="Grave Location Icon" 
+          style={{ width: '50%', height: '50%' }} 
+        /></button>
       <button onClick={()=> {setScene(false); setPerson_name_loc(null)}} className="cemeteryLot-back-btn"><FiDelete  style={{height:'60%', width:'60%'}}/></button>
       <button onClick={()=> {
         map.panTo({ lat: location.latitude, lng: location.longitude });
