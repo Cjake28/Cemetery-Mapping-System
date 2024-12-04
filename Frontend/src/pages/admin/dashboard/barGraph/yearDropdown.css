@@ -1,0 +1,23 @@
+.year-dropdown-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-top: 5px;
+  }
+  
+  .year-dropdown-label {
+    font-size: 1rem;
+    margin-right: 10px;
+    color: #333;
+  }
+  
+  .year-dropdown-select {
+    padding: 5px 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  

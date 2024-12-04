@@ -1,0 +1,44 @@
+
+  .piechart-container{
+    height:95%;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+    background-color: #FFFFFF;
+    border-radius: 5px;
+  }
+
+  .LegendList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    list-style: none; /* Remove default bullets */
+  }
+  
+  .LegendList li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .BulletLabel {
+    display: flex;
+    align-items: center;
+  }
+  
+  .CirecleBullet {
+    border-radius: 50%;
+  }
+  
+  .BulletLabelText {
+    margin-left: 10px;
+  }
+  
+  .CenteredLabelValue {
+    font-size: 36px;
+    font-weight: 600;
+    fill: #0088fe;
+  }
+  

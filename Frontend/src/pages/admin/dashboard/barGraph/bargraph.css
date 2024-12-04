@@ -1,0 +1,9 @@
+.bargraph-container{
+    height: 95%;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    margin-top: auto;
+    background-color: #FFFFFF;
+}

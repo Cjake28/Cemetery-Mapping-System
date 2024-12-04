@@ -25,7 +25,10 @@ export default function AdminNavbar() {
     <nav className='admin-navbar-container'>
       <div className='admin-menu-container'>
         {/* Menu items for desktop and mobile */}
-        <div className={`a-admin-navbar ${location.pathname === '/admin' ? 'active' : ''}`} onClick={() => navigate('/admin')}>
+        <div className={`a-admin-navbar ${location.pathname === '/admin' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin')}>
+            <p>Dashboard</p>
+        </div>
+        <div className={`a-admin-navbar ${location.pathname === '/admin/manage-user' ? 'active' : ''}`} onClick={() => navigate('/admin/manage-user')}>
           <p>user</p>
         </div>
         <div className={`a-admin-navbar ${location.pathname === '/admin/manage-vacant-lot' ? 'active' : ''}`} onClick={() => navigate('/admin/manage-vacant-lot')}>
@@ -49,6 +52,9 @@ export default function AdminNavbar() {
       {isOpen && (
         <div className="admin-mobile-menu">
           <div className={`a-admin-navbar ${location.pathname === '/admin' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin')}>
+            <p>Dashboard</p>
+          </div>
+          <div className={`a-admin-navbar ${location.pathname === '/admin/manage-user' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin/manage-user')}>
             <p>user</p>
           </div>
           <div className={`a-admin-navbar ${location.pathname === '/admin/manage-vacant-lot' ? 'active' : ''}`} onClick={() => handelnavbarNav('/admin/manage-vacant-lot')}>

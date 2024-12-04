@@ -1,0 +1,68 @@
+.dashboard-container {
+  display: flex; /* Horizontal layout for the main sections */
+  height: 100vh; /* Full viewport height */
+  background-color: rgb(223, 222, 222);
+  padding:10px
+}
+
+.dashboard-box {
+  flex: 1; /* Equal width for left and right sections */
+  /* border: 1px solid #000; For visibility */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.dashboard-middle {
+  flex: 2; /* Middle section takes twice the width */
+  display: flex; /* Use flexbox for vertical layout */
+  flex-direction: column; /* Stack children vertically */
+  /* border: 1px solid #000; For visibility */
+}
+
+.dashboard-last-box {
+  flex: 1; /* Middle section takes twice the width */
+  display: flex; /* Use flexbox for vertical layout */
+  flex-direction: column; /* Stack children vertically */
+  /* border: 1px solid #000; For visibility */
+}
+
+.dashboard-sub-box {
+  flex: 1; /* Equal height for the middle sections */
+  /* border: 1px solid #000;  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* .dashboard-sub-box{
+  height:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.middle-sub-box{
+  height: 95%;
+  width: 95%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: red; */
+}
+
+.bargraph-parent-container{
+  display:flex;
+  flex-direction: column;
+  flex-grow: 1.5;
+}
+
+/* 
+.piechart-box{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+} */

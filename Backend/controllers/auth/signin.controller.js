@@ -21,7 +21,7 @@ export const signin = async (req, res) =>{
         }
 
         if(!isVerified){
-            return res.status(403).json({success:false, message:"user not verified"});
+            return res.status(403).json({success:false, message:"Account suspended. Contact admin."});
         }
 
         const encrypted = await bcrypt.compare(password, dbpassword);

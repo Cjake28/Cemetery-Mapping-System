@@ -16,6 +16,7 @@ import ManageVacantLot from './admin/manageVacantLot/manageVaCantLot.jsx'
 import RoleBasedRedirect from '../components/protectedRoute/rolebasedRedirect.jsx'
 import VacantLot from '../pages/vacantLot/vaCantLot.jsx'
 import CemeteryGrid from '../pages/admin/cemeterygrid/cemeteryGrid.jsx'
+import Dashboard from './admin/dashboard/dashboard.jsx';
 import './App.css';
 import VisitorProtectedRoute from '../components/protectedRoute/visitorProtectedRoute.jsx'
 
@@ -77,7 +78,11 @@ const router = createBrowserRouter([
             children: [
               {
                 path: '',  // Maps to '/admin'
-                element: <ManageUsers />,
+                element: <Dashboard />,
+              },
+              {
+                path: 'manage-user',  // Maps to '/admin'
+                element: <ManageUsers/>,
               },
               {
                 path: 'manage-gravesite',  // Maps to '/manage-gravesite'
