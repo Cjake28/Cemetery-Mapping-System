@@ -85,6 +85,7 @@ export default function PersonsTable({ filteredPersons }) {
                     onClose={() => setIsDeleteModalOpen(false)}
                     name={selectedPerson.name}
                     personID={selectedPerson.id}
+                    person={selectedPerson}
                 />
             )}
 

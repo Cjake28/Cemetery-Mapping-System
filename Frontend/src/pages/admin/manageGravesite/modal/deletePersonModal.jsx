@@ -4,7 +4,7 @@ import {useQueryClient } from '@tanstack/react-query';
 
 const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-export default function DeletePersonModal({ isOpen, onClose, name, personID }) {
+export default function DeletePersonModal({ isOpen, onClose, name, personID, person }) {
     const queryClient = useQueryClient();
     const [errorMessage, setErrorMessage] = useState(''); // State to track error messages
     const [isLoading, setIsLoading] = useState(false); // State to show loading during the request
@@ -45,6 +45,7 @@ export default function DeletePersonModal({ isOpen, onClose, name, personID }) {
                 <p className="disable-user-modal-text">
                     Are you sure you want to Delete this Person: <strong>{name}</strong>?
                 </p>
+                <p>lat/lng: <strong>{person.center_lat_lng}</strong></p>
 
                 {/* Display error message if present */}
                 {errorMessage && <p className="disable-user-error">{errorMessage}</p>}
