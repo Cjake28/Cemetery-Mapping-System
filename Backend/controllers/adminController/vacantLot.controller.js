@@ -23,13 +23,18 @@ export const getVacantLotsController = async (req, res) => {
 export const createVacantLotController = async (req, res) => {
   const { vacantLotData } = req.body;
   const userId = req.userId;
-  const { location, lat_lng_point_center } = vacantLotData;
+  const { location, lat_lng_point_center, grave_type, grave_size } = vacantLotData;
 
-  if (!location || !lat_lng_point_center) {
-    return res.status(400).json({ success: false, message: 'All fields are required' });
+  // Validate required fields
+  if (!location || !lat_lng_point_center || !grave_type || !grave_size) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'All fields (location, lat_lng_point_center, grave_type, grave_size) are required' 
+    });
   }
 
   try {
+    // Check if a lot with the same location already exists
     const existingLot = await getVacantLotByLocation(location);
     
     if (existingLot) {
@@ -39,6 +44,7 @@ export const createVacantLotController = async (req, res) => {
       });
     }
 
+    // Create the vacant lot
     const insertId = await createVacantLot(vacantLotData, userId);
     res.status(201).json({
       success: true,
@@ -54,6 +60,7 @@ export const createVacantLotController = async (req, res) => {
     });
   }
 };
+
 
 // Controller to update a vacant lot
 export const updateVacantLotController = async (req, res) => {

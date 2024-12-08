@@ -40,6 +40,7 @@ export default function VacantLot(){
   const [showModal, setShowModal] = useState(false);
   const [targetLocation, setTargetLocation] = useState(null);
   const solidLineRef = useRef(null);
+  const [selectedLot, setSelectedSLot] = useState(null);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -88,7 +89,7 @@ export default function VacantLot(){
           new window.google.maps.Polygon({ paths: polygonCoords })
         );
   
-        if (isInsidePolygon) {
+        if (isInsidePolygon){
           const isTargetCell = polygonData.some(target =>
             Math.abs(cellCenter.lat() - target?.coords?.lat) < gridHeight / 2 &&
             Math.abs(cellCenter.lng() - target?.coords?.lng) < gridWidth / 2
@@ -107,8 +108,20 @@ export default function VacantLot(){
   
           // Add click event only if isTargetCell is true
           if (isTargetCell) {
+            const matchingData = polygonData.find(target =>
+              Math.abs(cellCenter.lat() - target?.coords?.lat) < gridHeight / 2 &&
+              Math.abs(cellCenter.lng() - target?.coords?.lng) < gridWidth / 2
+            );
             polygon.addListener('click', () => {
-              setTargetLocation({lat: cellCenter.lat(), lng: cellCenter.lng()});
+              setTargetLocation({ lat: cellCenter.lat(), lng: cellCenter.lng() });
+          
+              // Set selectedLot to include relevant data from polygonData
+              setSelectedSLot({
+                grave_size: matchingData?.grave_size,
+                grave_type: matchingData?.grave_type,
+              });
+        
+          
               setShowModal(true); // Show modal on cell click
             });
           }
@@ -236,7 +249,8 @@ export default function VacantLot(){
         onClose={() => setShowModal(false)} 
         onConfirm={() => { startDirection(targetLocation);
           setShowModal(false); 
-        }} 
+        }}
+        selectedLot={selectedLot}
       />
     
       <button onClick ={() => {

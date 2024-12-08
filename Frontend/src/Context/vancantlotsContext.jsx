@@ -35,6 +35,8 @@ export const VacantLotsProvider = ({ children }) => {
       const parsedLots = vacantLots.map((lot) => ({
         id: lot.id,
         coords: parseLatLng(lot.lat_lng_point_center),
+        grave_type: lot.grave_type,
+        grave_size: lot.grave_size
       }));
       setPolygonData(parsedLots);
     }

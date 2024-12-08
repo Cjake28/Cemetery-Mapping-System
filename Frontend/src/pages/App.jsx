@@ -120,7 +120,7 @@ export default function App() {
   // Run checkAuth when the app loads
   useEffect(() => {
     checkAuth();
-    console.log("app.jsx: checkAuth");
+    // console.log("app.jsx: checkAuth");
   },[]);
 
   // Show a loading screen while checking authentication

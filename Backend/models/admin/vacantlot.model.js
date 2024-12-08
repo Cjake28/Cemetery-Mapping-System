@@ -3,7 +3,17 @@ import db from '../../db/db.connect.js';
 // Get all vacant lots
 export async function getAllVacantLots() {
   try {
-    const [result] = await db.query(`SELECT * FROM vacantLot`);
+    const query = `
+      SELECT 
+        id, 
+        location, 
+        lat_lng_point_center, 
+        user_id, 
+        grave_type, 
+        grave_size
+      FROM vacantLot
+    `;
+    const [result] = await db.query(query);
     return result;
   } catch (error) {
     console.error("Error fetching all vacant lots: ", error);
@@ -11,17 +21,17 @@ export async function getAllVacantLots() {
   }
 }
 
-// Create a vacant lot
+
 export const createVacantLot = async (vacantLotData, user_id) => {
-  const { location, lat_lng_point_center } = vacantLotData;
+  const { location, lat_lng_point_center, grave_type, grave_size } = vacantLotData;
 
   const query = `
-    INSERT INTO vacantLot (location, lat_lng_point_center, user_id)
-    VALUES (?, ?, ?);
+    INSERT INTO vacantLot (location, lat_lng_point_center, user_id, grave_type, grave_size)
+    VALUES (?, ?, ?, ?, ?);
   `;
 
   try {
-    const [result] = await db.query(query, [location, lat_lng_point_center, user_id]);
+    const [result] = await db.query(query, [location, lat_lng_point_center, user_id, grave_type, grave_size]);
     return result.insertId;
   } catch (error) {
     console.error("Error creating vacant lot: ", error);

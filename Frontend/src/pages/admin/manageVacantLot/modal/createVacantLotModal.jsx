@@ -8,11 +8,15 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
     const [vacantLotData, setVacantLotData] = useState({
         location: '',
         lat_lng_point_center: '',
+        grave_type: '', // New field for grave type
+        grave_size: '', // New field for grave size
     });
     const [createError, setCreateError] = useState(null);
     const [errors, setErrors] = useState({
         location: '',
         lat_lng_point_center: '',
+        grave_type: '',
+        grave_size: '',
     });
 
     const handleInputChange = (e) => {
@@ -33,6 +37,8 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
         const newErrors = {};
         if (!vacantLotData.location.trim()) newErrors.location = 'This field cannot be empty.';
         if (!vacantLotData.lat_lng_point_center.trim()) newErrors.lat_lng_point_center = 'This field cannot be empty.';
+        if (!vacantLotData.grave_type.trim()) newErrors.grave_type = 'Please select a grave type.';
+        if (!vacantLotData.grave_size.trim()) newErrors.grave_size = 'This field cannot be empty.';
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -50,7 +56,7 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
     };
 
     const handleCancel = () => {
-        setErrors({ location: '', lat_lng_point_center: '' });
+        setErrors({ location: '', lat_lng_point_center: '', grave_type: '', grave_size: '' });
         onClose();
         setCreateError(null);
     };
@@ -79,6 +85,57 @@ export default function CreateVacantLotModal({ isOpen, onClose, onCreateSuccess 
                             type="text"
                             name="lat_lng_point_center"
                             value={vacantLotData.lat_lng_point_center}
+                            onChange={handleInputChange}
+                        />
+                    </label>
+                    <fieldset>
+                        <legend>Grave Type:</legend>
+                        {errors.grave_type && <p className="error-text">{errors.grave_type}</p>}
+                        <div className="radio-group">
+                            
+                            <div className="radio-item">
+                            <label htmlFor="lawn-lot">Lawn Lot</label>
+                                <input
+                                    type="radio"
+                                    id="lawn-lot"
+                                    name="grave_type"
+                                    value="Lawn Lot"
+                                    checked={vacantLotData.grave_type === 'Lawn Lot'}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="radio-item">
+                            <label htmlFor="mausoleum">Mausoleum</label>
+                                <input
+                                    type="radio"
+                                    id="mausoleum"
+                                    name="grave_type"
+                                    value="Mausoleum"
+                                    checked={vacantLotData.grave_type === 'Mausoleum'}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="radio-item">
+                            <label htmlFor="apartment">Apartment</label>
+                                <input
+                                    type="radio"
+                                    id="apartment"
+                                    name="grave_type"
+                                    value="Apartment"
+                                    checked={vacantLotData.grave_type === 'Apartment'}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <label>
+                        Grave Size:
+                        {errors.grave_size && <p className="error-text">{errors.grave_size}</p>}
+                        <input
+                            type="text"
+                            name="grave_size"
+                            placeholder="8x3ft"
+                            value={vacantLotData.grave_size}
                             onChange={handleInputChange}
                         />
                     </label>

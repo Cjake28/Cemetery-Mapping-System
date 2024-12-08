@@ -84,3 +84,32 @@
 .modal-actions button[type="button"]:hover {
     background-color: #c82333;
 }
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    text-align: left;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio-item input[type="radio"] {
+    margin: 0;
+    accent-color: #007bff; /* Customize the color of the radio button */
+    cursor: pointer;
+}
+
+.radio-item label {
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.radio-item:hover label {
+    color: #007bff;
+}
