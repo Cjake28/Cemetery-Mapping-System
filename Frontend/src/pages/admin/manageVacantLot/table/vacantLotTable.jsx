@@ -45,7 +45,9 @@ export default function VacantLotTable({ filteredLots }) {
                 <thead className="vacantlot-table-head">
                     <tr className="vacantlot-table-row">
                         <th className="vacantlot-table-heading">Location</th>
-                        <th className="vacantlot-table-heading">Map coordinates</th>
+                        <th className="vacantlot-table-heading">Grave type</th>
+                        <th className="vacantlot-table-heading">Grave site</th>
+                        {/* <th className="vacantlot-table-heading">lat/lng</th> */}
                         <th className="vacantlot-table-heading">Actions</th>
                     </tr>
                 </thead>
@@ -54,7 +56,9 @@ export default function VacantLotTable({ filteredLots }) {
                         filteredLots.map((lot) => (
                             <tr className="vacantlot-table-row vacantlot-table-row-content" key={lot.id}>
                                 <td className="vacantlot-table-cell">{lot.location || 'N/A'}</td>
-                                <td className="vacantlot-table-cell scrollable-cell">{lot.lat_lng_point_center || 'N/A'}</td>
+                                <td className="vacantlot-table-cell">{lot.grave_type || 'N/A'}</td>
+                                <td className="vacantlot-table-cell">{lot.grave_size || 'N/A'}</td>
+                                {/* <td className="vacantlot-table-cell scrollable-cell">{lot.lat_lng_point_center || 'N/A'}</td> */}
                                 <td className="vacantlot-table-cell">
                                     <span className="vacantlot-actions">
                                         <BsGeoAltFill
