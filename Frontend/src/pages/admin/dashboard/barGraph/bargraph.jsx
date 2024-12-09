@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import './bargraph.css';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label  } from "recharts";
 import Spinner from '../../../../components/spinner/spinner.jsx';
 import YearDropdown from './yeardropdown.jsx';
 
@@ -53,10 +53,14 @@ export default function MonthlyBurialsBarGraph({ data, isLoading = false, select
         </div>
       ) : (
         <ResponsiveContainer width="100%" height="90%">
-          <BarChart data={transformedData} margin={{ top: 0, right: 20, left: 0, bottom: 5 }}>
+          <BarChart data={transformedData} margin={{ top: 0, right: 20, left: 20, bottom: 30 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
+            <XAxis dataKey="month">
+              <Label value="Month" position="bottom" offset={10} fill="#2e2e2e"/>
+            </XAxis>
+            <YAxis>
+              <Label value="Sales" angle={-90} position="left" offset={-10} fill="#2e2e2e" />
+            </YAxis>
             <Tooltip />
             <Bar dataKey="total_burials" fill="#8884d8" />
           </BarChart>

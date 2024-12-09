@@ -79,3 +79,7 @@
 .cancel-disable-btn:hover {
     background-color: #95a5a6;
 }
+
+.name_owner_hover:hover{
+    color:rgb(201, 201, 201)
+}

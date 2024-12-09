@@ -63,7 +63,7 @@ export default function ManageVacantLot() {
             <input
                 className='inputVacant-lot' 
                 type="text" 
-                placeholder="Search persons..." 
+                placeholder="Search vacat lot..." 
                 value={searchQuery}
                 onChange={handleSearch}
             />

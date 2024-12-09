@@ -142,7 +142,7 @@ export default function ManageUsers() {
         verifiedUser?.filter((user) => user.name.toLowerCase().includes(searchQuery.toLowerCase())) : 
         unverifiedUser?.filter((user) => user.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    function checkboxHandler(e) {
+    function checkboxHandler(e){
         const isSelected = e.target.checked;
         const { id, name } = JSON.parse(e.target.value); // Parse JSON string
     

@@ -4,10 +4,12 @@ import DeletePersonModal from '../modal/deletePersonModal.jsx';
 import UpdateGraveLocationModal from '../modal/updateGraveLocationModal.jsx';  // Import the new modal
 import {useQueryClient } from '@tanstack/react-query';
 import UpdatePersonModal from '../modal/updatePersonModal.jsx'; 
+import './personTable.css'
 
 export default function PersonsTable({ filteredPersons }) {
     const queryClient = useQueryClient()
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [alpheticalOrder, setAlpheticalOrder] = useState(filteredPersons);
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isGeoModalOpen, setIsGeoModalOpen] = useState(false);  // For updating location modal
@@ -33,20 +35,30 @@ export default function PersonsTable({ filteredPersons }) {
         setIsUpdateModalOpen(true);
     };
 
+    const handleAplhabeticalByName = () => {
+        const sortedData = [...filteredPersons].sort((a, b) => a.name.localeCompare(b.name));
+        setAlpheticalOrder(sortedData);
+    };
+
+    const handleAplhabeticalByOwner = () => {
+        const sortedData = [...filteredPersons].sort((a, b) => a.owner_name.localeCompare(b.owner_name));
+        setAlpheticalOrder(sortedData);
+    };
+
     return (
         <div className="table-wrapper">
             <table className="user-table">
                 <thead className="user-table-head">
                     <tr className="user-table-row">
-                        <th className="user-table-heading">Name</th>
+                        <th className="user-table-heading name_owner_hover" style={{cursor:'pointer'}}  onClick={handleAplhabeticalByName}>Name</th>
                         <th className="user-table-heading">Location</th>
-                        <th className="user-table-heading">Owner Name</th>
+                        <th className="user-table-heading name_owner_hover"  style={{cursor:'pointer'}} onClick={handleAplhabeticalByOwner}>Owner Name</th>
                         <th className="user-table-heading">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="user-table-body">
-                    {filteredPersons && filteredPersons.length > 0 ? (
-                        filteredPersons.map((person) => (
+                    {alpheticalOrder && alpheticalOrder.length > 0 ? (
+                        alpheticalOrder.map((person) => (
                             <tr className="user-table-row user-table-row-content" key={person.id}>
                                 <td className="user-table-cell">{person.fullname || `${person.name} ${person.surname}`}</td>
                                 <td className="user-table-cell">{person.location || 'N/A'}</td>

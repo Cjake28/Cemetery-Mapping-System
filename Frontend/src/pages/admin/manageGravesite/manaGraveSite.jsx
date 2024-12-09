@@ -56,7 +56,7 @@ export default function ManageGraveSite() {
       <div className="search-bar">
         <input 
             type="text" 
-            placeholder="Search persons..." 
+            placeholder="Search person..." 
             value={searchQuery}
             onChange={handleSearch}
         />
