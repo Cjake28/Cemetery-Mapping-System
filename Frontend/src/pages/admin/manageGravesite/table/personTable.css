@@ -81,5 +81,6 @@
 }
 
 .name_owner_hover:hover{
-    color:rgb(201, 201, 201)
+    color:rgb(201, 201, 201);
+    cursor: pointer
 }

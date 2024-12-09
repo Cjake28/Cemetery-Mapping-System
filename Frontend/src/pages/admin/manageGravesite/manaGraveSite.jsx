@@ -10,7 +10,7 @@ const API_URL = import.meta.env.VITE_BACKEND_URL;
 export default function ManageGraveSite() {
     const [searchQuery, setSearchQuery] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [sortedPersons, setSortedPersons] = useState(null);
     const queryClient = useQueryClient();
     
   // Fetch persons data with useQuery
@@ -36,9 +36,25 @@ export default function ManageGraveSite() {
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
+        setAlpheticalOrder(filteredPersons);
     };
 
-    const filteredPersons =  persons?.filter((person) => person.name.toLowerCase().includes(searchQuery.toLowerCase()) || person.surname.toLowerCase().includes(searchQuery.toLowerCase()));
+    const handleAlphabeticalByName = () => {
+      const sorted = [...persons].sort((a, b) => a.name.localeCompare(b.name));
+      setSortedPersons(sorted);
+  };
+
+  const handleAlphabeticalByOwner = () => {
+      const sorted = [...persons].sort((a, b) => a.owner_name.localeCompare(b.owner_name));
+      setSortedPersons(sorted);
+  };
+
+  // Filtered and sorted persons
+  const filteredPersons = (sortedPersons || persons)?.filter(
+      (person) =>
+          person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          person.surname.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching persons</div>;
@@ -62,7 +78,11 @@ export default function ManageGraveSite() {
         />
       </div>
 
-      <PersonsTable filteredPersons={filteredPersons}/>
+        <PersonsTable
+          filteredPersons={filteredPersons}
+          handleAlphabeticalByName={handleAlphabeticalByName}
+          handleAlphabeticalByOwner={handleAlphabeticalByOwner}
+        />
 
       {isModalOpen && (
         <CreatePersonModal
