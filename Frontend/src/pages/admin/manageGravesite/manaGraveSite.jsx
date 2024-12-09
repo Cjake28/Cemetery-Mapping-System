@@ -52,8 +52,8 @@ export default function ManageGraveSite() {
   // Filtered and sorted persons
   const filteredPersons = (sortedPersons || persons)?.filter(
       (person) =>
-          person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          person.surname.toLowerCase().includes(searchQuery.toLowerCase())
+          person.fullname.toLowerCase().includes(searchQuery.toLowerCase()) 
+          // person.surname.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (isLoading) return <div>Loading...</div>;
